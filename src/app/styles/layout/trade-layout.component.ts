@@ -271,6 +271,87 @@ export class TradeLayoutComponent implements OnInit {
         },
       ],
     },
+    {
+      label: 'Export',
+      children: [
+        {
+          label: 'DC Advising',
+          children: [
+            {
+              label: 'Customer Export LC Request',
+              route: ['/trade', 'dc-advising', 'customer', 'dashboard']
+            },
+            {
+              label: 'Relationship Officer Review',
+              route: ['/trade', 'dc-advising', 'ro', 'dashboard']
+            },
+            {
+              label: 'Trade Officer Review',
+              route: ['/trade', 'dc-advising', 'to', 'dashboard']
+            },
+            {
+              label: 'Trade Approval Review',
+              route: ['/trade', 'dc-advising', 'approver', 'dashboard']
+            }
+          ]
+        },
+        {
+          label: 'Export-Bill Collection',
+          children: [
+            {
+              label: 'Customer Bill Request',
+              route: ['/trade', 'export-bill', 'customer', 'dashboard']
+            },
+            {
+              label: 'Relationship Officer Review',
+              route: ['/trade', 'export-bill', 'ro', 'dashboard']
+            },
+            {
+              label: 'Trade Officer Review',
+              route: ['/trade', 'export-bill', 'to', 'dashboard']
+            },
+            {
+              label: 'Approver Review',
+              route: ['/trade', 'export-bill', 'approver', 'dashboard']
+            }
+          ]
+        },
+        {
+          label: 'Export Proceed',
+          children: [
+            {
+              label: 'Trade Officer Review',
+              route: ['/trade', 'export-proceed', 'to', 'dashboard']
+            },
+            {
+              label: 'Approver Review',
+              route: ['/trade', 'export-proceed', 'approver', 'dashboard']
+            },
+            {
+              label: 'Customer Dashboard',
+              route: ['/trade', 'export-proceed', 'customer', 'dashboard']
+            }
+          ]
+        },
+        {
+          label: 'Master LC',
+          children: [
+            {
+              label: 'Create Master LC',
+              route: ['/trade', 'master-lc', 'customer', 'dashboard']
+            },
+            {
+              label: 'Trade Officer Review',
+              route: ['/trade', 'master-lc', 'to', 'dashboard']
+            },
+            {
+              label: 'Manager Review',
+              route: ['/trade', 'master-lc', 'manager', 'dashboard']
+            },
+          ]
+        }
+      ]
+    }
   ];
 
   sidebarCollapsed = false;
@@ -284,30 +365,40 @@ export class TradeLayoutComponent implements OnInit {
     const currentUrl = this.router.url;
 
     this.mainMenuItems.forEach((item) => {
-      if (!item.children || item.children.length === 0) {
-        return;
-      }
-
-      const hasActiveChild = item.children.some((child) => {
-        if (child.children && child.children.length > 0) {
-          const hasActiveGrand = child.children.some((grand) => {
-            const tree = this.router.createUrlTree(grand.route || []);
+      if (item.children) {
+        const hasActiveChild = item.children.some((child) => {
+          // Check Level 2 Direct Route
+          if (child.route) {
+            const tree = this.router.createUrlTree(child.route);
             const path = this.router.serializeUrl(tree);
-            return currentUrl.startsWith(path);
-          });
-          if (hasActiveGrand) {
-            this.expandedGroups[child.label] = true;
+            if (currentUrl.startsWith(path)) {
+              return true;
+            }
           }
-          return hasActiveGrand;
+
+          // Check Level 3 Children
+          if (child.children && child.children.length > 0) {
+            const hasActiveGrand = child.children.some((grand) => {
+              if (grand.route) {
+                const tree = this.router.createUrlTree(grand.route);
+                const path = this.router.serializeUrl(tree);
+                return currentUrl.startsWith(path);
+              }
+              return false;
+            });
+
+            if (hasActiveGrand) {
+              this.expandedGroups[child.label] = true;
+              return true;
+            }
+          }
+
+          return false;
+        });
+
+        if (hasActiveChild) {
+          this.expandedGroups[item.label] = true;
         }
-
-        const tree = this.router.createUrlTree(child.route || []);
-        const path = this.router.serializeUrl(tree);
-        return currentUrl.startsWith(path);
-      });
-
-      if (hasActiveChild) {
-        this.expandedGroups[item.label] = true;
       }
     });
   }

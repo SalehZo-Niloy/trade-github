@@ -1,0 +1,171 @@
+<app-trade-layout>
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <div class="space-y-1">
+      <h1 class="text-2xl font-bold text-slate-900">Create Export Bill Collection</h1>
+      <p class="text-slate-500">Submit documents for collection.</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="flex items-center justify-between px-10 py-4">
+      <div class="flex flex-col items-center">
+        <div [class]="'flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold ' + (currentStep >= 1 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-500')">1</div>
+        <span [class]="'mt-2 text-xs font-medium ' + (currentStep >= 1 ? 'text-teal-600' : 'text-gray-500')">Details</span>
+      </div>
+      <div class="h-0.5 w-full mx-4 bg-gray-200"></div>
+      <div class="flex flex-col items-center">
+        <div [class]="'flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold ' + (currentStep >= 2 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-500')">2</div>
+        <span [class]="'mt-2 text-xs font-medium ' + (currentStep >= 2 ? 'text-teal-600' : 'text-gray-500')">Buyer & Bill</span>
+      </div>
+      <div class="h-0.5 w-full mx-4 bg-gray-200"></div>
+      <div class="flex flex-col items-center">
+        <div [class]="'flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold ' + (currentStep >= 3 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-500')">3</div>
+        <span [class]="'mt-2 text-xs font-medium ' + (currentStep >= 3 ? 'text-teal-600' : 'text-gray-500')">Documents</span>
+      </div>
+      <div class="h-0.5 w-full mx-4 bg-gray-200"></div>
+      <div class="flex flex-col items-center">
+        <div [class]="'flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold ' + (currentStep >= 4 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-500')">4</div>
+        <span [class]="'mt-2 text-xs font-medium ' + (currentStep >= 4 ? 'text-teal-600' : 'text-gray-500')">Review</span>
+      </div>
+    </div>
+
+    <!-- Step Content -->
+    <div class="bg-white rounded-lg border border-slate-200 p-8 shadow-sm min-h-[400px]">
+      
+      <!-- Step 1: Details -->
+      <div *ngIf="currentStep === 1">
+        <h2 class="text-lg font-semibold text-slate-800 mb-6">Applicant & LC Details</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-slate-700">Applicant Name</label>
+            <input type="text" [(ngModel)]="formData.applicantName" readonly class="w-full rounded-md border border-slate-300 bg-gray-50 px-3 py-2 text-sm text-slate-600 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+          </div>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-slate-700">LC Number <span class="text-red-500">*</span></label>
+            <input type="text" [(ngModel)]="formData.lcNumber" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+          </div>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-slate-700">Issuing Bank</label>
+            <input type="text" [(ngModel)]="formData.issuingBank" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+          </div>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-slate-700">LC Issue Date</label>
+            <input type="date" [(ngModel)]="formData.lcIssueDate" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Buyer & Bill -->
+      <div *ngIf="currentStep === 2">
+        <h2 class="text-lg font-semibold text-slate-800 mb-6">Buyer & Bill Details</h2>
+        
+        <div class="mb-4">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Buyer (Drawee)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700">Buyer Name</label>
+                    <input type="text" [(ngModel)]="formData.buyerName" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700">Country</label>
+                    <input type="text" [(ngModel)]="formData.country" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Bill Terms</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700">Bill Amount</label>
+                    <input type="number" [(ngModel)]="formData.billAmount" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700">Currency</label>
+                    <select [(ngModel)]="formData.currency" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                        <option *ngFor="let c of currencies" [value]="c">{{ c }}</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700">Collection Type</label>
+                    <select [(ngModel)]="formData.collectionType" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                        <option value="">Select...</option>
+                        <option *ngFor="let t of collectionTypes" [value]="t">{{ t }}</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700">Tenor (Days)</label>
+                    <input type="number" [(ngModel)]="formData.tenor" class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Documents -->
+      <div *ngIf="currentStep === 3">
+        <h2 class="text-lg font-semibold text-slate-800 mb-6">Documents</h2>
+        <div class="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center hover:bg-slate-50 transition-colors cursor-pointer">
+            <div class="text-slate-400 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-900">Click to upload or drag and drop</p>
+            <p class="text-xs text-slate-500 mt-1">PDF, DOC, JPG up to 10MB</p>
+        </div>
+      </div>
+
+      <!-- Step 4: Review -->
+      <div *ngIf="currentStep === 4">
+        <h2 class="text-lg font-semibold text-slate-800 mb-6">Review & Submit</h2>
+        <div class="bg-gray-50 p-6 rounded-lg space-y-4">
+            <div class="grid grid-cols-2 gap-4 text-sm">
+                <div class="text-slate-500">Applicant</div>
+                <div class="font-medium text-slate-900">{{ formData.applicantName }}</div>
+                
+                <div class="text-slate-500">LC Number</div>
+                <div class="font-medium text-slate-900">{{ formData.lcNumber }}</div>
+                
+                <div class="text-slate-500">Buyer</div>
+                <div class="font-medium text-slate-900">{{ formData.buyerName }}</div>
+                
+                <div class="text-slate-500">Amount</div>
+                <div class="font-medium text-slate-900">{{ formData.currency }} {{ formData.billAmount | number:'1.2-2' }}</div>
+                
+                <div class="text-slate-500">Collection Type</div>
+                <div class="font-medium text-slate-900">{{ formData.collectionType }}</div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-between pt-4">
+      <button 
+        *ngIf="currentStep > 1" 
+        (click)="prevStep()"
+        class="px-6 py-2 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50"
+      >
+        Back
+      </button>
+      <div *ngIf="currentStep === 1"></div> <!-- Spacer -->
+      
+      <button 
+        *ngIf="currentStep < 4" 
+        (click)="nextStep()"
+        class="px-6 py-2 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 shadow-sm"
+      >
+        Next
+      </button>
+      
+      <button 
+        *ngIf="currentStep === 4" 
+        (click)="submit()"
+        class="px-6 py-2 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 shadow-sm"
+      >
+        Submit Collection
+      </button>
+    </div>
+  </div>
+</app-trade-layout>

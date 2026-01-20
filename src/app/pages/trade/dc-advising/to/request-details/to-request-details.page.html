@@ -1,0 +1,209 @@
+<app-trade-layout
+  organisationName="Trade Platform"
+  solutionName="Trade Finance"
+  breadcrumb="Request Details"
+  basePath="/trade"
+>
+  <div class="details-container" *ngIf="request">
+    <!-- Header -->
+    <div class="header-card">
+      <div class="header-top">
+        <h1>{{ request.id }}</h1>
+        <span class="status-badge" [ngClass]="getStatusClass(request.status)">
+          {{ getStatusLabel(request.status) }}
+        </span>
+      </div>
+      <div class="header-sub">
+        Applicant: {{ request.applicant.name }} • LC: {{ request.exportLC.lcNo }}
+      </div>
+    </div>
+
+    <!-- Trade Review & Charges -->
+    <div class="section-card review-section">
+      <div class="section-title">Trade Review & Charges</div>
+      <p class="section-desc">Verify LC details and apply charges.</p>
+      <button class="add-charge-btn" (click)="openChargesModal()">+ Add/Edit Charges</button>
+      
+      <div class="action-buttons">
+        <button class="btn-primary" (click)="submitForApproval()">Submit for Approval</button>
+        <button class="btn-secondary" (click)="returnToCustomer()">Return to Customer</button>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="left-column">
+        <!-- Documents -->
+        <div class="section-card">
+          <div class="section-title">Documents</div>
+          <div class="document-list">
+            <div class="document-item" *ngFor="let doc of request.documents">
+              <div class="doc-icon">
+                <i class="far fa-file-pdf"></i>
+              </div>
+              <div class="doc-info">
+                <div class="doc-name">{{ doc.name }}</div>
+                <div class="doc-meta">
+                  {{ (doc.size || 0) / 1024 | number:'1.0-0' }} KB • {{ doc.uploadDate }}
+                  <span [class.text-danger]="doc.status === 'INVALID'" [class.text-success]="doc.status === 'VALID'">
+                    {{ doc.status }}
+                  </span>
+                </div>
+                <div class="doc-remark" *ngIf="doc.remark">Remark: {{ doc.remark }}</div>
+              </div>
+            </div>
+            <div class="no-docs" *ngIf="request.documents.length === 0">
+              No documents uploaded
+            </div>
+          </div>
+        </div>
+
+        <!-- LC Details -->
+        <div class="section-card">
+          <div class="section-title">LC & Advice Details</div>
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>LC Number</label>
+              <div>{{ request.exportLC.lcNo }}</div>
+            </div>
+            <div class="detail-item">
+              <label>LC Type</label>
+              <div>{{ request.exportLC.lcType }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Issuing Bank</label>
+              <div>{{ request.exportLC.issuingBank }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Beneficiary</label>
+              <div>{{ request.exportLC.beneficiaryName }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Amount (FCY)</label>
+              <div>{{ request.exportLC.currency }} {{ request.exportLC.amount | number }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Exchange Rate</label>
+              <div>{{ request.exportLC.exchangeRate }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Amount (LCY)</label>
+              <div>{{ request.exportLC.amountLcy | number }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Shipment Date</label>
+              <div>{{ request.dcAdvice?.shipmentDate || '-' }}</div>
+            </div>
+            <div class="detail-item">
+              <label>Expiry Date</label>
+              <div>{{ request.exportLC.expiryDate }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charges Display Section -->
+        <div class="section-card" *ngIf="request.charges && request.charges.length > 0">
+          <div class="section-title">Charges</div>
+          <div class="charges-list">
+            <div class="charge-item" *ngFor="let charge of request.charges">
+              <span>{{ charge.description }}</span>
+              <span>{{ charge.currency }} {{ charge.amount | number:'1.2-2' }}</span>
+            </div>
+            <div class="charge-total">
+              <strong>Total (Inc VAT)</strong>
+              <strong>{{ request.exportLC.currency }} {{ getTotalCharges() | number:'1.2-2' }}</strong>
+            </div>
+            <div class="debit-account">
+              Debit Account: {{ request.applicant.account }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <!-- Applicant -->
+        <div class="section-card">
+          <div class="section-title">Applicant</div>
+          <div class="applicant-info">
+            <div><strong>Name:</strong> {{ request.applicant.name }}</div>
+            <div><strong>CIF:</strong> {{ request.applicant.cif }}</div>
+            <div><strong>Account:</strong> {{ request.applicant.account }}</div>
+          </div>
+        </div>
+
+        <!-- Portfolio Summary -->
+        <div class="section-card">
+          <div class="section-title">Portfolio Summary</div>
+          <div class="portfolio-list">
+            <div class="portfolio-item">
+              <span>AML Screening</span>
+              <span class="text-success">Pass (Score: 100)</span>
+            </div>
+            <div class="portfolio-item">
+              <span>Export Overdue</span>
+              <span>2</span>
+            </div>
+            <div class="portfolio-item">
+              <span>Loan Overdue</span>
+              <span>0</span>
+            </div>
+            <div class="portfolio-item">
+              <span>Export (Last 1 Year)</span>
+              <span>$1,250,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- History -->
+        <div class="section-card">
+          <div class="section-title">Request History</div>
+          <div class="history-timeline">
+            <div class="timeline-item" *ngFor="let event of request.history">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <strong>{{ event.status.replace('_', ' ') }}</strong>
+                  <span class="timeline-date">{{ event.date }}, {{ event.time }}</span>
+                </div>
+                <div class="timeline-actor">by {{ event.actor }}</div>
+                <div class="timeline-comment" *ngIf="event.comment">
+                  {{ event.comment }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charges Modal -->
+  
+  <!-- Charges Modal -->
+  <div class="modal-overlay" *ngIf="showChargesModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>DC Advice Charge Types</h3>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Advice Charge</label>
+            <input type="number" name="adviceCharge" [(ngModel)]="chargeForm.adviceCharge" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label>SWIFT Charge</label>
+            <input type="number" name="swiftCharge" [(ngModel)]="chargeForm.swiftCharge" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label>VAT on Advice Charge (%)</label>
+            <input type="number" name="vatPercent" [(ngModel)]="chargeForm.vatPercent" placeholder="5">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeChargesModal()">Cancel</button>
+        <button class="btn-primary" (click)="saveCharges()">Save Charges</button>
+      </div>
+    </div>
+  </div>
+</app-trade-layout>

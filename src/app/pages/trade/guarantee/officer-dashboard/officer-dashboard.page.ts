@@ -351,6 +351,18 @@ export class GuaranteeOfficerDashboardPageComponent {
     this.router.navigate(['/trade', 'guarantee-application-review']);
   }
 
+  openGuaranteeIssuance(row: IssuanceRow): void {
+    this.router.navigate(['/trade', 'guarantee-issuance']);
+  }
+
+  openAmendmentProcessing(row: AmendmentRow): void {
+    this.router.navigate(['/trade', 'guarantee-amendment-processing']);
+  }
+
+  openClaimHandling(row: ClaimRow): void {
+    this.router.navigate(['/trade', 'guarantee-claim-handling']);
+  }
+
   filterTableByPriority(priorityId: string): void {
     if (priorityId === 'amendments') {
       this.activeInboxTab = 'amendments';
