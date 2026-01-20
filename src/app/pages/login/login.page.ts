@@ -15,12 +15,17 @@ import { tradeTheme } from '../../styles/theme';
 export class LoginPageComponent implements OnInit {
   username = '';
   password = '';
+  isPasswordVisible = false;
 
   theme = tradeTheme;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+  }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   onSubmit(): void {

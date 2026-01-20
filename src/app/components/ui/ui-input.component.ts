@@ -18,6 +18,7 @@ import { tradeTheme } from '../../styles/theme';
           class="block w-full rounded-md border px-3 py-2 text-sm text-slate-900 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           [ngClass]="[theme.input.background.default, theme.border.default]"
           [attr.placeholder]="placeholder"
+          [attr.readonly]="readOnly ? '' : null"
           [value]="value"
           (input)="onInput($event)"
         ></textarea>
@@ -28,6 +29,7 @@ import { tradeTheme } from '../../styles/theme';
           class="block w-full rounded-md border px-3 py-2 text-sm text-slate-900 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           [ngClass]="[theme.input.background.default, theme.border.default]"
           [attr.placeholder]="placeholder"
+          [attr.readonly]="readOnly ? '' : null"
           [value]="value"
           (input)="onInput($event)"
         />
@@ -41,6 +43,7 @@ export class UiInputComponent {
   @Input() type = 'text';
   @Input() rows = 3;
   @Input() required = false;
+  @Input('readonly') readOnly = false;
 
   @Input() value = '';
   @Output() valueChange = new EventEmitter<string>();

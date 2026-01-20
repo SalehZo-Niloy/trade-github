@@ -9,6 +9,7 @@ import { tradeTheme } from '../../styles/theme';
   template: `
     <button
       [attr.type]="type"
+      [disabled]="disabled"
       class="inline-flex items-center justify-center rounded-md border text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
       [ngClass]="classes"
     >
@@ -20,6 +21,7 @@ export class UiButtonComponent {
   @Input() variant: 'primary' | 'secondary' | 'ghost' = 'primary';
   @Input() fullWidth = false;
   @Input() type: 'button' | 'submit' = 'button';
+  @Input() disabled = false;
 
   theme = tradeTheme;
 

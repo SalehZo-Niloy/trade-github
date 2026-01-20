@@ -1,0 +1,261 @@
+<app-trade-layout
+  organisationName="Trade Platform"
+  solutionName="Trade Finance"
+  breadcrumb="Import LC Initiation – Request Status"
+  basePath="/trade"
+>
+  <section class="rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          📘
+        </div>
+        <div class="space-y-1">
+          <h1 class="text-sm font-semibold text-slate-900">
+            Import LC Initiation – Request Status
+          </h1>
+          <p class="text-xs text-slate-500">
+            Track the status of your Import Letter of Credit request.
+          </p>
+        </div>
+      </div>
+      <!-- <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-600">View as:</label>
+        <select [(ngModel)]="viewAs" class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 shadow-sm">
+          <option>Customer</option>
+          <option>Bank</option>
+        </select>
+      </div> -->
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="grid gap-6 md:grid-cols-3">
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Reference Number
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ referenceNumber }}</div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Request Date & Time
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ requestDateTime }}</div>
+      </div>
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+            Submitted By
+          </div>
+          <div class="mt-1 text-sm font-semibold text-slate-900">{{ submittedBy }}</div>
+        </div>
+        <app-ui-button variant="secondary" (click)="print()">Print</app-ui-button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+        ℹ
+      </div>
+      <div class="flex items-center gap-2 text-xs">
+        <span
+          class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-[11px] font-medium text-blue-800"
+          >{{ currentStatus }}</span
+        >
+        <span class="text-slate-600">{{ currentStatusDescription }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+        🪜
+      </div>
+      <h2 class="text-sm font-semibold text-slate-900">Workflow Progress</h2>
+    </div>
+    <div class="mt-6 flex items-center gap-6">
+      <div class="flex items-center gap-2">
+        <div
+          class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs"
+        >
+          ✓
+        </div>
+        <div class="text-xs">
+          <div class="font-semibold text-slate-900">{{ workflow[0].label }}</div>
+          <div class="text-slate-500">{{ workflow[0].status }}</div>
+        </div>
+      </div>
+      <div class="h-0.5 w-24 bg-slate-200"></div>
+      <div class="flex items-center gap-2">
+        <div
+          class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-white text-xs"
+        >
+          ●
+        </div>
+        <div class="text-xs">
+          <div class="font-semibold text-slate-900">{{ workflow[1].label }}</div>
+          <div class="text-slate-500">{{ workflow[1].status }}</div>
+        </div>
+      </div>
+      <div class="h-0.5 w-24 bg-slate-200"></div>
+      <div class="flex items-center gap-2">
+        <div
+          class="flex h-6 w-6 items-center justify-center rounded-full bg-slate-300 text-white text-xs"
+        >
+          ✕
+        </div>
+        <div class="text-xs">
+          <div class="font-semibold text-slate-900">{{ workflow[2].label }}</div>
+          <div class="text-slate-500">{{ workflow[2].status }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          📦
+        </div>
+        <h2 class="text-sm font-semibold text-slate-900">Submitted Trade Summary</h2>
+      </div>
+      <button type="button" class="text-xs font-medium text-blue-700">View Full Details</button>
+    </div>
+    <div class="mt-4 grid gap-6 md:grid-cols-3">
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Type of LC
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.typeOfLc }}</div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Invoice Amount
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.invoiceAmount }}</div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Currency</div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.currency }}</div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Beneficiary Name
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.beneficiaryName }}</div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Beneficiary Country
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">
+          {{ summary.beneficiaryCountry }}
+        </div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Incoterms
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.incoterms }}</div>
+      </div>
+      <div class="md:col-span-2">
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Goods Description
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.goodsDescription }}</div>
+      </div>
+      <div>
+        <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Expected Shipment
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-900">{{ summary.expectedShipment }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+        📄
+      </div>
+      <h2 class="text-sm font-semibold text-slate-900">Uploaded Commercial Reference</h2>
+    </div>
+    <div
+      class="mt-4 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-4 py-3"
+    >
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-md bg-rose-100 text-rose-700">
+          PDF
+        </div>
+        <div class="text-sm">
+          <div class="font-semibold text-slate-900">{{ uploadedReference.fileName }}</div>
+          <div class="text-xs text-slate-500">Uploaded on {{ uploadedReference.uploadedAt }}</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <app-ui-button variant="secondary" (click)="viewFile()">View</app-ui-button>
+        <app-ui-button variant="secondary" (click)="downloadFile()">Download</app-ui-button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-blue-100 bg-blue-50 p-6 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+        ✅
+      </div>
+      <h2 class="text-sm font-semibold text-blue-900">System Acknowledgement</h2>
+    </div>
+    <div class="mt-4 grid gap-3 md:grid-cols-3">
+      <div
+        *ngFor="let ack of acknowledgements"
+        class="flex items-center gap-2 text-xs text-blue-900"
+      >
+        <span
+          class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"
+          >✓</span
+        >
+        <span>{{ ack }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+        🧰
+      </div>
+      <h2 class="text-sm font-semibold text-slate-900">Available Actions</h2>
+    </div>
+    <div class="mt-4 grid gap-3 md:grid-cols-4">
+      <app-ui-button variant="secondary" (click)="viewSubmittedDetails()"
+        >View Submitted Details</app-ui-button
+      >
+      <app-ui-button variant="secondary" (click)="downloadAcknowledgement()"
+        >Download Acknowledgement</app-ui-button
+      >
+      <app-ui-button variant="secondary" (click)="saveReference()">Save Reference</app-ui-button>
+      <app-ui-button variant="secondary" (click)="contactRO()">Contact RO</app-ui-button>
+    </div>
+  </section>
+
+  <section class="mt-6 rounded-2xl border border-blue-100 bg-blue-50 p-6 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+        ❓
+      </div>
+      <div class="space-y-1">
+        <h2 class="text-sm font-semibold text-blue-900">What Happens Next?</h2>
+        <p class="text-xs text-blue-900">
+          Your request is under review. The bank will contact you if additional information is
+          required.
+        </p>
+      </div>
+    </div>
+  </section>
+</app-trade-layout>

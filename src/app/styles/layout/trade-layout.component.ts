@@ -7,7 +7,8 @@ import { tradeTheme } from '../theme';
 
 interface TradeMenuChild {
   label: string;
-  route: any[];
+  route?: any[];
+  children?: TradeMenuChild[];
 }
 
 interface TradeMenuItem {
@@ -66,14 +67,43 @@ interface TradeMenuItem {
                       </span>
                     </button>
                     <div *ngIf="isGroupExpanded(item.label)" class="space-y-1 pl-2">
-                      <a
-                        *ngFor="let child of item.children"
-                        [routerLink]="child.route"
-                        routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
-                        class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm text-slate-700 hover:border-blue-200 hover:bg-blue-50"
-                      >
-                        <span>{{ child.label }}</span>
-                      </a>
+                      <ng-container *ngFor="let child of item.children">
+                        <ng-container
+                          *ngIf="!child.children || child.children.length === 0; else childGroup"
+                        >
+                          <a
+                            [routerLink]="child.route"
+                            routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
+                            class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                          >
+                            <span>{{ child.label }}</span>
+                          </a>
+                        </ng-container>
+                        <ng-template #childGroup>
+                          <button
+                            type="button"
+                            class="flex w-full items-center justify-between rounded-md border border-transparent px-3 py-1.5 text-left text-slate-700 hover:border-slate-200 hover:bg-slate-50"
+                            (click)="toggleGroup(child.label)"
+                          >
+                            <span class="text-[11px] font-semibold uppercase tracking-wide">
+                              {{ child.label }}
+                            </span>
+                            <span class="text-[10px] text-slate-400">
+                              {{ isGroupExpanded(child.label) ? '▴' : '▾' }}
+                            </span>
+                          </button>
+                          <div *ngIf="isGroupExpanded(child.label)" class="space-y-1 pl-2">
+                            <a
+                              *ngFor="let grand of child.children"
+                              [routerLink]="grand.route"
+                              routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
+                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                            >
+                              <span>{{ grand.label }}</span>
+                            </a>
+                          </div>
+                        </ng-template>
+                      </ng-container>
                     </div>
                   </ng-container>
                 </ng-container>
@@ -140,7 +170,7 @@ interface TradeMenuItem {
 
       <app-common-footer></app-common-footer>
     </div>
-  `
+  `,
 })
 export class TradeLayoutComponent implements OnInit {
   @Input() organisationName = 'Trade Finance';
@@ -152,21 +182,95 @@ export class TradeLayoutComponent implements OnInit {
   @Input() mainMenuItems: TradeMenuItem[] = [
     {
       label: 'Dashboard',
-      route: ['/trade', 'dashboard']
+      route: ['/trade', 'dashboard'],
     },
     {
       label: 'Guarantee',
       children: [
         {
           label: 'Guarantee Application',
-          route: ['/trade', 'guarantee']
+          route: ['/trade', 'guarantee'],
         },
         {
           label: 'Guarantee Officer Dashboard',
           route: ['/trade', 'guarantee-officer-dashboard']
-        }
-      ]
-    }
+        },
+        {
+          label: 'Guarantee Checker Dashboard',
+          route: ['/trade', 'guarantee-officer-checker-dashboard']
+        },
+      ],
+    },
+    {
+      label: 'Import',
+      children: [
+        {
+          label: 'Import Application',
+          children: [
+            {
+              label: 'Submitting Import LC Request',
+              route: ['/trade', 'import', 'submitting'],
+            },
+            {
+              label: 'Import LC Request Customer view page',
+              route: ['/trade', 'import', 'customer-view'],
+            },
+            {
+              label: 'Document view & Handover',
+              route: ['/trade', 'import', 'document-handover'],
+            },
+            {
+              label: 'Pending review & Approve Import LC',
+              route: ['/trade', 'import', 'pending-review'],
+            },
+            {
+              label: 'LC Issuance',
+              route: ['/trade', 'import', 'lc-issuance'],
+            },
+            {
+              label: 'LC Charge Collection',
+              route: ['/trade', 'import', 'lc-charge-collection'],
+            },
+            {
+              label: 'LC Margin Collection',
+              route: ['/trade', 'import', 'lc-margin-collection'],
+            },
+            {
+              label: 'LC Amendment Request',
+              route: ['/trade', 'import', 'lc-amendment-request'],
+            },
+            {
+              label: 'Document Receive',
+              route: ['/trade', 'import', 'document-receive'],
+            },
+            {
+              label: 'Document Checking',
+              route: ['/trade', 'import', 'document-checking'],
+            },
+            {
+              label: 'Discrepancy Record, Review & Rejection',
+              route: ['/trade', 'import', 'discrepancy-record'],
+            },
+            {
+              label: 'LC Settlement Decision',
+              route: ['/trade', 'import', 'lc-settlement-decision'],
+            },
+            {
+              label: 'PAD Creation',
+              route: ['/trade', 'import', 'pad-creation'],
+            },
+            {
+              label: 'Execute Payment',
+              route: ['/trade', 'import', 'execute-payment'],
+            },
+            {
+              label: 'LC Closure',
+              route: ['/trade', 'import', 'lc-closure'],
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   sidebarCollapsed = false;
@@ -185,7 +289,19 @@ export class TradeLayoutComponent implements OnInit {
       }
 
       const hasActiveChild = item.children.some((child) => {
-        const tree = this.router.createUrlTree(child.route);
+        if (child.children && child.children.length > 0) {
+          const hasActiveGrand = child.children.some((grand) => {
+            const tree = this.router.createUrlTree(grand.route || []);
+            const path = this.router.serializeUrl(tree);
+            return currentUrl.startsWith(path);
+          });
+          if (hasActiveGrand) {
+            this.expandedGroups[child.label] = true;
+          }
+          return hasActiveGrand;
+        }
+
+        const tree = this.router.createUrlTree(child.route || []);
         const path = this.router.serializeUrl(tree);
         return currentUrl.startsWith(path);
       });

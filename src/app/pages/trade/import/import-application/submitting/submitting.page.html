@@ -1,0 +1,406 @@
+<app-trade-layout
+  organisationName="Trade Platform"
+  solutionName="Trade Finance"
+  breadcrumb="Submitting Import LC Request"
+  basePath="/trade"
+>
+  <section class="space-y-6 rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm mb-6">
+    <div class="flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          🏦
+        </div>
+        <div class="space-y-1">
+          <h1 class="text-sm font-semibold text-slate-900">Initiate Import Letter of Credit</h1>
+          <p class="text-xs text-slate-500">
+            Submit your Import LC request with basic trade information. Our trade team will review
+            and contact you for detailed documentation.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+          (click)="refreshForm()"
+        >
+          <span class="text-base">↻</span>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </section>
+  <form class="space-y-6" (ngSubmit)="submitRequest()">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          📄
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Trade & Transaction Intent</h2>
+        </div>
+      </div>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <app-ui-input label="Request Type" [readonly]="true" [(value)]="requestType"></app-ui-input>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Type of LC</label>
+
+          <select
+            [(ngModel)]="lcType"
+            name="lcType"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select LC Type</option>
+            <option *ngFor="let t of lcTypes" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <app-ui-input
+            label="Purpose of import"
+            placeholder="e.g., Raw materials for manufacturing"
+            [(value)]="purposeOfImport"
+          ></app-ui-input>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          👤
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Applicant (Importer) Information</h2>
+        </div>
+      </div>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <app-ui-input
+          label="Applicant Name"
+          placeholder="e.g.,Anik Saha"
+          [(value)]="applicantName"
+        ></app-ui-input>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Account Number</label>
+          <select
+            [(ngModel)]="accountNumber"
+            name="accountNumber"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select Account</option>
+            <option value="ACC-001">1234567898-Current Account</option>
+            <option value="ACC-002">3546276353-Trade Finance Account</option>
+          </select>
+        </div>
+        <app-ui-input
+          label="Contact Email"
+          placeholder="e.g., anik.saha@example.com"
+          type="email"
+          [(value)]="contactEmail"
+        ></app-ui-input>
+        <app-ui-input
+          label="Contact Phone"
+          placeholder="e.g., 01712345678"
+          type="tel"
+          [(value)]="contactPhone"
+        ></app-ui-input>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          🏦
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Beneficiary (Exporter) Information</h2>
+        </div>
+      </div>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <app-ui-input
+          label="Beneficiary Name"
+          placeholder="enter beneficiary name"
+          [(value)]="beneficiaryName"
+        ></app-ui-input>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Beneficiary Country</label>
+          <select
+            [(ngModel)]="beneficiaryCountry"
+            name="beneficiaryCountry"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select Country</option>
+            <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+        <app-ui-input
+          label="Beneficiary Bank Name"
+          placeholder="enter beneficiary bank name"
+          [(value)]="beneficiaryBankName"
+        ></app-ui-input>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Beneficiary Bank Country</label>
+          <select
+            [(ngModel)]="beneficiaryBankCountry"
+            name="beneficiaryBankCountry"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select Country</option>
+            <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          🧾
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Commercial Reference</h2>
+        </div>
+      </div>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700"
+            >Proforma Invoice / Indent Reference</label
+          >
+          <input
+            type="file"
+            (change)="onFileSelected($event, 'poReference')"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          />
+          <input
+            *ngIf="!poReferenceFile"
+            [(ngModel)]="poReference"
+            name="poReference"
+            placeholder="enter proforma invoice / indent reference"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          />
+          <div *ngIf="poReferenceFile" class="flex items-center gap-2 text-xs text-slate-600">
+            <span>{{ poReferenceFile.name }}</span>
+            <button
+              type="button"
+              (click)="removeFile('poReference')"
+              class="text-red-600 hover:text-red-800"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        <app-ui-input label="Invoice Date" type="date" [(value)]="invoiceDate"></app-ui-input>
+        <app-ui-input label="Invoice Amount" type="number" [(value)]="invoiceAmount"></app-ui-input>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Currency</label>
+          <select
+            [(ngModel)]="currency"
+            name="currency"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select Currency</option>
+            <option *ngFor="let cur of currencies" [value]="cur">{{ cur }}</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          📦
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Goods & Shipment Overview</h2>
+        </div>
+      </div>
+      <div class="mt-4 space-y-4">
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Goods Description</label>
+          <textarea
+            [(ngModel)]="goodsDescription"
+            placeholder="describe the goods being imported"
+            name="goodsDescription"
+            rows="3"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          ></textarea>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <app-ui-input
+            label="Quantity (optional)"
+            placeholder="e.g., 1000 units"
+            [(value)]="quantity"
+          ></app-ui-input>
+          <app-ui-input
+            label="Expected Shipment Period"
+            type="month"
+            [(value)]="shipmentPeriod"
+          ></app-ui-input>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <app-ui-input
+            label="Port of Loading"
+            placeholder="e.g., Shanghai port"
+            [(value)]="portOfLoading"
+          ></app-ui-input>
+          <app-ui-input
+            label="Port of Discharge"
+            placeholder="e.g., Chengdu port"
+            [(value)]="portOfDischarge"
+          ></app-ui-input>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          ⚙️
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Commercial Terms (High Level)</h2>
+        </div>
+      </div>
+      <div class="mt-4 grid gap-4 md:grid-cols-1">
+        <div class="space-y-1.5 w-1/2">
+          <label class="text-xs font-medium text-slate-700">Incoterms</label>
+          <select
+            [(ngModel)]="incoterm"
+            name="incoterm"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select Incoterm</option>
+            <option *ngFor="let i of incoterms" [value]="i">{{ i }}</option>
+          </select>
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Partial Shipment Allowed</label>
+          <div class="flex items-center gap-4 text-sm">
+            <label class="inline-flex items-center gap-2"
+              ><input
+                type="radio"
+                [(ngModel)]="partialShipmentAllowed"
+                name="partialShipmentAllowed"
+                value="yes"
+              />
+              <span>Yes</span></label
+            >
+            <label class="inline-flex items-center gap-2"
+              ><input
+                type="radio"
+                [(ngModel)]="partialShipmentAllowed"
+                name="partialShipmentAllowed"
+                value="no"
+              />
+              <span>No</span></label
+            >
+          </div>
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Transshipment Allowed</label>
+          <div class="flex items-center gap-4 text-sm">
+            <label class="inline-flex items-center gap-2"
+              ><input
+                type="radio"
+                [(ngModel)]="transshipmentAllowed"
+                name="transshipmentAllowed"
+                value="yes"
+              />
+              <span>Yes</span></label
+            >
+            <label class="inline-flex items-center gap-2"
+              ><input
+                type="radio"
+                [(ngModel)]="transshipmentAllowed"
+                name="transshipmentAllowed"
+                value="no"
+              />
+              <span>No</span></label
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          📝
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Customer Instruction</h2>
+        </div>
+      </div>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Preferred LC Issuing Branch</label>
+          <select
+            [(ngModel)]="preferredIssuingBranch"
+            name="preferredIssuingBranch"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          >
+            <option value="" disabled selected>Select Branch</option>
+            <option *ngFor="let b of branches" [value]="b">{{ b }}</option>
+          </select>
+        </div>
+        <app-ui-input
+          label="Preferred Advising Bank"
+          placeholder="Enter bank name (optional)"
+          [(value)]="preferredAdvisingBank"
+        ></app-ui-input>
+        <div class="md:col-span-2 space-y-1.5">
+          <label class="text-xs font-medium text-slate-700">Remarks / Special Instructions</label>
+          <textarea
+            [(ngModel)]="remarks"
+            name="remarks"
+            rows="3"
+            placeholder="e.g., Any additional instructions for the LC issuer"
+            class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          ></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          ✅
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-sm font-semibold text-slate-900">Declaration & Consent</h2>
+        </div>
+      </div>
+      <div class="mt-4 flex items-start gap-2 text-xs text-slate-700">
+        <input
+          type="checkbox"
+          [(ngModel)]="confirm"
+          (ngModelChange)="onConfirmChange($event)"
+          name="confirm"
+          class="mt-0.5"
+        />
+        <span
+          >I confirm the above information is accurate and provided for initiating an Import LC
+          request. I understand additional documentation and verification may be required.</span
+        >
+      </div>
+      <div class="mt-6 flex items-center justify-between">
+        <app-ui-button variant="secondary" (click)="cancel()">Cancel</app-ui-button>
+        <div class="flex items-center gap-3">
+          <app-ui-button variant="secondary" (click)="saveDraft()">Save as Draft</app-ui-button>
+          <app-ui-button type="submit" [disabled]="!confirm"
+            >Submit LC Initiation Request</app-ui-button
+          >
+        </div>
+      </div>
+    </section>
+    <div
+      *ngIf="statusMessage"
+      class="rounded-md border px-4 py-2 text-xs"
+      [ngClass]="{
+        'border-emerald-200 bg-emerald-50 text-emerald-800': statusType === 'success',
+        'border-rose-200 bg-rose-50 text-rose-800': statusType === 'error',
+      }"
+    >
+      {{ statusMessage }}
+    </div>
+  </form>
+</app-trade-layout>

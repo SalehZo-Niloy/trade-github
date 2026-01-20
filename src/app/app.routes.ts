@@ -7,15 +7,15 @@ import { umsRoutes } from './routes/ums.routes';
 export const routes: Routes = [
   {
     path: '',
-    component: LoginPageComponent
+    component: LoginPageComponent,
   },
   {
     path: 'dashboard',
-    component: DashboardPageComponent
+    component: DashboardPageComponent,
   },
   {
     path: 'dashboard/:solution',
-    component: DashboardPageComponent
+    component: DashboardPageComponent,
   },
   {
     path: 'trade',
