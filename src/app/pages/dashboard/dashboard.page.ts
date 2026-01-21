@@ -10,7 +10,7 @@ import { tradeTheme } from '../../styles/theme';
   selector: 'app-dashboard-page',
   standalone: true,
   imports: [CommonModule, UiTableComponent, CommonFooterComponent, UserMenuComponent],
-  templateUrl: './dashboard.page.html'
+  templateUrl: './dashboard.page.html',
 })
 export class DashboardPageComponent {
   theme = tradeTheme;
@@ -20,26 +20,26 @@ export class DashboardPageComponent {
       name: 'Rahim Uddin',
       email: 'rahim.uddin@example.com',
       role: 'User',
-      status: 'Active'
+      status: 'Active',
     },
     {
       name: 'Fatema Begum',
       email: 'fatema.begum@example.com',
       role: 'Admin',
-      status: 'Active'
+      status: 'Active',
     },
     {
       name: 'Sajib Ahmed',
       email: 'sajib.ahmed@example.com',
       role: 'User',
-      status: 'Invited'
+      status: 'Invited',
     },
     {
       name: 'Nusrat Jahan',
       email: 'nusrat.jahan@example.com',
       role: 'User',
-      status: 'Suspended'
-    }
+      status: 'Suspended',
+    },
   ];
 
   constructor(private router: Router) {}
@@ -47,6 +47,11 @@ export class DashboardPageComponent {
   goToSolution(solution: string): void {
     if (solution === 'trade-finance') {
       this.router.navigate(['/trade/dashboard']);
+      return;
+    }
+
+    if (solution === 'work-flow') {
+      this.router.navigate(['/workflow/work-flow']);
       return;
     }
 

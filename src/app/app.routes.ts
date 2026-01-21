@@ -3,6 +3,7 @@ import { LoginPageComponent } from './pages/login/login.page';
 import { DashboardPageComponent } from './pages/dashboard/dashboard.page';
 import { tradeRoutes } from './routes/trade.routes';
 import { umsRoutes } from './routes/ums.routes';
+import { workflowRoutes } from './routes/workflow.routes';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
   {
     path: 'ums',
     children: umsRoutes
+  },
+  {
+    path: 'workflow',
+    children: workflowRoutes
   }
 ];
  

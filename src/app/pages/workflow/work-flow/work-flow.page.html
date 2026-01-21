@@ -1,0 +1,141 @@
+<app-trade-layout
+  organisationName="Work Flow"
+  solutionName="Work Flow"
+  breadcrumb="Workflow definitions Editor"
+  basePath="/workflow"
+  primarySectionLabel="Work Flow"
+  [mainMenuItems]="menuItems"
+>
+  <div class="min-h-screen bg-white font-['Trebuchet_MS'] text-slate-700">
+    <div class="px-6 py-6">
+      <h1 class="text-lg font-medium text-[#1a89d1]">Workflow definitions Editor</h1>
+
+      <section class="mt-6 rounded-lg border border-slate-200 bg-[#f8fbff] shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-4 px-5 py-4">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-xs font-semibold uppercase text-slate-700 shadow-sm hover:bg-slate-50"
+          >
+            Bulk Actions
+            <svg viewBox="0 0 20 20" class="h-4 w-4 text-slate-500" fill="currentColor">
+              <path d="M5 7l5 5 5-5H5z" />
+            </svg>
+          </button>
+
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Search on name, description"
+                class="h-9 w-60 rounded border border-slate-300 bg-white pl-3 pr-9 text-sm text-slate-700 placeholder:text-slate-400 focus:border-[#1aa3de] focus:outline-none"
+              />
+              <svg
+                viewBox="0 0 24 24"
+                class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-4.2-4.2" />
+              </svg>
+            </div>
+
+            <div class="inline-flex overflow-hidden rounded border border-[#1691c7] shadow-sm">
+              <button
+                type="button"
+                class="bg-[#1aa3de] px-4 py-2 text-xs font-semibold uppercase text-white hover:bg-[#1698cf]"
+              >
+                Create Workflow
+              </button>
+              <button type="button" class="bg-[#1698cf] px-2 text-white hover:bg-[#148bc1]">
+                <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                  <path d="M5 7l5 5 5-5H5z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-200 bg-white">
+          <table class="w-full text-sm">
+            <thead class="bg-white text-slate-500">
+              <tr class="border-b border-slate-200">
+                <th class="w-12 px-4 py-3 text-left">
+                  <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
+                </th>
+                <th class="px-4 py-3 text-left font-semibold">Definition ID</th>
+                <th class="px-4 py-3 text-left font-semibold">Name</th>
+                <th class="px-4 py-3 text-left font-semibold">Latest version</th>
+                <th class="px-4 py-3 text-left font-semibold">Published version</th>
+                <th class="px-4 py-3 text-left font-semibold">Description</th>
+                <th class="w-12 px-4 py-3 text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of workflowDefinitions"
+                class="border-b border-slate-200 text-slate-700 hover:bg-slate-50"
+              >
+                <td class="px-4 py-4">
+                  <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
+                </td>
+                <td class="px-4 py-4">{{ item.id }}</td>
+                <td class="px-4 py-4">{{ item.name }}</td>
+                <td class="px-4 py-4">{{ item.latestVersion }}</td>
+                <td class="px-4 py-4">{{ item.publishedVersion }}</td>
+                <td class="px-4 py-4 text-slate-500">
+                  {{ item.description }}
+                </td>
+                <td class="px-4 py-4 text-right">
+                  <button type="button" class="text-slate-400 hover:text-slate-600" aria-label="More">
+                    <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                      <circle cx="10" cy="4" r="1.6" />
+                      <circle cx="10" cy="10" r="1.6" />
+                      <circle cx="10" cy="16" r="1.6" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex items-center justify-end gap-8 px-5 py-3 text-xs text-slate-500">
+          <div class="flex items-center gap-2">
+            <span>Rows Per Page</span>
+            <button type="button" class="inline-flex items-center gap-1">
+              <span>10</span>
+              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                <path d="M5 7l5 5 5-5H5z" />
+              </svg>
+            </button>
+          </div>
+          <div>1-4 of 4</div>
+          <div class="flex items-center gap-3">
+            <button type="button" class="text-slate-300" aria-label="First page">
+              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                <path d="M7 5h2v10H7zM11 10l5 5V5z" />
+              </svg>
+            </button>
+            <button type="button" class="text-slate-300" aria-label="Previous page">
+              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                <path d="M12 5l-5 5 5 5V5z" />
+              </svg>
+            </button>
+            <button type="button" class="text-slate-300" aria-label="Next page">
+              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                <path d="M8 5l5 5-5 5V5z" />
+              </svg>
+            </button>
+            <button type="button" class="text-slate-300" aria-label="Last page">
+              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor">
+                <path d="M11 5h2v10h-2zM9 10L4 5v10z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</app-trade-layout>
