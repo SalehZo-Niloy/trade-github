@@ -4,23 +4,31 @@
 >
   <div *ngIf="request; else loading">
     <div class="mb-6 flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-bold text-gray-900">Request Details</h1>
-        <p class="text-sm text-gray-500">ID: {{ request.id }}</p>
+      <div class="flex items-center gap-4">
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 class="text-2xl font-bold text-gray-900">Request Details</h1>
+            <span
+              class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium"
+              [ngClass]="{
+                'bg-green-100 text-green-800': request.status === 'Manager Approved',
+                'bg-orange-100 text-orange-800': request.status === 'Pending Approval' || request.status === 'Pending Manager Approval',
+                'bg-red-100 text-red-800': request.status === 'Rejected',
+                'bg-gray-100 text-gray-800': request.status === 'Returned'
+              }"
+            >
+              {{ request.status }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-500">ID: {{ request.id }}</p>
+        </div>
       </div>
-      <div class="flex gap-3">
-        <span
-          class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium"
-          [ngClass]="{
-            'bg-green-100 text-green-800': request.status === 'Manager Approved',
-            'bg-orange-100 text-orange-800': request.status === 'Pending Approval' || request.status === 'Pending Manager Approval',
-            'bg-red-100 text-red-800': request.status === 'Rejected',
-            'bg-gray-100 text-gray-800': request.status === 'Returned'
-          }"
-        >
-          {{ request.status }}
-        </span>
-      </div>
+      <button (click)="goBack()" class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Back
+      </button>
     </div>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -30,20 +38,20 @@
         <!-- Financial Validation Section (Trade Officer Only) -->
         <div class="rounded-lg border border-gray-200 bg-white shadow-sm overflow-hidden" *ngIf="request.status === 'Pending Approval'">
           <!-- Limit Summary Header -->
-          <div class="bg-slate-800 px-6 py-4 text-white">
-            <h3 class="text-sm font-semibold uppercase tracking-wider">BTB LC Limit Summary</h3>
+          <div class="bg-blue-50 px-6 py-4 border-b border-blue-100">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-blue-900">BTB LC Limit Summary</h3>
             <div class="mt-4 grid grid-cols-3 gap-4 text-center">
               <div>
-                <div class="text-xs text-slate-400">Approved Limit</div>
-                <div class="text-lg font-bold">{{ request.currency }} {{ limitApproved | number:'1.2-2' }}</div>
+                <div class="text-xs text-blue-600">Approved Limit</div>
+                <div class="text-lg font-bold text-blue-900">{{ request.currency }} {{ limitApproved | number:'1.2-2' }}</div>
               </div>
               <div>
-                <div class="text-xs text-yellow-400">Utilized</div>
-                <div class="text-lg font-bold text-yellow-400">{{ request.currency }} {{ limitUtilized | number:'1.2-2' }}</div>
+                <div class="text-xs text-orange-600">Utilized</div>
+                <div class="text-lg font-bold text-orange-700">{{ request.currency }} {{ limitUtilized | number:'1.2-2' }}</div>
               </div>
               <div>
-                <div class="text-xs text-green-400">Available</div>
-                <div class="text-lg font-bold text-green-400">{{ request.currency }} {{ limitAvailable | number:'1.2-2' }}</div>
+                <div class="text-xs text-green-600">Available</div>
+                <div class="text-lg font-bold text-green-700">{{ request.currency }} {{ limitAvailable | number:'1.2-2' }}</div>
               </div>
             </div>
           </div>
@@ -175,27 +183,35 @@
 
       <!-- Sidebar / Actions -->
       <div class="space-y-6">
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 class="mb-4 text-lg font-medium text-gray-900">Actions</h3>
+        <div class="rounded-xl border border-blue-100 bg-blue-50 p-6 shadow-sm" *ngIf="request.status === 'Pending Approval'">
+            <div class="mb-4">
+              <h3 class="text-lg font-semibold text-blue-900">Approval Actions</h3>
+              <p class="mt-1 text-sm text-blue-700">Review the request details and provide your approval decision.</p>
+            </div>
             
-            <div class="space-y-4" *ngIf="request.status === 'Pending Approval'">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Remarks</label>
-                    <textarea [(ngModel)]="remarks" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"></textarea>
-                </div>
+            <div class="space-y-4">
                 
-                <button (click)="approve()" class="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                
+                <button (click)="approve()" class="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition-colors">
+                    
                     Verify & Forward to Manager
                 </button>
-                <button (click)="returnToCustomer()" class="flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <button (click)="returnToCustomer()" class="flex w-full items-center justify-center gap-2 rounded-lg border border-blue-200 bg-white px-4 py-2.5 text-sm font-medium text-blue-600 shadow-sm hover:bg-blue-50 transition-colors">
+                   
                     Return to Customer
                 </button>
-                <button (click)="reject()" class="flex w-full justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                <button (click)="reject()" class="flex w-full items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-4 py-2.5 text-sm font-medium text-red-600 shadow-sm hover:bg-red-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                     Reject
                 </button>
             </div>
+        </div>
 
-            <div *ngIf="request.status !== 'Pending Approval'" class="text-sm text-gray-500">
+        <div *ngIf="request.status !== 'Pending Approval'" class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <h3 class="mb-4 text-lg font-medium text-gray-900">Actions</h3>
+            <div class="text-sm text-gray-500">
                 This request is currently {{ request.status }}. Actions are limited.
             </div>
         </div>

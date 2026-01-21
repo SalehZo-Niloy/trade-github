@@ -31,6 +31,10 @@ export class ExportBillRORequestDetailsPageComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigate(['/trade/export-bill/ro/dashboard']);
+  }
+
   passValidation() {
     if (!this.bill) return;
 
@@ -39,7 +43,7 @@ export class ExportBillRORequestDetailsPageComponent implements OnInit {
       text: "This will forward the request to the Trade Officer.",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#4338ca', // Indigo-600
+      confirmButtonColor: '#2563eb', // blue-600
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Pass Validation'
     }).then((result) => {
@@ -52,7 +56,7 @@ export class ExportBillRORequestDetailsPageComponent implements OnInit {
           title: 'Validation Passed Successfully!',
           text: 'Request has been forwarded to Trade Officer.',
           icon: 'success',
-          confirmButtonColor: '#4338ca'
+          confirmButtonColor: '#2563eb'
         }).then(() => {
           this.router.navigate(['/trade/export-bill/ro/dashboard']);
         });

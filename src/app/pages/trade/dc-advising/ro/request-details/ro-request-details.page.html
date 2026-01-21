@@ -7,11 +7,19 @@
   <div class="details-container p-6 bg-slate-50 min-h-screen" *ngIf="request">
     <!-- Header -->
     <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6">
-      <div class="flex items-center gap-4 mb-2">
-        <h1 class="text-2xl font-bold text-slate-900">{{ request.id }}</h1>
-        <span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="getStatusClass(request.status)">
-          {{ request.status.replace('_', ' ') }}
-        </span>
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-4">
+          <h1 class="text-2xl font-bold text-slate-900">{{ request.id }}</h1>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="getStatusClass(request.status)">
+            {{ request.status.replace('_', ' ') }}
+          </span>
+        </div>
+        <button (click)="goBack()" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-md transition-colors border border-transparent hover:border-slate-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          Back
+        </button>
       </div>
       <div class="text-sm text-slate-500">
         Applicant: {{ request.applicant.name }} • LC: {{ request.exportLC.lcNo }}
@@ -26,7 +34,7 @@
       <div class="flex gap-4">
         <button 
           (click)="passValidation()"
-          class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+          class="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
         >
           Pass Validation
         </button>

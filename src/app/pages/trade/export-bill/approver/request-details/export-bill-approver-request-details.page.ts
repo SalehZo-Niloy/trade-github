@@ -31,10 +31,14 @@ export class ExportBillApproverRequestDetailsPageComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigate(['/trade/export-bill/approver/dashboard']);
+  }
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'VERIFIED': return 'bg-indigo-100 text-indigo-800';
-      case 'APPROVED': return 'bg-green-100 text-green-800';
+      case 'APPROVED': return 'bg-blue-100 text-blue-800';
       case 'SENT_TO_IMPORTER': return 'bg-purple-100 text-purple-800';
       case 'RETURNED': return 'bg-red-100 text-red-800';
       default: return 'bg-gray-100 text-gray-800';
@@ -49,7 +53,7 @@ export class ExportBillApproverRequestDetailsPageComponent implements OnInit {
       text: "This will finalize the export bill and send it to the importer.",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#16a34a', // Green-600
+      confirmButtonColor: '#2563eb', // blue-600
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Approve Request'
     }).then((result) => {
@@ -60,7 +64,7 @@ export class ExportBillApproverRequestDetailsPageComponent implements OnInit {
           title: 'Request Approved!',
           text: 'Export Collection has been sent to the importer bank.',
           icon: 'success',
-          confirmButtonColor: '#16a34a'
+          confirmButtonColor: '#2563eb'
         }).then(() => {
           this.router.navigate(['/trade/export-bill/approver/dashboard']);
         });

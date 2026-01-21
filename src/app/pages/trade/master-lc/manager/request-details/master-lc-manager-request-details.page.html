@@ -5,22 +5,29 @@
   <div *ngIf="request; else loading">
     <div class="mb-6 flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Request Details (Manager Review)</h1>
+        <div class="flex items-center gap-3">
+          <h1 class="text-2xl font-bold text-gray-900">Request Details </h1>
+          <span
+            class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium"
+            [ngClass]="{
+              'bg-green-100 text-green-800': request.status === 'Manager Approved',
+              'bg-orange-100 text-orange-800': request.status === 'Pending Manager Approval',
+              'bg-red-100 text-red-800': request.status === 'Rejected',
+              'bg-gray-100 text-gray-800': request.status === 'Returned'
+            }"
+          >
+            {{ request.status }}
+          </span>
+        </div>
         <p class="text-sm text-gray-500">ID: {{ request.id }}</p>
       </div>
-      <div class="flex gap-3">
-        <span
-          class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium"
-          [ngClass]="{
-            'bg-green-100 text-green-800': request.status === 'Manager Approved',
-            'bg-orange-100 text-orange-800': request.status === 'Pending Manager Approval',
-            'bg-red-100 text-red-800': request.status === 'Rejected',
-            'bg-gray-100 text-gray-800': request.status === 'Returned'
-          }"
-        >
-          {{ request.status }}
-        </span>
-      </div>
+
+      <button (click)="goBack()" class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Back
+      </button>
     </div>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -30,20 +37,20 @@
         <!-- Financial Validation Section (Read Only for Manager) -->
         <div class="rounded-lg border border-gray-200 bg-white shadow-sm overflow-hidden" *ngIf="request.marginPercent !== undefined">
           <!-- Limit Summary Header -->
-          <div class="bg-slate-800 px-6 py-4 text-white">
-            <h3 class="text-sm font-semibold uppercase tracking-wider">BTB LC Limit Summary</h3>
+          <div class="bg-blue-50 px-6 py-4 border-b border-blue-100">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-blue-900">BTB LC Limit Summary</h3>
             <div class="mt-4 grid grid-cols-3 gap-4 text-center">
               <div>
-                <div class="text-xs text-slate-400">Approved Limit</div>
-                <div class="text-lg font-bold">{{ request.currency }} {{ request.limitApproved | number:'1.2-2' }}</div>
+                <div class="text-xs text-blue-600">Approved Limit</div>
+                <div class="text-lg font-bold text-blue-900">{{ request.currency }} {{ request.limitApproved | number:'1.2-2' }}</div>
               </div>
               <div>
-                <div class="text-xs text-yellow-400">Utilized</div>
-                <div class="text-lg font-bold text-yellow-400">{{ request.currency }} {{ request.limitUtilized | number:'1.2-2' }}</div>
+                <div class="text-xs text-orange-600">Utilized</div>
+                <div class="text-lg font-bold text-orange-700">{{ request.currency }} {{ request.limitUtilized | number:'1.2-2' }}</div>
               </div>
               <div>
-                <div class="text-xs text-green-400">Available</div>
-                <div class="text-lg font-bold text-green-400">{{ request.currency }} {{ request.limitAvailable | number:'1.2-2' }}</div>
+                <div class="text-xs text-green-600">Available</div>
+                <div class="text-lg font-bold text-green-700">{{ request.currency }} {{ request.limitAvailable | number:'1.2-2' }}</div>
               </div>
             </div>
           </div>
@@ -156,12 +163,9 @@
             <h3 class="mb-4 text-lg font-medium text-gray-900">Actions</h3>
             
             <div class="space-y-4" *ngIf="request.status === 'Pending Manager Approval'">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Remarks</label>
-                    <textarea [(ngModel)]="remarks" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"></textarea>
-                </div>
                 
-                <button (click)="approve()" class="flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                
+                <button (click)="approve()" class="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     Final Approve
                 </button>
                 <button (click)="returnToTO()" class="flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">

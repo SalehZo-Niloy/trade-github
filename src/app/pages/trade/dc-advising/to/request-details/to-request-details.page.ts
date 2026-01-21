@@ -17,11 +17,8 @@ export class TradeOfficerRequestDetailsPageComponent implements OnInit {
   request: TradeRequest | undefined;
   
   showChargesModal = false;
-  chargeForm = {
-    adviceCharge: 0,
-    swiftCharge: 0,
-    vatPercent: 5
-  };
+  chargeTypes = ['Advice Charge', 'SWIFT Charge', 'Courier Charge', 'Handling Fee', 'VAT', 'Other'];
+  chargesList: { type: string, amount: number }[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -36,64 +33,62 @@ export class TradeOfficerRequestDetailsPageComponent implements OnInit {
         this.request = this.tradeRequestService.getRequestById(id);
         if (this.request?.charges?.length) {
           this.populateFormFromCharges();
+        } else {
+            // Default charges if none exist
+            this.chargesList = [
+                { type: 'Advice Charge', amount: 0 },
+                { type: 'SWIFT Charge', amount: 0 }
+            ];
         }
       }
     });
   }
 
+  goBack() {
+    this.router.navigate(['/trade/dc-advising/to/dashboard']);
+  }
+
   populateFormFromCharges() {
     if (!this.request?.charges) return;
-    
-    const advice = this.request.charges.find(c => c.description === 'Advice Charge');
-    const swift = this.request.charges.find(c => c.description === 'SWIFT Charge');
-    // Try to extract VAT percent from description like "VAT (5%)"
-    const vat = this.request.charges.find(c => c.description.startsWith('VAT'));
-    
-    if (advice) this.chargeForm.adviceCharge = advice.amount;
-    if (swift) this.chargeForm.swiftCharge = swift.amount;
-    
-    if (vat) {
-      const match = vat.description.match(/(\d+)%/);
-      if (match) {
-        this.chargeForm.vatPercent = parseInt(match[1], 10);
-      }
-    }
+    this.chargesList = this.request.charges.map(c => ({
+        type: c.description, // Assuming description matches types or is custom
+        amount: c.amount
+    }));
   }
 
   openChargesModal() {
     this.showChargesModal = true;
+    if (!this.chargesList || this.chargesList.length === 0) {
+         this.chargesList = [
+            { type: 'Advice Charge', amount: 0 },
+            { type: 'SWIFT Charge', amount: 0 }
+        ];
+    }
   }
 
   closeChargesModal() {
     this.showChargesModal = false;
   }
 
+  addCharge() {
+      this.chargesList.push({ type: 'Other', amount: 0 });
+  }
+
+  removeCharge(index: number) {
+      this.chargesList.splice(index, 1);
+  }
+
   saveCharges() {
     if (!this.request) return;
 
     const currency = this.request.exportLC.currency || 'USD';
-    const vatAmount = (this.chargeForm.adviceCharge * this.chargeForm.vatPercent) / 100;
-
-    const charges = [
-      {
-        amount: this.chargeForm.adviceCharge,
+    
+    const charges = this.chargesList.map(c => ({
+        amount: c.amount,
         currency: currency,
-        description: 'Advice Charge',
+        description: c.type,
         status: 'PENDING' as const
-      },
-      {
-        amount: this.chargeForm.swiftCharge,
-        currency: currency,
-        description: 'SWIFT Charge',
-        status: 'PENDING' as const
-      },
-      {
-        amount: vatAmount,
-        currency: currency,
-        description: `VAT (${this.chargeForm.vatPercent}%)`,
-        status: 'PENDING' as const
-      }
-    ];
+    }));
 
     this.tradeRequestService.updateRequestCharges(this.request.id, charges);
     this.request = this.tradeRequestService.getRequestById(this.request.id); // Refresh local state
@@ -107,11 +102,12 @@ export class TradeOfficerRequestDetailsPageComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'TO_TRADE_OFFICER': return 'status-purple';
-      case 'PENDING_APPROVAL': return 'status-orange';
-      case 'APPROVED': return 'status-green';
-      case 'DC_ADVICE_ISSUED': return 'status-teal';
-      default: return 'status-gray';
+      case 'TO_TRADE_OFFICER': return 'bg-blue-100 text-blue-700'; // Blue
+      case 'PENDING_APPROVAL': return 'bg-orange-100 text-orange-700';
+      case 'APPROVED': return 'bg-green-100 text-green-700';
+      case 'DC_ADVICE_ISSUED': return 'bg-teal-100 text-teal-700';
+      case 'RETURNED': return 'bg-red-100 text-red-700';
+      default: return 'bg-gray-100 text-gray-700';
     }
   }
 
@@ -127,7 +123,7 @@ export class TradeOfficerRequestDetailsPageComponent implements OnInit {
       text: "This will send the request to the approver.",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#7b1fa2', // Purple
+      confirmButtonColor: '#0d6efd', // Blue
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, submit it!'
     }).then((result) => {
@@ -143,7 +139,7 @@ export class TradeOfficerRequestDetailsPageComponent implements OnInit {
           title: 'Submitted Successfully!',
           text: 'Request has been sent for approval.',
           icon: 'success',
-          confirmButtonColor: '#7b1fa2'
+          confirmButtonColor: '#0d6efd' // Blue
         }).then(() => {
           this.router.navigate(['/trade/dc-advising/to/dashboard']);
         });
@@ -182,7 +178,7 @@ export class TradeOfficerRequestDetailsPageComponent implements OnInit {
           title: 'Returned Successfully!',
           text: 'Request has been returned to customer.',
           icon: 'success',
-          confirmButtonColor: '#7b1fa2'
+          confirmButtonColor: '#0d6efd' // Blue
         }).then(() => {
           this.router.navigate(['/trade/dc-advising/to/dashboard']);
         });

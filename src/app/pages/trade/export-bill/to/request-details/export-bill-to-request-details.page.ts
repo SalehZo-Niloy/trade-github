@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgIf, DecimalPipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule, NgIf, NgClass, DecimalPipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 import { ExportBillService, ExportBill } from '../../../../../services/export-bill.service';
 import Swal from 'sweetalert2';
@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-export-bill-to-request-details',
   standalone: true,
-  imports: [CommonModule, TradeLayoutComponent, NgIf, DecimalPipe],
+  imports: [CommonModule, TradeLayoutComponent, NgIf, NgClass, DecimalPipe, RouterLink],
   templateUrl: './export-bill-to-request-details.page.html'
 })
 export class ExportBillToRequestDetailsPageComponent implements OnInit {
@@ -49,7 +49,7 @@ export class ExportBillToRequestDetailsPageComponent implements OnInit {
       text: "This will forward the request to the Approver.",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#0d9488', // Teal-600
+      confirmButtonColor: '#2563eb', // Blue-600
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Verify & Forward'
     }).then((result) => {
@@ -61,7 +61,7 @@ export class ExportBillToRequestDetailsPageComponent implements OnInit {
           title: 'Verification Successful!',
           text: 'Request has been forwarded to Approver.',
           icon: 'success',
-          confirmButtonColor: '#0d9488'
+          confirmButtonColor: '#2563eb'
         }).then(() => {
           this.router.navigate(['/trade/export-bill/to/dashboard']);
         });
@@ -86,11 +86,12 @@ export class ExportBillToRequestDetailsPageComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed && result.value) {
         this.bill!.status = 'RETURNED';
-        Swal.fire(
-          'Returned!',
-          'Request has been returned to the exporter.',
-          'success'
-        ).then(() => {
+        Swal.fire({
+          title: 'Returned!',
+          text: 'Request has been returned to the exporter.',
+          icon: 'success',
+          confirmButtonColor: '#2563eb'
+        }).then(() => {
           this.router.navigate(['/trade/export-bill/to/dashboard']);
         });
       }

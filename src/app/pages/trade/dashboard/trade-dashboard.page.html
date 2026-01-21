@@ -1,180 +1,747 @@
 <app-trade-layout
-  organisationName="Trade Platform"
+  organisationName="Trade Finance Portal"
   solutionName="Trade Finance"
   breadcrumb="Dashboard"
   basePath="/trade"
 >
-  <div class="dashboard-container p-6 bg-slate-50 min-h-screen">
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-      <!-- Total Transactions -->
-      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs text-gray-500 uppercase font-semibold">Total Transactions</p>
-            <p class="text-2xl font-bold text-gray-900 mt-1">{{ stats.totalTransactions }}</p>
+  <div class="px-6 py-6 bg-slate-50 min-h-screen space-y-6">
+    <section class="space-y-2">
+      <h1 class="text-2xl font-semibold text-slate-900">Trade Finance Control Center</h1>
+      <p class="text-sm text-slate-500">
+        Unified view of your Import, Export, and Guarantee operations
+      </p>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+        Global Snapshot
+      </h2>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                <path d="M6 4h12v4H6z" class="fill-blue-100" />
+                <rect x="5" y="8" width="14" height="11" rx="2" class="stroke-blue-500" stroke-width="1.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-2xl font-semibold text-slate-900">{{ stats.totalTransactions }}</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Active Trade Instruments</div>
+              <div class="mt-1 text-xs text-slate-500">
+                Import LCs: 12 · Export LCs: 8 · Guarantees: 8
+              </div>
+            </div>
           </div>
-          <div class="p-3 bg-blue-50 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
-            </svg>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                <rect x="4" y="5" width="16" height="14" rx="3" class="stroke-purple-500" stroke-width="1.5" />
+                <path d="M8 11h3l2 3h3" class="stroke-purple-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-2xl font-semibold text-slate-900">AED 12.5M</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Total Exposure</div>
+              <div class="mt-1 text-xs text-slate-500">
+                Funded: AED 8.2M · Non-Funded: AED 4.3M
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                <circle cx="12" cy="12" r="7" class="stroke-emerald-500" stroke-width="1.5" />
+                <path d="M8 12.5 11 15l5-6" class="stroke-emerald-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-2xl font-semibold text-slate-900">68%</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Limit Utilization</div>
+              <div class="mt-1 text-xs text-slate-500">
+                Approved: AED 20M · Available: AED 6.4M
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                <rect x="5" y="4" width="14" height="16" rx="2" class="stroke-amber-500" stroke-width="1.5" />
+                <path d="M9 4v2M15 4v2M8 11h8" class="stroke-amber-500" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-2xl font-semibold text-slate-900">5</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Upcoming Expiries</div>
+              <div class="mt-1 text-xs text-slate-500">
+                LC Expiry: 3 · Guarantee Expiry: 2
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                <path d="M12 9v4" class="stroke-rose-500" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="12" cy="16" r="0.75" class="fill-rose-500" />
+                <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z" class="stroke-rose-500" stroke-width="1.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-2xl font-semibold text-slate-900">3</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Action Required</div>
+              <div class="mt-1 text-xs text-slate-500">
+                Corrections: 2 · Margin Due: 1
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Pending Action -->
-      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs text-gray-500 uppercase font-semibold">Pending Action</p>
-            <p class="text-2xl font-bold text-gray-900 mt-1">{{ stats.pendingAction }}</p>
+    <section class="space-y-4">
+      <div class="rounded-3xl bg-blue-600 px-6 py-6 text-white shadow-sm">
+        <h2 class="text-sm font-semibold tracking-wide">Quick Actions</h2>
+        <div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div class="rounded-2xl border border-blue-300 bg-white/90 p-5 text-slate-900 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                    <path d="M7 7h10v10H7z" class="stroke-blue-500" stroke-width="1.5" />
+                    <path d="M10 10h4" class="stroke-blue-500" stroke-width="1.5" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">Import Operations</div>
+                  <div class="text-xs text-slate-500">Manage import LCs and amendments</div>
+                </div>
+              </div>
+              <span class="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-blue-600">
+                Import
+              </span>
+            </div>
+            <div class="mt-4 space-y-2">
+              <a
+                [routerLink]="['/trade', 'import', 'submitting']"
+                class="flex items-center justify-between rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700"
+              >
+                <span>Apply for Import LC</span>
+              </a>
+              <a
+                [routerLink]="['/trade', 'import', 'lc-amendment-request']"
+                class="flex items-center justify-between rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700"
+              >
+                <span>Request LC Amendment</span>
+              </a>
+            </div>
           </div>
-          <div class="p-3 bg-yellow-50 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-yellow-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+
+          <div class="rounded-2xl border border-emerald-300 bg-white/90 p-5 text-slate-900 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                    <path d="M6 7h12v10H6z" class="stroke-emerald-500" stroke-width="1.5" />
+                    <path d="M9 11h6M9 14h4" class="stroke-emerald-500" stroke-width="1.5" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">Export Operations</div>
+                  <div class="text-xs text-slate-500">Manage export advising and bills</div>
+                </div>
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-600">
+                Export
+              </span>
+            </div>
+            <div class="mt-4 space-y-2">
+              <a
+                [routerLink]="['/trade', 'dc-advising', 'customer', 'dashboard']"
+                class="flex items-center justify-between rounded-lg bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700"
+              >
+                <span>Apply for LC Advising</span>
+              </a>
+              <a
+                [routerLink]="['/trade', 'export-bill', 'customer', 'dashboard']"
+                class="flex items-center justify-between rounded-lg bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700"
+              >
+                <span>Submit Export Bill</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-purple-300 bg-white/90 p-5 text-slate-900 shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+                    <path d="M12 4 5 8v8l7 4 7-4V8z" class="stroke-purple-500" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M10 11.5 12 13l3-3" class="stroke-purple-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">Guarantee Operations</div>
+                  <div class="text-xs text-slate-500">Issue and amend guarantees</div>
+                </div>
+              </div>
+              <span class="rounded-full bg-purple-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-purple-600">
+                Guarantee
+              </span>
+            </div>
+            <div class="mt-4 space-y-2">
+              <a
+                [routerLink]="['/trade', 'guarantee']"
+                class="flex items-center justify-between rounded-lg bg-purple-50 px-4 py-2 text-sm font-medium text-purple-700"
+              >
+                <span>Apply for New Guarantee</span>
+              </a>
+              <a
+                [routerLink]="['/trade', 'guarantee-officer-dashboard']"
+                class="flex items-center justify-between rounded-lg bg-purple-50 px-4 py-2 text-sm font-medium text-purple-700"
+              >
+                <span>Request Amendment</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Completed -->
-      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-xs text-gray-500 uppercase font-semibold">Completed</p>
-            <p class="text-2xl font-bold text-gray-900 mt-1">{{ stats.completed }}</p>
+    <section class="space-y-4">
+      <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                  <path d="M7 6h10v12H7z" class="stroke-blue-500" stroke-width="1.5" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-slate-900">Import Module</h3>
+            </div>
+            <button class="text-xs font-semibold text-blue-600">View All</button>
           </div>
-          <div class="p-3 bg-green-50 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-xl bg-blue-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Active LCs</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">12</div>
+            </div>
+            <div class="rounded-xl bg-blue-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Settled</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">8</div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-3 text-sm">
+            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <div>
+                <div class="text-[11px] font-medium text-slate-500">Recent Import LCs</div>
+                <div class="mt-1 text-sm font-semibold text-slate-900">ILC-2024-0156</div>
+                <div class="text-xs text-slate-500">AED 850,000</div>
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-600">
+                Issued
+              </span>
+            </div>
+            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <div>
+                <div class="text-sm font-semibold text-slate-900">ILC-2024-0142</div>
+                <div class="text-xs text-slate-500">AED 1,200,000</div>
+              </div>
+              <span class="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold text-blue-600">
+                Submitted
+              </span>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div class="font-semibold text-slate-700">Pending Actions</div>
+            <ul class="mt-1 space-y-1">
+              <li class="flex items-center gap-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                <span>Margin pending: 1</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                <span>Amendment required: 1</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                  <path d="M6 7h12v10H6z" class="stroke-emerald-500" stroke-width="1.5" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-slate-900">Export Module</h3>
+            </div>
+            <button class="text-xs font-semibold text-emerald-600">View All</button>
+          </div>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            <div class="rounded-xl bg-emerald-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Active Bills</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">8</div>
+            </div>
+            <div class="rounded-xl bg-emerald-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Paid</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">15</div>
+            </div>
+            <div class="rounded-xl bg-emerald-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Pending</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">3</div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-3 text-sm">
+            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <div>
+                <div class="text-[11px] font-medium text-slate-500">Recent Export Bills</div>
+                <div class="mt-1 text-sm font-semibold text-slate-900">EXB-2024-0089</div>
+                <div class="text-xs text-slate-500">USD 125,000</div>
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-600">
+                Accepted
+              </span>
+            </div>
+            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <div>
+                <div class="text-sm font-semibold text-slate-900">EXB-2024-0076</div>
+                <div class="text-xs text-slate-500">USD 98,500</div>
+              </div>
+              <span class="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold text-blue-600">
+                Submitted
+              </span>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div class="font-semibold text-slate-700">Export Proceeds</div>
+            <div class="mt-1 flex items-center justify-between">
+              <span>Pending</span>
+              <span class="font-semibold text-emerald-600">USD 223,500</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between">
+              <span>Realized</span>
+              <span class="font-semibold text-emerald-600">USD 1,450,000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                  <path d="M12 4 5 8v8l7 4 7-4V8z" class="stroke-purple-500" stroke-width="1.5" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-slate-900">Guarantee Module</h3>
+            </div>
+            <button class="text-xs font-semibold text-purple-600">View All</button>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-xl bg-purple-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Active</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">8</div>
+            </div>
+            <div class="rounded-xl bg-purple-50 px-4 py-3">
+              <div class="text-[11px] font-medium text-slate-600">Expiring Soon</div>
+              <div class="mt-1 text-xl font-semibold text-slate-900">2</div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-3 text-sm">
+            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <div>
+                <div class="text-[11px] font-medium text-slate-500">Active Guarantees</div>
+                <div class="mt-1 text-sm font-semibold text-slate-900">GUA-2024-0145</div>
+                <div class="text-xs text-slate-500">AED 500,000</div>
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-600">
+                Active
+              </span>
+            </div>
+            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <div>
+                <div class="text-sm font-semibold text-slate-900">GUA-2024-0132</div>
+                <div class="text-xs text-slate-500">AED 250,000</div>
+              </div>
+              <span class="rounded-full bg-amber-50 px-3 py-1 text-[11px] font-semibold text-amber-600">
+                Expiring
+              </span>
+            </div>
+          </div>
+          <div class="mt-4 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div class="flex items-center justify-between">
+              <span>Amendment Requests</span>
+              <span class="font-semibold text-slate-700">2 Pending</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between">
+              <span>Claims Submitted</span>
+              <span class="font-semibold text-blue-600">1 Under Review</span>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Rejected/Returned -->
-      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
+    <section class="space-y-4">
+      <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
           <div>
-            <p class="text-xs text-gray-500 uppercase font-semibold">Rejected / Returned</p>
-            <p class="text-2xl font-bold text-gray-900 mt-1">{{ stats.rejected }}</p>
+            <h2 class="text-sm font-semibold text-slate-900">
+              Unified Transaction Tracker
+            </h2>
+            <p class="text-xs text-slate-500">
+              Consolidated view across Import, Export, and Guarantee modules
+            </p>
           </div>
-          <div class="p-3 bg-red-50 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-            </svg>
+          <div class="flex items-center gap-3">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
+            >
+              <span>All Modules</span>
+              <span class="text-slate-400">
+                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
+            >
+              <span>All Status</span>
+              <span class="text-slate-400">
+                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Recent Activity Table -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-      <div class="p-4 border-b border-gray-200">
-        <h2 class="text-lg font-semibold text-gray-900">Recent Transactions</h2>
-      </div>
-      
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="w-10 px-6 py-3"></th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated</th>
-              <th scope="col" class="relative px-6 py-3">
-                <span class="sr-only">View</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <ng-container *ngFor="let t of recentTransactions">
-              <tr class="hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <button (click)="toggleHistory(t.id)" class="text-gray-400 hover:text-gray-600 focus:outline-none">
-                    <svg *ngIf="expandedTransactionId !== t.id" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
-                    <svg *ngIf="expandedTransactionId === t.id" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
-                  </button>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
-                  {{ t.reference || t.id }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ formatType(t.type) }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {{ t.customer }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
-                  {{ t.currency }} {{ t.amount | number:'1.2-2' }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" [ngClass]="getStatusClass(t.status)">
-                    {{ t.status }}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ t.date | date:'mediumDate' }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a [routerLink]="t.link" class="text-blue-600 hover:text-blue-900">View</a>
-                </td>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200">
+            <thead class="bg-slate-50">
+              <tr>
+                <th class="w-10 px-6 py-3"></th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Application ID
+                </th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Module
+                </th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Transaction Type
+                </th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Current Status
+                </th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Last Bank Action
+                </th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Next Step
+                </th>
+                <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                  Last Updated
+                </th>
+                <th class="px-6 py-3"></th>
               </tr>
-              <!-- History Row -->
-              <tr *ngIf="expandedTransactionId === t.id" class="bg-gray-50">
-                <td colspan="8" class="px-6 py-4">
-                  <div class="ml-10">
-                    <h4 class="text-sm font-semibold text-gray-900 mb-4">Processing History</h4>
-                    <div *ngIf="t.history.length === 0" class="text-sm text-gray-500 italic">No history available.</div>
-                    <div *ngIf="t.history.length > 0" class="flow-root">
-                      <ul role="list" class="-mb-8">
-                        <li *ngFor="let event of t.history; let last = last">
-                          <div class="relative pb-8">
-                            <span *ngIf="!last" class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
-                            <div class="relative flex space-x-3">
-                              <div>
-                                <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white" [ngClass]="getStatusClass(event.status)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h3.25a.75.75 0 00.75-.75v-3.25z" clip-rule="evenodd" />
-                                  </svg>
-                                </span>
-                              </div>
-                              <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+            </thead>
+            <tbody class="divide-y divide-slate-100 bg-white">
+              <ng-container *ngFor="let t of recentTransactions">
+                <tr class="hover:bg-slate-50 transition-colors">
+                  <td class="px-6 py-4 text-sm text-slate-500">
+                    <button (click)="toggleHistory(t.id)" class="text-slate-400 hover:text-slate-600">
+                      <svg
+                        *ngIf="expandedTransactionId !== t.id"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        class="h-4 w-4"
+                      >
+                        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <svg
+                        *ngIf="expandedTransactionId === t.id"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        class="h-4 w-4"
+                      >
+                        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
+                  </td>
+                  <td class="px-6 py-4 text-sm font-semibold text-blue-700">
+                    {{ t.reference || t.id }}
+                  </td>
+                  <td class="px-6 py-4 text-sm">
+                    <span
+                      class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold"
+                      [ngClass]="{
+                        'bg-blue-50 text-blue-700': t.type === 'REQUEST',
+                        'bg-emerald-50 text-emerald-700': t.type === 'EXPORT_BILL',
+                        'bg-purple-50 text-purple-700': t.type === 'EXPORT_PROCEED'
+                      }"
+                    >
+                      <span *ngIf="t.type === 'REQUEST'">Import</span>
+                      <span *ngIf="t.type === 'EXPORT_BILL'">Export</span>
+                      <span *ngIf="t.type === 'EXPORT_PROCEED'">Export Proceed</span>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-600">
+                    {{ formatType(t.type) }}
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold"
+                      [ngClass]="getStatusClass(t.status)"
+                    >
+                      {{ t.status }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-600">
+                    LC Issued via SWIFT
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-600">
+                    Shipment Expected
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-500">
+                    {{ t.date | date: 'dd-MMM-yyyy' }}
+                  </td>
+                  <td class="px-6 py-4 text-right text-sm">
+                    <a [routerLink]="t.link" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                      View
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="expandedTransactionId === t.id" class="bg-slate-50">
+                  <td colspan="9" class="px-6 pb-4 pt-0">
+                    <div class="ml-10 border-t border-slate-200 pt-4">
+                      <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">
+                        Processing History
+                      </h4>
+                      <div *ngIf="t.history.length === 0" class="text-sm text-slate-500 italic">
+                        No history available.
+                      </div>
+                      <div *ngIf="t.history.length > 0" class="flow-root">
+                        <ul role="list" class="-mb-8">
+                          <li *ngFor="let event of t.history; let last = last">
+                            <div class="relative pb-6">
+                              <span
+                                *ngIf="!last"
+                                class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-slate-200"
+                                aria-hidden="true"
+                              ></span>
+                              <div class="relative flex space-x-3">
                                 <div>
-                                  <p class="text-sm text-gray-500">
-                                    <span class="font-medium text-gray-900">{{ event.status }}</span> 
-                                    <span *ngIf="event.comment"> - {{ event.comment }}</span>
-                                    <span class="block text-xs text-gray-400">by {{ event.actor }}</span>
-                                  </p>
+                                  <span
+                                    class="flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white"
+                                    [ngClass]="getStatusClass(event.status)"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                                      <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h3.25a.75.75 0 00.75-.75v-3.25z"
+                                        clip-rule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
                                 </div>
-                                <div class="whitespace-nowrap text-right text-sm text-gray-500">
-                                  <time [attr.datetime]="event.date">{{ event.date }} {{ event.time }}</time>
+                                <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                  <div>
+                                    <p class="text-sm text-slate-600">
+                                      <span class="font-medium text-slate-900">{{ event.status }}</span>
+                                      <span *ngIf="event.comment"> – {{ event.comment }}</span>
+                                      <span class="block text-xs text-slate-400">by {{ event.actor }}</span>
+                                    </p>
+                                  </div>
+                                  <div class="whitespace-nowrap text-right text-xs text-slate-500">
+                                    <time [attr.datetime]="event.date">
+                                      {{ event.date }} {{ event.time }}
+                                    </time>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </li>
-                      </ul>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="recentTransactions.length === 0">
+                <td colspan="9" class="px-6 py-10 text-center text-sm text-slate-500">
+                  No recent transactions found.
                 </td>
               </tr>
-            </ng-container>
-            <tr *ngIf="recentTransactions.length === 0">
-              <td colspan="8" class="px-6 py-12 text-center text-gray-500">
-                No recent transactions found.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4">
+        <h2 class="text-sm font-semibold text-slate-900">Financial & Exposure Summary</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-2xl bg-blue-50 px-4 py-3">
+            <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Margin Held by Module
+            </div>
+            <div class="mt-3 space-y-1 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Import LC</span>
+                <span class="font-semibold text-slate-900">AED 2,400,000</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Guarantees</span>
+                <span class="font-semibold text-slate-900">AED 1,800,000</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Export Bills</span>
+                <span class="font-semibold text-slate-900">AED 950,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-purple-50 px-4 py-3">
+            <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Charges Summary
+            </div>
+            <div class="mt-3 space-y-1 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Charges Paid (MTD)</span>
+                <span class="font-semibold text-emerald-600">AED 45,800</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Charges Due</span>
+                <span class="font-semibold text-rose-500">AED 12,500</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-emerald-50 px-4 py-3">
+            <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Exposure Utilization
+            </div>
+            <div class="mt-3 space-y-1 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Import LC Exposure</span>
+                <span class="font-semibold text-slate-900">AED 8,200,000</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-700">Guarantee Exposure</span>
+                <span class="font-semibold text-slate-900">AED 4,300,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
+              Recent Financial Activity
+            </div>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="mt-1 h-2 w-2 rounded-full bg-emerald-500"></span>
+                <div>
+                  <div class="font-medium text-slate-800">
+                    Margin blocked – ILC-2024-0156
+                  </div>
+                  <div class="text-xs text-slate-500">15-Jan-2024</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="mt-1 h-2 w-2 rounded-full bg-amber-500"></span>
+                <div>
+                  <div class="font-medium text-slate-800">
+                    Charges debited – AED 8,500
+                  </div>
+                  <div class="text-xs text-slate-500">14-Jan-2024</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4">
+        <h2 class="text-sm font-semibold text-slate-900">Notifications & Alerts</h2>
+        <div class="space-y-3 text-sm">
+          <div class="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3">
+            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-rose-500">
+              <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+              <span>High Priority Alerts</span>
+            </div>
+            <div class="mt-3 space-y-2">
+              <div class="rounded-xl bg-white/70 px-4 py-3">
+                <div class="text-sm font-semibold text-slate-900">
+                  Guarantee Expiring Soon
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  GUA-2024-0132 expires on 28-Jan-2024 · 10:30 AM
+                </div>
+              </div>
+              <div class="rounded-xl bg-amber-50 px-4 py-3">
+                <div class="text-sm font-semibold text-slate-900">
+                  Action Required
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  Application ILC-2024-0142 returned for correction · 15-Jan-2024 2:15 PM
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600">
+              <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+              <span>Recent Notifications</span>
+            </div>
+            <div class="mt-3 space-y-2">
+              <div class="rounded-xl bg-blue-50 px-4 py-3">
+                <div class="text-sm font-semibold text-slate-900">
+                  Application Approved
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  Import LC ILC-2024-0156 has been issued · 16-Jan-2024 9:45 AM
+                </div>
+              </div>
+              <div class="rounded-xl bg-emerald-50 px-4 py-3">
+                <div class="text-sm font-semibold text-slate-900">
+                  Export Bill Accepted
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  Bill EXB-2024-0089 accepted by bank · 14-Jan-2024 11:20 AM
+                </div>
+              </div>
+              <div class="rounded-xl bg-slate-50 px-4 py-3">
+                <div class="text-sm font-semibold text-slate-900">
+                  Amendment Under Review
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  Guarantee amendment GUA-2024-0145-A1 submitted · 13-Jan-2024 3:30 PM
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </app-trade-layout>

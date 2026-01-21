@@ -14,36 +14,15 @@
             {{ bill.status.replace('_', ' ') }}
             </span>
         </div>
-        <button (click)="goBack()" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-md transition-colors border border-transparent hover:border-slate-200">
+        <a routerLink="/trade/export-bill/customer/dashboard" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-md transition-colors border border-transparent hover:border-slate-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
             Back
-        </button>
+        </a>
       </div>
       <div class="text-sm text-slate-500">
-        Customer: {{ bill.customerName }} • LC: {{ bill.lcNumber }}
-      </div>
-    </div>
-
-    <!-- Action Section -->
-    <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-lg shadow-sm mb-6" *ngIf="bill.status === 'SUBMITTED'">
-      <h3 class="text-lg font-semibold text-indigo-900 mb-2">RO Validation</h3>
-      <p class="text-indigo-700 mb-4 text-sm">Review documents and validate the request.</p>
-      
-      <div class="flex gap-4">
-        <button 
-          (click)="passValidation()"
-          class="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-        >
-          Pass Validation
-        </button>
-        <button 
-          (click)="returnToCustomer()"
-          class="bg-white text-slate-700 border border-slate-300 px-6 py-2 rounded-lg font-medium hover:bg-slate-50 transition-colors"
-        >
-          Return to Customer
-        </button>
+        LC: {{ bill.lcNumber }} • Created: {{ '2025-01-20' }} <!-- Mock date if not in model -->
       </div>
     </div>
 
@@ -53,24 +32,19 @@
         <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
           <h3 class="text-lg font-semibold text-slate-900 mb-4">Documents</h3>
           <div class="space-y-4">
-            <!-- Mock Documents -->
-            <div class="flex items-start gap-4 p-4 border border-slate-200 rounded-lg">
+            <!-- Mock Documents List (since bill.documents might be just File objects or similar, we iterate carefully) -->
+            <div *ngFor="let doc of bill.documents" class="flex items-start gap-4 p-4 border border-slate-200 rounded-lg">
                 <div class="text-slate-400 text-2xl">
-                  <!-- Icon placeholder -->
                   📄
                 </div>
                 <div class="flex-1">
-                  <div class="font-medium text-slate-900">Commercial Invoice</div>
-                  <div class="text-xs text-slate-500 mt-1">2.4 MB • 2025-01-19</div>
-                  <div class="mt-2 flex items-center gap-2">
-                    <span class="text-xs font-semibold px-2 py-0.5 rounded bg-green-100 text-green-700">VALID</span>
-                    <button class="text-xs text-blue-600 hover:text-blue-800 font-medium underline">Toggle Status</button>
-                  </div>
+                  <div class="font-medium text-slate-900">{{ doc.name }}</div>
+                  <div class="text-xs text-slate-500 mt-1">{{ (doc.size || 0) / 1024 | number:'1.0-0' }} KB</div>
                 </div>
             </div>
             
             <div *ngIf="bill.documents.length === 0" class="text-slate-500 text-center py-4">
-              No documents uploaded (Mock)
+              No documents uploaded.
             </div>
           </div>
         </div>
@@ -112,9 +86,9 @@
       </div>
 
       <div class="space-y-6">
-        <!-- Applicant -->
+        <!-- Applicant (Self) -->
         <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-          <h3 class="text-lg font-semibold text-slate-900 mb-4">Applicant</h3>
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Applicant Details</h3>
           <div class="space-y-3">
             <div>
               <div class="text-xs text-slate-500">Name</div>
@@ -128,5 +102,13 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="!bill" class="text-center py-12">
+      <h2 class="text-xl font-semibold text-gray-900">Request Not Found</h2>
+      <p class="mt-2 text-gray-500">The requested trade finance record could not be found.</p>
+      <div class="mt-6">
+          <a routerLink="/trade/export-bill/customer/dashboard" class="text-blue-600 hover:text-blue-800 font-medium">Back to Dashboard</a>
+      </div>
   </div>
 </app-trade-layout>

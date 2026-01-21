@@ -29,6 +29,10 @@ export class RORequestDetailsPageComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigate(['/trade/dc-advising/ro/dashboard']);
+  }
+
   toggleDocumentStatus(doc: Document) {
     if (!this.request) return;
     
@@ -80,7 +84,7 @@ export class RORequestDetailsPageComponent implements OnInit {
           title: 'Validation Passed Successfully!',
           text: 'Request has been forwarded to Trade Officer.',
           icon: 'success',
-          confirmButtonColor: '#4338ca'
+          confirmButtonColor: '#2563eb'
         }).then(() => {
           this.router.navigate(['/trade/dc-advising/ro/dashboard']);
         });

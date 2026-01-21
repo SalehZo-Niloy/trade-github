@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-export-proceed-to-request-details',
@@ -96,11 +97,31 @@ export class ExportProceedToRequestDetailsPageComponent implements OnInit {
   }
 
   submitForApproval() {
-    console.log('Submitted for Approval', {
-      distributions: this.distributions,
-      charges: this.charges
+    Swal.fire({
+      title: 'Submit for Approval?',
+      text: "Are you sure you want to submit this proceed for approval?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2563eb',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Submit'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('Submitted for Approval', {
+          distributions: this.distributions,
+          charges: this.charges
+        });
+        this.proceedDetails.status = 'Pending Approval';
+        
+        Swal.fire({
+          title: 'Submitted!',
+          text: 'The proceed has been submitted for approval.',
+          icon: 'success',
+          confirmButtonColor: '#2563eb'
+        }).then(() => {
+          this.router.navigate(['/trade/export-proceed/to/dashboard']);
+        });
+      }
     });
-    this.proceedDetails.status = 'Pending Approval';
-    this.router.navigate(['/trade/export-proceed/to/dashboard']);
   }
 }

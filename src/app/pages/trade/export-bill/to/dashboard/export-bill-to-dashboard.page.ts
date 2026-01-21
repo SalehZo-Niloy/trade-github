@@ -64,4 +64,3 @@ export class ExportBillToDashboardPageComponent implements OnInit {
     return status.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
   }
 }
-

@@ -38,6 +38,7 @@
   text-transform: uppercase;
 }
 
+.status-blue { background-color: #e3f2fd; color: #0d6efd; }
 .status-purple { background-color: #f3e5f5; color: #7b1fa2; }
 .status-orange { background-color: #fff3e0; color: #e65100; }
 .status-green { background-color: #e8f5e9; color: #2e7d32; }
@@ -65,7 +66,7 @@
 }
 
 .review-section .section-title {
-  color: #7b1fa2; /* Match TO status color */
+  color: #0d6efd; /* Match TO status color (Blue) */
 }
 
 .section-desc {
@@ -89,13 +90,32 @@
 }
 
 .btn-primary {
-  background-color: #7b1fa2; /* Purple */
+  background-color: #0d6efd; /* Blue */
   color: white;
   border: none;
   padding: 10px 24px;
   border-radius: 4px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+.btn-danger-outline {
+    background: transparent;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-danger-outline:hover {
+    background: #dc3545;
+    color: white;
 }
 
 .btn-secondary {

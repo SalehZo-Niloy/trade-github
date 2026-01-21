@@ -7,11 +7,19 @@
   <div class="details-container" *ngIf="request">
     <!-- Header -->
     <div class="header-card">
-      <div class="header-top">
-        <h1>{{ request.id }}</h1>
-        <span class="status-badge" [ngClass]="getStatusClass(request.status)">
-          {{ getStatusLabel(request.status) }}
-        </span>
+      <div class="header-top flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <h1>{{ request.id }}</h1>
+          <span class="status-badge" [ngClass]="getStatusClass(request.status)">
+            {{ getStatusLabel(request.status) }}
+          </span>
+        </div>
+        <button (click)="goBack()" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-md transition-colors border border-transparent hover:border-slate-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          Back
+        </button>
       </div>
       <div class="header-sub">
         Applicant: {{ request.applicant.name }} • LC: {{ request.exportLC.lcNo }}
@@ -24,8 +32,8 @@
       <p class="section-desc">Review the request and charges.</p>
       
       <div class="action-buttons">
-        <button class="btn-approve" (click)="approveRequest()">Approve</button>
-        <button class="btn-reject" (click)="rejectRequest()">Reject</button>
+        <button class="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm" (click)="approveRequest()">Approve</button>
+        <button class="rounded-lg border border-red-200 bg-white px-6 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors shadow-sm" (click)="rejectRequest()">Reject</button>
       </div>
     </div>
 

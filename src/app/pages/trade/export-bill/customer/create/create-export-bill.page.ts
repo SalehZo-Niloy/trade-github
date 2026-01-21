@@ -14,6 +14,12 @@ import Swal from 'sweetalert2';
 })
 export class CreateExportBillPageComponent {
   currentStep = 1;
+  steps = [
+    { number: 1, name: 'Details' },
+    { number: 2, name: 'Buyer & Bill' },
+    { number: 3, name: 'Documents' },
+    { number: 4, name: 'Review' }
+  ];
 
   // Form Data
   formData = {
@@ -55,31 +61,76 @@ export class CreateExportBillPageComponent {
     }
   }
 
+  goToStep(step: number) {
+    if (step < this.currentStep) {
+      this.currentStep = step;
+    }
+  }
+
+  handleDocumentUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.formData.documents.push({ name: file.name, size: file.size, file: file });
+    }
+  }
+
+  removeDocument(doc: any) {
+    this.formData.documents = this.formData.documents.filter(d => d !== doc);
+  }
+
+  previewDocument(doc: any) {
+    if (doc.file) {
+      const fileURL = URL.createObjectURL(doc.file);
+      window.open(fileURL, '_blank');
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Preview',
+        text: `Previewing document: ${doc.name}`,
+        confirmButtonText: 'Close'
+      });
+    }
+  }
+
   submit() {
-    // Logic to save the bill
-    const billData: Partial<ExportBill> = {
-      applicantName: this.formData.applicantName,
-      lcNumber: this.formData.lcNumber,
-      issuingBank: this.formData.issuingBank,
-      lcIssueDate: this.formData.lcIssueDate,
-      buyerName: this.formData.buyerName,
-      country: this.formData.country,
-      amount: this.formData.billAmount || 0,
-      currency: this.formData.currency,
-      collectionType: this.formData.collectionType,
-      tenor: this.formData.tenor,
-      documents: this.formData.documents
-    };
-
-    this.billService.addBill(billData);
-
     Swal.fire({
-      title: 'Submitted Successfully!',
-      text: 'Your export bill collection has been submitted.',
-      icon: 'success',
-      confirmButtonColor: '#0d9488'
-    }).then(() => {
-      this.router.navigate(['/trade/export-bill/customer/dashboard']);
+      title: 'Are you sure?',
+      text: "Do you want to submit this Export Bill Collection?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, submit it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Logic to save the bill
+        const billData: Partial<ExportBill> = {
+          applicantName: this.formData.applicantName,
+          lcNumber: this.formData.lcNumber,
+          issuingBank: this.formData.issuingBank,
+          lcIssueDate: this.formData.lcIssueDate,
+          buyerName: this.formData.buyerName,
+          country: this.formData.country,
+          amount: this.formData.billAmount || 0,
+          currency: this.formData.currency,
+          collectionType: this.formData.collectionType,
+          tenor: this.formData.tenor,
+          documents: this.formData.documents
+        };
+
+        this.billService.addBill(billData);
+
+        Swal.fire({
+          title: 'Submitted!',
+          text: 'Your export bill collection has been submitted successfully.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['/trade/export-bill/customer/dashboard']);
+        });
+      }
     });
   }
 }

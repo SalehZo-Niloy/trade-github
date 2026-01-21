@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 import { MasterLCService, MasterLCRequest } from '../../../../../services/master-lc.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-master-lc-create',
@@ -102,7 +103,27 @@ export class MasterLCCreatePageComponent implements OnInit {
   }
 
   submit() {
-    this.masterLCService.addRequest(this.data);
-    this.router.navigate(['/trade/master-lc/customer/dashboard']);
+    Swal.fire({
+      title: 'Submit Application?',
+      text: "Are you sure you want to submit this Master LC application?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#2563eb',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Submit'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.masterLCService.addRequest(this.data);
+        
+        Swal.fire({
+          title: 'Submitted!',
+          text: 'Your application has been submitted successfully.',
+          icon: 'success',
+          confirmButtonColor: '#2563eb'
+        }).then(() => {
+          this.router.navigate(['/trade/master-lc/customer/dashboard']);
+        });
+      }
+    });
   }
 }

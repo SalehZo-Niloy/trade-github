@@ -30,6 +30,10 @@ export class ApproverRequestDetailsPageComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigate(['/trade/dc-advising/approver/dashboard']);
+  }
+
   approveRequest() {
     if (!this.request) return;
 

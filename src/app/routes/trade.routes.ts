@@ -46,6 +46,7 @@ import { TradeOfficerRequestDetailsPageComponent } from '../pages/trade/dc-advis
 import { ApproverDashboardPageComponent } from '../pages/trade/dc-advising/approver/dashboard/approver-dashboard.page';
 import { ApproverRequestDetailsPageComponent } from '../pages/trade/dc-advising/approver/request-details/approver-request-details.page';
 import { ExportBillCustomerDashboardPageComponent } from '../pages/trade/export-bill/customer/dashboard/export-bill-customer-dashboard.page';
+import { ExportBillCustomerRequestDetailsPageComponent } from '../pages/trade/export-bill/customer/request-details/export-bill-customer-request-details.page';
 import { CreateExportBillPageComponent } from '../pages/trade/export-bill/customer/create/create-export-bill.page';
 import { ExportBillRoDashboardPageComponent } from '../pages/trade/export-bill/ro/dashboard/export-bill-ro-dashboard.page';
 import { ExportBillRORequestDetailsPageComponent } from '../pages/trade/export-bill/ro/request-details/export-bill-ro-request-details.page';
@@ -247,6 +248,10 @@ export const tradeRoutes: Routes = [
       {
         path: 'export-bill/customer/dashboard',
         component: ExportBillCustomerDashboardPageComponent
+      },
+      {
+        path: 'export-bill/customer/request/:id',
+        component: ExportBillCustomerRequestDetailsPageComponent
       },
       {
         path: 'export-bill/customer/create',

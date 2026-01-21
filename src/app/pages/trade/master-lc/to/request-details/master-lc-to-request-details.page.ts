@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 import { MasterLCService, MasterLCRequest } from '../../../../../services/master-lc.service';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-master-lc-to-request-details',
@@ -29,7 +30,8 @@ export class MasterLCToRequestDetailsPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private masterLCService: MasterLCService
+    private masterLCService: MasterLCService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -78,7 +80,30 @@ export class MasterLCToRequestDetailsPageComponent implements OnInit {
     this.totalCharges = amount * (this.commissionPercent / 100);
   }
 
+  goBack() {
+    this.location.back();
+  }
+
   approve() {
+    if (!this.request) return;
+
+    Swal.fire({
+      title: 'Approve Request?',
+      text: "You are about to verify this request and forward it to the Manager.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2563eb',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Verify & Forward',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.processApproval();
+      }
+    });
+  }
+
+  private processApproval() {
     if (this.request) {
       // 1. Save Financials
       const updatedReq = { ...this.request };
@@ -99,31 +124,91 @@ export class MasterLCToRequestDetailsPageComponent implements OnInit {
         'Trade Officer', 
         this.remarks || 'Verified and forwarded to Manager'
       );
-      this.router.navigate(['/trade/master-lc/to/dashboard']);
+      
+      Swal.fire({
+        title: 'Verified!',
+        text: 'Request has been forwarded to the Manager.',
+        icon: 'success',
+        confirmButtonColor: '#2563eb'
+      }).then(() => {
+        this.router.navigate(['/trade/master-lc/to/dashboard']);
+      });
     }
   }
 
   reject() {
-    if (this.request) {
-      this.masterLCService.updateStatus(
-        this.request.id, 
-        'Rejected', 
-        'Trade Officer', 
-        this.remarks || 'Rejected by Trade Officer'
-      );
-      this.router.navigate(['/trade/master-lc/to/dashboard']);
-    }
+    if (!this.request) return;
+
+    Swal.fire({
+      title: 'Reject Request?',
+      text: "You are about to reject this request. Please provide a reason.",
+      icon: 'warning',
+      input: 'textarea',
+      inputPlaceholder: 'Enter rejection remarks...',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, Reject',
+      cancelButtonText: 'Cancel',
+      preConfirm: (inputValue) => {
+        if (!inputValue && !this.remarks) {
+          Swal.showValidationMessage('Please enter rejection remarks');
+        }
+        return inputValue;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const finalRemarks = result.value || this.remarks;
+        
+        this.masterLCService.updateStatus(
+          this.request!.id, 
+          'Rejected', 
+          'Trade Officer', 
+          finalRemarks
+        );
+        
+        Swal.fire({
+          title: 'Rejected!',
+          text: 'The request has been rejected.',
+          icon: 'success',
+          confirmButtonColor: '#2563eb'
+        }).then(() => {
+          this.router.navigate(['/trade/master-lc/to/dashboard']);
+        });
+      }
+    });
   }
 
   returnToCustomer() {
-      if (this.request) {
+    if (!this.request) return;
+
+    Swal.fire({
+      title: 'Return to Customer?',
+      text: "This will return the request to the customer for corrections.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#2563eb',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, Return',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.masterLCService.updateStatus(
-            this.request.id,
+            this.request!.id,
             'Returned',
             'Trade Officer',
             this.remarks || 'Returned for correction'
         );
-        this.router.navigate(['/trade/master-lc/to/dashboard']);
+        
+        Swal.fire({
+          title: 'Returned!',
+          text: 'The request has been returned to the customer.',
+          icon: 'success',
+          confirmButtonColor: '#2563eb'
+        }).then(() => {
+          this.router.navigate(['/trade/master-lc/to/dashboard']);
+        });
       }
+    });
   }
 }
