@@ -12,6 +12,7 @@ import { GuaranteeOfficerCheckerDashboardPageComponent } from '../pages/trade/gu
 import { GuaranteeCheckerApplicationReviewPageComponent } from '../pages/trade/guarantee/guarantee-officer-checker-dashboard/application-review/application-review.page';
 import { GuaranteeClaimHandlingPageComponent } from '../pages/trade/guarantee/officer-dashboard/claim/guarantee-claim-handling.page';
 import { GuaranteeClaimSettlementPageComponent } from '../pages/trade/guarantee/officer-dashboard/claim/guarantee-claim-settlement.page';
+import { GuaranteeRegulatoryEvaluationPageComponent } from '../pages/trade/guarantee/regulatory-officer-dashboard/regulatory-evaluation/regulatory-evaluation.page';
 import { ImportApplicationPageComponent } from '../pages/trade/import/import-application/import-application.page';
 import { ImportSubmittingPageComponent } from '../pages/trade/import/import-application/submitting/submitting.page';
 import { ImportCustomerViewPageComponent } from '../pages/trade/import/import-application/customer-view/customer-view.page';
@@ -73,6 +74,10 @@ export const tradeRoutes: Routes = [
   {
     path: 'guarantee',
     component: GuaranteeApplicationPageComponent
+  },
+  {
+    path: 'guarantee-regulatory-evaluation',
+    component: GuaranteeRegulatoryEvaluationPageComponent
   },
   {
     path: 'guarantee-issuance',

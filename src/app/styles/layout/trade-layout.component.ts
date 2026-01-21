@@ -25,19 +25,19 @@ interface TradeMenuItem {
     <div class="flex h-screen flex-col text-slate-900" [ngClass]="theme.page.background">
       <div class="flex flex-1 overflow-hidden">
         <aside
-          class="flex flex-col border-r overflow-y-auto transition-all duration-300 ease-in-out"
+          class="flex flex-col border-r overflow-hidden transition-all duration-300 ease-in-out"
           [ngClass]="[theme.border.default, theme.surface.card]"
           [class.w-64]="!sidebarCollapsed"
           [class.w-0]="sidebarCollapsed"
         >
-          <div class="flex items-center gap-3 border-b px-4 py-3" [ngClass]="theme.border.default">
+          <div class="flex h-16 items-center gap-3 border-b px-4" [ngClass]="theme.border.default">
             <img src="era_logo.svg" alt="ERA InfoTech Limited" class="h-8 w-auto" />
             <div class="flex flex-col">
-              <span class="text-sm font-semibold">{{ organisationName }}</span>
+              <span class="text-sm font-semibold">Trade Finance</span>
             </div>
           </div>
 
-          <nav class="flex-1 space-y-6 px-3 py-4 text-sm">
+          <nav class="flex-1 overflow-y-auto space-y-6 px-3 py-4 text-sm">
             <div>
               <div class="px-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
                 {{ primarySectionLabel }}
@@ -48,7 +48,7 @@ interface TradeMenuItem {
                     <a
                       [routerLink]="item.route"
                       routerLinkActive="bg-blue-50 text-blue-700 border-blue-300"
-                      class="flex items-center justify-between rounded-md border border-transparent px-3 py-2 text-slate-700 hover:border-slate-200 hover:bg-slate-50"
+                      class="flex items-center justify-between rounded-md border border-transparent px-3 py-2 text-sm font-medium text-slate-700 hover:border-slate-200 hover:bg-slate-50"
                     >
                       <span>{{ item.label }}</span>
                     </a>
@@ -62,8 +62,21 @@ interface TradeMenuItem {
                       <span class="text-xs font-semibold uppercase tracking-wide">
                         {{ item.label }}
                       </span>
-                      <span class="text-[10px] text-slate-400">
-                        {{ isGroupExpanded(item.label) ? '▴' : '▾' }}
+                      <span class="flex h-4 w-4 items-center justify-center text-slate-400">
+                        <svg
+                          viewBox="0 0 20 20"
+                          class="h-3.5 w-3.5"
+                          [style.transform]="isGroupExpanded(item.label) ? 'rotate(90deg)' : 'rotate(0deg)'"
+                        >
+                          <path
+                            d="M7 5l5 5-5 5"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
                       </span>
                     </button>
                     <div *ngIf="isGroupExpanded(item.label)" class="space-y-1 pl-2">
@@ -71,13 +84,13 @@ interface TradeMenuItem {
                         <ng-container
                           *ngIf="!child.children || child.children.length === 0; else childGroup"
                         >
-                          <a
-                            [routerLink]="child.route"
-                            routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
-                            class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm text-slate-700 hover:border-blue-200 hover:bg-blue-50"
-                          >
-                            <span>{{ child.label }}</span>
-                          </a>
+                            <a
+                              [routerLink]="child.route"
+                              routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
+                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                            >
+                              <span>{{ child.label }}</span>
+                            </a>
                         </ng-container>
                         <ng-template #childGroup>
                           <button
@@ -85,11 +98,24 @@ interface TradeMenuItem {
                             class="flex w-full items-center justify-between rounded-md border border-transparent px-3 py-1.5 text-left text-slate-700 hover:border-slate-200 hover:bg-slate-50"
                             (click)="toggleGroup(child.label)"
                           >
-                            <span class="text-[11px] font-semibold uppercase tracking-wide">
+                            <span class="text-xs font-semibold uppercase tracking-wide">
                               {{ child.label }}
                             </span>
-                            <span class="text-[10px] text-slate-400">
-                              {{ isGroupExpanded(child.label) ? '▴' : '▾' }}
+                            <span class="flex h-4 w-4 items-center justify-center text-slate-400">
+                              <svg
+                                viewBox="0 0 20 20"
+                                class="h-3.5 w-3.5"
+                                [style.transform]="isGroupExpanded(child.label) ? 'rotate(90deg)' : 'rotate(0deg)'"
+                              >
+                                <path
+                                  d="M7 5l5 5-5 5"
+                                  stroke="currentColor"
+                                  stroke-width="1.7"
+                                  fill="none"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
                             </span>
                           </button>
                           <div *ngIf="isGroupExpanded(child.label)" class="space-y-1 pl-2">
@@ -97,7 +123,7 @@ interface TradeMenuItem {
                               *ngFor="let grand of child.children"
                               [routerLink]="grand.route"
                               routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
-                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
                             >
                               <span>{{ grand.label }}</span>
                             </a>
@@ -127,9 +153,9 @@ interface TradeMenuItem {
           </nav>
         </aside>
 
-        <section class="flex flex-1 flex-col">
+          <section class="flex flex-1 flex-col">
           <header
-            class="flex items-center justify-between border-b px-6 py-3"
+            class="flex h-16 items-center justify-between border-b px-6"
             [ngClass]="[theme.border.default, theme.surface.card]"
           >
             <div class="flex items-center gap-3">
@@ -190,6 +216,10 @@ export class TradeLayoutComponent implements OnInit {
         {
           label: 'Guarantee Application',
           route: ['/trade', 'guarantee'],
+        },
+        {
+          label: 'Regulatory Evaluation',
+          route: ['/trade', 'guarantee-regulatory-evaluation'],
         },
         {
           label: 'Guarantee Officer Dashboard',

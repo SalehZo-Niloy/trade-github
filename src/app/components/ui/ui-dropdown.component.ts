@@ -31,7 +31,22 @@ interface UiDropdownOption {
               'Select'
             }}
           </span>
-          <span>▾</span>
+          <span class="ml-2 flex h-4 w-4 items-center justify-center text-slate-400">
+            <svg
+              viewBox="0 0 20 20"
+              class="h-3.5 w-3.5"
+              [style.transform]="open ? 'rotate(180deg)' : 'rotate(0deg)'"
+            >
+              <path
+                d="M5 7.5l5 5 5-5"
+                stroke="currentColor"
+                stroke-width="1.7"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
         </button>
         <div
           *ngIf="open"
