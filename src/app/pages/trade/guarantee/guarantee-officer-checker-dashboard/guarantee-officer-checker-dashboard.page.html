@@ -95,7 +95,6 @@
               <th class="px-4 py-2">Escalated By</th>
               <th class="px-4 py-2">Escalation Time</th>
               <th class="px-4 py-2">Status</th>
-              <th class="px-4 py-2 text-right">Action</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 bg-white">
@@ -104,7 +103,13 @@
               class="text-xs hover:bg-slate-50"
             >
               <td class="px-4 py-3 font-semibold text-blue-700">
-                {{ row.applicationId }}
+                <button
+                  type="button"
+                  class="hover:underline"
+                  (click)="reviewApplication(row)"
+                >
+                  {{ row.applicationId }}
+                </button>
               </td>
               <td class="px-4 py-3">
                 <div class="text-[11px] font-semibold text-slate-900">
@@ -145,15 +150,6 @@
                     {{ row.status }}
                   </span>
                 </span>
-              </td>
-              <td class="px-4 py-3 text-right">
-                <button
-                  type="button"
-                  class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-blue-700"
-                  (click)="reviewApplication(row)"
-                >
-                  Review
-                </button>
               </td>
             </tr>
           </tbody>

@@ -113,13 +113,18 @@
                     <th class="px-4 py-2">Submitted</th>
                     <th class="px-4 py-2">Status</th>
                     <th class="px-4 py-2">SLA</th>
-                    <th class="px-4 py-2 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 bg-white">
                   <tr *ngFor="let row of applications" class="text-xs hover:bg-slate-50">
-                    <td class="px-4 py-2 font-medium text-slate-900">
-                      {{ row.id }}
+                    <td class="px-4 py-2 font-semibold text-blue-700">
+                      <button
+                        type="button"
+                        class="hover:underline"
+                        (click)="reviewApplication(row)"
+                      >
+                        {{ row.id }}
+                      </button>
                     </td>
                     <td class="px-4 py-2 text-slate-800">
                       {{ row.customer }}
@@ -150,15 +155,6 @@
                     <td class="px-4 py-2 text-slate-700">
                       {{ row.sla }}
                     </td>
-                    <td class="px-4 py-2 text-right">
-                      <button
-                        type="button"
-                        class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-blue-700"
-                        (click)="reviewApplication(row)"
-                      >
-                        Review
-                      </button>
-                    </td>
                   </tr>
                 </tbody>
                 </app-ui-table>
@@ -176,13 +172,18 @@
                     <th class="px-4 py-2">Approval Date</th>
                     <th class="px-4 py-2">Issuance Status</th>
                     <th class="px-4 py-2">Accounting Status</th>
-                    <th class="px-4 py-2 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 bg-white">
                   <tr *ngFor="let row of issuanceRows" class="text-xs hover:bg-slate-50">
-                    <td class="px-4 py-2 font-medium text-slate-900">
-                      {{ row.id }}
+                    <td class="px-4 py-2 font-semibold text-blue-700">
+                      <button
+                        type="button"
+                        class="hover:underline"
+                        (click)="openGuaranteeIssuance(row)"
+                      >
+                        {{ row.id }}
+                      </button>
                     </td>
                     <td class="px-4 py-2 text-slate-700">
                       {{ row.type }}
@@ -217,15 +218,6 @@
                         {{ row.accountingStatus }}
                       </span>
                     </td>
-                    <td class="px-4 py-2 text-right">
-                      <button
-                        type="button"
-                        class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-blue-700"
-                        (click)="openGuaranteeIssuance(row)"
-                      >
-                        Issue
-                      </button>
-                    </td>
                   </tr>
                 </tbody>
                 </app-ui-table>
@@ -243,13 +235,18 @@
                     <th class="px-4 py-2">Financial Impact</th>
                     <th class="px-4 py-2">Submitted</th>
                     <th class="px-4 py-2">Status</th>
-                    <th class="px-4 py-2 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 bg-white">
                   <tr *ngFor="let row of amendmentRows" class="text-xs hover:bg-slate-50">
-                    <td class="px-4 py-2 font-medium text-slate-900">
-                      {{ row.id }}
+                    <td class="px-4 py-2 font-semibold text-blue-700">
+                      <button
+                        type="button"
+                        class="hover:underline"
+                        (click)="openAmendmentProcessing(row)"
+                      >
+                        {{ row.id }}
+                      </button>
                     </td>
                     <td class="px-4 py-2 text-slate-800">
                       {{ row.originalRef }}
@@ -279,15 +276,6 @@
                         {{ row.status }}
                       </span>
                     </td>
-                    <td class="px-4 py-2 text-right">
-                      <button
-                        type="button"
-                        class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-blue-700"
-                        (click)="openAmendmentProcessing(row)"
-                      >
-                        Process
-                      </button>
-                    </td>
                   </tr>
                 </tbody>
                 </app-ui-table>
@@ -304,13 +292,18 @@
                     <th class="px-4 py-2">Claim Amount</th>
                     <th class="px-4 py-2">Submitted</th>
                     <th class="px-4 py-2">Status</th>
-                    <th class="px-4 py-2 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 bg-white">
                   <tr *ngFor="let row of claimRows" class="text-xs hover:bg-slate-50">
-                    <td class="px-4 py-2 font-medium text-slate-900">
-                      {{ row.id }}
+                    <td class="px-4 py-2 font-semibold text-blue-700">
+                      <button
+                        type="button"
+                        class="hover:underline"
+                        (click)="openClaimHandling(row)"
+                      >
+                        {{ row.id }}
+                      </button>
                     </td>
                     <td class="px-4 py-2 text-slate-800">
                       {{ row.guaranteeRef }}
@@ -336,15 +329,6 @@
                       >
                         {{ row.status }}
                       </span>
-                    </td>
-                    <td class="px-4 py-2 text-right">
-                      <button
-                        type="button"
-                        class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-blue-700"
-                        (click)="openClaimHandling(row)"
-                      >
-                        Process
-                      </button>
                     </td>
                   </tr>
                 </tbody>

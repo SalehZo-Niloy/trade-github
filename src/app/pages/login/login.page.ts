@@ -3,13 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthLogoComponent } from '../../components/common/auth-logo.component';
 import { UiInputComponent } from '../../components/ui/ui-input.component';
-import { CommonFooterComponent } from '../../components/common/common-footer.component';
 import { tradeTheme } from '../../styles/theme';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, AuthLogoComponent, UiInputComponent, CommonFooterComponent],
+  imports: [CommonModule, AuthLogoComponent, UiInputComponent],
   templateUrl: './login.page.html'
 })
 export class LoginPageComponent implements OnInit {

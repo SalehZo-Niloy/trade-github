@@ -14,7 +14,7 @@ import { tradeTheme } from '../../../styles/theme';
 export class WorkFlowPageComponent {
  theme = tradeTheme;
 
-  workflowUrl = 'http://10.11.204.35:13000/login';
+  workflowUrl = 'https://workflow.erainfotechbd.com/login';
 
   safeUrl: SafeResourceUrl | null = null;
 
@@ -29,7 +29,9 @@ export class WorkFlowPageComponent {
     },
   ];
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer) {
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.workflowUrl);
+  }
 
   openWorkflowUrl(): void {
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.workflowUrl);

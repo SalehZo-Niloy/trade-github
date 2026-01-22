@@ -50,7 +50,20 @@ interface TradeMenuItem {
                       class="flex items-center justify-between rounded-md border border-transparent px-3 py-2 text-sm font-medium text-slate-700 hover:border-slate-200 hover:bg-slate-50"
                       [ngClass]="getActiveClassForRoute(item.route)"
                     >
-                      <span>{{ item.label }}</span>
+                      <span class="flex items-center gap-2">
+                        <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Dashboard'">
+                          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
+                            <path
+                              d="M4 9.5 10 4l6 5.5V16a1 1 0 0 1-1 1h-3.5v-4H8.5v4H5a1 1 0 0 1-1-1V9.5Z"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span>{{ item.label }}</span>
+                      </span>
                     </a>
                   </ng-container>
                   <ng-container *ngIf="item.children && item.children.length > 0">
@@ -59,8 +72,62 @@ interface TradeMenuItem {
                       class="flex w-full items-center justify-between rounded-md border border-transparent px-3 py-2 text-left text-slate-700 hover:border-slate-200 hover:bg-slate-50"
                       (click)="toggleGroup(item.label)"
                     >
-                      <span class="text-xs font-semibold uppercase tracking-wide">
-                        {{ item.label }}
+                      <span class="flex items-center gap-2">
+                        <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Guarantee'">
+                          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
+                            <path
+                              d="M10 3 5 5v5c0 3.038 1.94 5.824 5 7 3.06-1.176 5-3.962 5-7V5l-5-2Z"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="m7.5 9.75 1.75 1.75 3.25-3.25"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Import'">
+                          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
+                            <path
+                              d="M10 3v10.5"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                            />
+                            <path
+                              d="m6.5 10 3.5 3.5L13.5 10"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Export'">
+                          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
+                            <path
+                              d="M10 16.5V6"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                            />
+                            <path
+                              d="M6.5 9 10 5.5 13.5 9"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span class="text-xs font-semibold uppercase tracking-wide">
+                          {{ item.label }}
+                        </span>
                       </span>
                       <span class="flex h-4 w-4 items-center justify-center text-slate-400">
                         <svg
