@@ -24,6 +24,7 @@ import { PendingReviewViewComponent } from '../pages/trade/import/import-applica
 import { ImportLcIssuancePageComponent } from '../pages/trade/import/import-application/lc-issuance/lc-issuance.page';
 import { LcChargeCollectionPageComponent } from '../pages/trade/import/import-application/lc-charge-collection/lc-charge-collection.page';
 import { LcMarginCollectionPageComponent } from '../pages/trade/import/import-application/lc-margin-collection/lc-margin-collection.page';
+import { LcAcceptancePageComponent } from '../pages/trade/import/import-application/lc-acceptance/lc-acceptance.page';
 import { LcAmendmentRequestPageComponent } from '../pages/trade/import/import-application/lc-amendment-request/lc-amendment-request.page';
 import { DocumentReceivePageComponent } from '../pages/trade/import/import-application/document-receive/document-receive.page';
 import { DocumentCheckingPageComponent } from '../pages/trade/import/import-application/document-checking/document-checking.page';
@@ -168,6 +169,10 @@ export const tradeRoutes: Routes = [
       {
         path: 'import/lc-margin-collection',
         component: LcMarginCollectionPageComponent,
+      },
+      {
+        path: 'import/lc-acceptance',
+        component: LcAcceptancePageComponent,
       },
       {
         path: 'import/lc-amendment-request',

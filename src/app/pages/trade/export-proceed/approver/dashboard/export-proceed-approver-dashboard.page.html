@@ -95,7 +95,7 @@
             <td class="px-6 py-4 font-bold text-slate-900">{{ p.currency }} {{ p.amount | number:'1.2-2' }}</td>
             <td class="px-6 py-4">
               <span [class]="'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ' + getStatusClass(p.status)">
-                {{ p.status }}
+                {{ formatStatus(p.status) }}
               </span>
             </td>
             <!-- <td class="px-6 py-4 text-right">

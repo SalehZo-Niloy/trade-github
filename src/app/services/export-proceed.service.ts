@@ -163,5 +163,12 @@ export class ExportProceedService {
       this.saveToStorage([...current]);
     }
   }
+
+  addProceed(proceed: ExportProceed) {
+    const current = this.proceeds.getValue();
+    const updated = [proceed, ...current];
+    this.proceeds.next(updated);
+    this.saveToStorage(updated);
+  }
 }
 

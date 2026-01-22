@@ -125,21 +125,28 @@ export class CreateRequestPageComponent {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       console.log('File uploaded:', file.name);
-      
-      // Simulate auto-fill logic
+
+      // Simulate auto-fill logic with fixed LC and DC Advice data
       setTimeout(() => {
         this.data.exportLC = {
           ...this.data.exportLC,
-          lcNo: 'LC-AUTO-' + Math.floor(Math.random() * 10000),
+          lcNo: '003LC029662',
           lcType: 'Irrevocable',
-          amount: '50000',
+          amount: '5000',
           currency: 'USD',
           exchangeRate: '1.0',
           amountLcy: '', // Will be calculated
-          issueDate: new Date().toISOString().split('T')[0],
-          issuingBank: 'Bank of America',
-          beneficiaryName: this.data.applicant.name
+          issueDate: '2024-01-23',
+          issuingBank: 'BANK ASIA LTD',
+          beneficiaryName: 'ASCOM INTERNATIONAL'
         };
+
+        this.data.dcAdvice = {
+          ...this.data.dcAdvice,
+          shipmentDate: '2024-12-12',
+          expiryDate: '2024-12-16'
+        };
+
         this.calculateLCY();
       }, 500);
     }

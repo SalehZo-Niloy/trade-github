@@ -94,13 +94,26 @@ interface TradeMenuItem {
                         <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Import'">
                           <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
                             <path
-                              d="M10 3v10.5"
+                              d="M10 4h-4"
                               stroke="currentColor"
                               stroke-width="1.4"
                               stroke-linecap="round"
                             />
                             <path
-                              d="m6.5 10 3.5 3.5L13.5 10"
+                              d="M6 4v4"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                            />
+                            <path
+                              d="M10 4 6 8"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M7 8.5h7a2 2 0 0 1 2 2v4.5H8a2 2 0 0 1-2-2V8.5Z"
                               stroke="currentColor"
                               stroke-width="1.4"
                               stroke-linecap="round"
@@ -111,13 +124,26 @@ interface TradeMenuItem {
                         <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Export'">
                           <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
                             <path
-                              d="M10 16.5V6"
+                              d="M10 4h4"
                               stroke="currentColor"
                               stroke-width="1.4"
                               stroke-linecap="round"
                             />
                             <path
-                              d="M6.5 9 10 5.5 13.5 9"
+                              d="M14 4v4"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                            />
+                            <path
+                              d="M10 4 14 8"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M6 8.5h7a2 2 0 0 1 2 2v4.5H7a2 2 0 0 1-2-2V8.5Z"
                               stroke="currentColor"
                               stroke-width="1.4"
                               stroke-linecap="round"
@@ -309,7 +335,7 @@ export class TradeLayoutComponent implements OnInit {
               route: ['/trade', 'import', 'submitting'],
             },
             {
-              label: 'Document view & Handover',
+              label: 'LC Review',
               route: ['/trade', 'import', 'document-handover'],
             },
             {
@@ -328,6 +354,11 @@ export class TradeLayoutComponent implements OnInit {
               label: 'LC Margin Collection',
               route: ['/trade', 'import', 'lc-margin-collection'],
             },
+            {
+              label: 'LC Acceptance',
+              route: ['/trade', 'import', 'lc-acceptance'],
+            },
+            
             {
               label: 'LC Amendment Request',
               route: ['/trade', 'import', 'lc-amendment-request'],
@@ -367,7 +398,7 @@ export class TradeLayoutComponent implements OnInit {
           label: 'DC Advising',
           children: [
             {
-              label: 'Customer Export LC Request',
+              label: 'Export LC Request',
               route: ['/trade', 'dc-advising', 'customer', 'dashboard']
             },
             {
@@ -381,14 +412,20 @@ export class TradeLayoutComponent implements OnInit {
             {
               label: 'Trade Approval Review',
               route: ['/trade', 'dc-advising', 'approver', 'dashboard']
-            }
+            },
+            {
+          label: 'DC Amendment',
+            },
+            {
+          label: 'DC Transfer',
+           },
           ]
         },
         {
           label: 'Export-Bill Collection',
           children: [
             {
-              label: 'Customer Bill Request',
+              label: 'Bill Request',
               route: ['/trade', 'export-bill', 'customer', 'dashboard']
             },
             {
@@ -419,7 +456,10 @@ export class TradeLayoutComponent implements OnInit {
             {
               label: 'Customer Dashboard',
               route: ['/trade', 'export-proceed', 'customer', 'dashboard']
-            }
+            },   
+            {
+          label: 'ARV Process',
+            },
           ]
         },
         
@@ -438,22 +478,13 @@ export class TradeLayoutComponent implements OnInit {
               label: 'Manager Review',
               route: ['/trade', 'master-lc', 'manager', 'dashboard']
             },
-          ]
-        },
-        {
-          label: 'DC Amendment',
-        },
-        {
-          label: 'DC Transfer',
-        },
-        {
-          label: 'Cost Sheet',
-        },
-        {
-          label: 'ARV Process',
-        },
-        {
+            {
           label: 'Master LC Replace',
+            },
+           {
+          label: 'Cost Sheet',
+           },
+          ]
         },
       ]
     }

@@ -4,6 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UiButtonComponent } from '../../../../../components/ui/ui-button.component';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 import { ImportLcStateService } from '../../../../../services/import-lc-state.service';
+import Swal from 'sweetalert2';
 
 interface SummaryRow {
   label: string;
@@ -24,7 +25,7 @@ interface AccountOption {
 }
 
 @Component({
-  selector: 'app-lc-margin-collection-page',
+  selector: 'app-lc-acceptance-page',
   standalone: true,
   imports: [
     CommonModule,
@@ -33,9 +34,9 @@ interface AccountOption {
     TradeLayoutComponent,
     UiButtonComponent,
   ],
-  templateUrl: './lc-margin-collection.page.html',
+  templateUrl: './lc-acceptance.page.html',
 })
-export class LcMarginCollectionPageComponent implements OnInit {
+export class LcAcceptancePageComponent implements OnInit {
   lcReferenceControl = new FormControl<string | null>(null);
   lcOptions: string[] = [
     'LC-2024-00847',
@@ -45,16 +46,10 @@ export class LcMarginCollectionPageComponent implements OnInit {
     'LC-REF-TEST',
   ];
   header = {
-    title: 'LC Margin Collection & Blocking',
+    title: 'LC Acceptance & Acknowledgement',
     reference: 'LC-2024-00847',
-    status: 'Awaiting Margin',
+    status: 'Awaiting Acceptance',
     openedOn: 'Jan 15, 2025',
-  };
-
-  user = {
-    name: 'James Mitchell',
-    role: 'Trade Officer',
-    initials: 'JM',
   };
 
   lcSummary: SummaryRow[] = [
@@ -66,19 +61,19 @@ export class LcMarginCollectionPageComponent implements OnInit {
     { label: 'Latest Shipment', value: 'February 28, 2025' },
   ];
 
-  margin = {
+  acceptance = {
     lcAmount: '2,450,000.00',
-    percentage: 20,
-    amount: 490000,
+    percentage: 0.5,
+    amount: 12250,
   };
 
-  marginSummary = {
+  acceptanceSummary = {
     reference: 'LC-2024-00847',
     totalAmount: 'USD 2,450,000.00',
-    marginRequired: 'USD 490,000.00',
-    debitAccount: '4521-8890-3321',
+    acceptanceAmount: 'USD 12,250.00',
+    settlementAccount: '4521-8890-3321',
     availableBalance: '$3,850,000.00',
-    afterBlocking: '$3,360,000.00',
+    afterSettlement: '$3,837,750.00',
     period: 'Until March 15, 2025',
   };
 
@@ -110,8 +105,8 @@ export class LcMarginCollectionPageComponent implements OnInit {
         ...this.header,
         reference: initialRef,
       };
-      this.marginSummary = {
-        ...this.marginSummary,
+      this.acceptanceSummary = {
+        ...this.acceptanceSummary,
         reference: initialRef,
       };
       this.lcReferenceControl.setValue(initialRef, { emitEvent: false });
@@ -123,8 +118,8 @@ export class LcMarginCollectionPageComponent implements OnInit {
           ...this.header,
           reference,
         };
-        this.marginSummary = {
-          ...this.marginSummary,
+        this.acceptanceSummary = {
+          ...this.acceptanceSummary,
           reference,
         };
         this.importLcStateService.updateState({ lcReference: reference });
@@ -137,8 +132,8 @@ export class LcMarginCollectionPageComponent implements OnInit {
           ...this.header,
           reference: state.lcReference,
         };
-        this.marginSummary = {
-          ...this.marginSummary,
+        this.acceptanceSummary = {
+          ...this.acceptanceSummary,
           reference: state.lcReference,
         };
         if (this.lcReferenceControl.value !== state.lcReference) {
@@ -147,67 +142,71 @@ export class LcMarginCollectionPageComponent implements OnInit {
       }
     });
 
-    this.recalculateMargin();
+    this.recalculateAcceptance();
   }
 
-  recalculateMargin() {
-    const baseAmount = this.parseAmount(this.margin.lcAmount);
-    const percentageNumber = Number(this.margin.percentage) || 0;
+  recalculateAcceptance() {
+    const baseAmount = this.parseAmount(this.acceptance.lcAmount);
+    const percentageNumber = Number(this.acceptance.percentage) || 0;
 
     if (!Number.isFinite(baseAmount) || baseAmount <= 0 || percentageNumber < 0) {
-      this.margin.amount = 0;
-      this.margin.percentage = 0;
-      this.marginSummary = {
-        ...this.marginSummary,
-        marginRequired: `USD ${this.formatAmount(0)}`,
+      this.acceptance.amount = 0;
+      this.acceptance.percentage = 0;
+      this.acceptanceSummary = {
+        ...this.acceptanceSummary,
+        acceptanceAmount: `USD ${this.formatAmount(0)}`,
       };
       return;
     }
 
     const calculatedAmount = (baseAmount * percentageNumber) / 100;
-    this.margin.amount = Number(calculatedAmount.toFixed(2));
-    this.marginSummary = {
-      ...this.marginSummary,
-      marginRequired: `USD ${this.formatAmount(this.margin.amount)}`,
+    this.acceptance.amount = Number(calculatedAmount.toFixed(2));
+    this.acceptanceSummary = {
+      ...this.acceptanceSummary,
+      acceptanceAmount: `USD ${this.formatAmount(this.acceptance.amount)}`,
     };
   }
 
   onPercentageChange(value: string | number) {
     const numeric = Number(value);
     if (!Number.isFinite(numeric) || numeric < 0) {
-      this.margin.percentage = 0;
+      this.acceptance.percentage = 0;
     } else if (numeric > 100) {
-      this.margin.percentage = 100;
+      this.acceptance.percentage = 100;
     } else {
-      this.margin.percentage = Number(numeric.toFixed(2));
+      this.acceptance.percentage = Number(numeric.toFixed(2));
     }
-    this.recalculateMargin();
+    this.recalculateAcceptance();
   }
 
   onAmountChange(value: string | number) {
-    const baseAmount = this.parseAmount(this.margin.lcAmount);
+    const baseAmount = this.parseAmount(this.acceptance.lcAmount);
     if (!Number.isFinite(baseAmount) || baseAmount <= 0) {
-      this.margin.amount = 0;
-      this.margin.percentage = 0;
-      this.marginSummary = {
-        ...this.marginSummary,
-        marginRequired: `USD ${this.formatAmount(0)}`,
+      this.acceptance.amount = 0;
+      this.acceptance.percentage = 0;
+      this.acceptanceSummary = {
+        ...this.acceptanceSummary,
+        acceptanceAmount: `USD ${this.formatAmount(0)}`,
       };
       return;
     }
 
     let enteredAmount = typeof value === 'number' ? value : this.parseAmount(String(value));
-    if (!Number.isFinite(enteredAmount) || enteredAmount < 0) enteredAmount = 0;
-    if (enteredAmount > baseAmount) enteredAmount = baseAmount;
+    if (!Number.isFinite(enteredAmount) || enteredAmount < 0) {
+      enteredAmount = 0;
+    }
+    if (enteredAmount > baseAmount) {
+      enteredAmount = baseAmount;
+    }
 
-    this.margin.amount = Number(enteredAmount.toFixed(2));
+    this.acceptance.amount = Number(enteredAmount.toFixed(2));
 
     const percentage = baseAmount === 0 ? 0 : (enteredAmount / baseAmount) * 100;
-    this.margin.percentage = Number(percentage.toFixed(2));
+    this.acceptance.percentage = Number(percentage.toFixed(2));
 
-    this.marginSummary = {
-      ...this.marginSummary,
-      marginRequired: `USD ${this.formatAmount(this.margin.amount)}`,
+    this.acceptanceSummary = {
+      ...this.acceptanceSummary,
+      acceptanceAmount: `USD ${this.formatAmount(this.acceptance.amount)}`,
     };
   }
 
@@ -228,7 +227,7 @@ export class LcMarginCollectionPageComponent implements OnInit {
 
   steps: ProcessStep[] = [
     { title: 'LC Opened', date: 'Jan 15, 2025', status: 'completed' },
-    { title: 'Block Margin', date: 'In Progress', status: 'in-progress' },
+    { title: 'LC Acceptance', date: 'In Progress', status: 'in-progress' },
     { title: 'Collect Charges', date: 'Pending', status: 'pending' },
     { title: 'Issue MT700', date: 'Pending', status: 'pending' },
   ];
@@ -253,13 +252,30 @@ export class LcMarginCollectionPageComponent implements OnInit {
     return ['bg-slate-300', 'text-slate-600'];
   }
 
-  onBlockMargin() {
-    // show a purple-accent modal matching the button
+  onAcceptLc() {
     this.showAlert(
-      'Margin Blocked',
-      `USD ${this.formatAmount(this.margin.amount)} has been blocked from ${this.selectedAccount.accountNumber}`,
+      'LC Accepted',
+      `Acceptance confirmed for USD ${this.acceptance.amount} on ${this.header.reference}`,
       '#7c3aed',
     );
+  }
+
+  onSave() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Saved',
+      text: `Changes saved successfully for ${this.header.reference}`,
+      confirmButtonColor: '#10b981',
+    });
+  }
+
+  onCancel() {
+    Swal.fire({
+      icon: 'info',
+      title: 'Cancelled',
+      text: `Operation cancelled for ${this.header.reference}`,
+      confirmButtonColor: '#6b7280',
+    });
   }
 
   private showAlert(title: string, text: string, accentColor: string) {
