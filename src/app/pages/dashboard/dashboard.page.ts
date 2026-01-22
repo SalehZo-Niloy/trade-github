@@ -50,6 +50,13 @@ export class DashboardPageComponent {
       return;
     }
 
+    if (solution === 'trade-finance-customer') {
+      if (typeof window !== 'undefined') {
+        window.open('https://tradefinanceconfig.netlify.app/', '_blank');
+      }
+      return;
+    }
+
     if (solution === 'work-flow') {
       this.router.navigate(['/workflow/work-flow']);
       return;

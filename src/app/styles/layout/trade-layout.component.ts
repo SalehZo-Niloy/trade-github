@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { CommonFooterComponent } from '../../components/common/common-footer.component';
 import { UserMenuComponent } from '../../components/common/user-menu.component';
 import { tradeTheme } from '../theme';
@@ -20,7 +20,7 @@ interface TradeMenuItem {
 @Component({
   selector: 'app-trade-layout',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, CommonFooterComponent, UserMenuComponent],
+  imports: [CommonModule, RouterLink, CommonFooterComponent, UserMenuComponent],
   template: `
     <div class="flex h-screen flex-col text-slate-900" [ngClass]="theme.page.background">
       <div class="flex flex-1 overflow-hidden">
@@ -47,8 +47,8 @@ interface TradeMenuItem {
                   <ng-container *ngIf="!item.children || item.children.length === 0">
                     <a
                       [routerLink]="item.route"
-                      routerLinkActive="bg-blue-50 text-blue-700 border-blue-300"
                       class="flex items-center justify-between rounded-md border border-transparent px-3 py-2 text-sm font-medium text-slate-700 hover:border-slate-200 hover:bg-slate-50"
+                      [ngClass]="getActiveClassForRoute(item.route)"
                     >
                       <span>{{ item.label }}</span>
                     </a>
@@ -86,8 +86,8 @@ interface TradeMenuItem {
                         >
                             <a
                               [routerLink]="child.route"
-                              routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
                               class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                              [ngClass]="getActiveClassForRoute(child.route)"
                             >
                               <span>{{ child.label }}</span>
                             </a>
@@ -122,8 +122,8 @@ interface TradeMenuItem {
                             <a
                               *ngFor="let grand of child.children"
                               [routerLink]="grand.route"
-                              routerLinkActive="bg-blue-50 text-blue-700 border-blue-300 border-blue-300"
                               class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                              [ngClass]="getActiveClassForRoute(grand.route)"
                             >
                               <span>{{ grand.label }}</span>
                             </a>
@@ -213,14 +213,10 @@ export class TradeLayoutComponent implements OnInit {
     {
       label: 'Guarantee',
       children: [
-        {
-          label: 'Guarantee Application',
-          route: ['/trade', 'guarantee'],
-        },
-        {
-          label: 'Regulatory Evaluation',
-          route: ['/trade', 'guarantee-regulatory-evaluation'],
-        },
+        // {
+        //   label: 'Guarantee Application',
+        //   route: ['/trade', 'guarantee'],
+        // },
         {
           label: 'Guarantee Officer Dashboard',
           route: ['/trade', 'guarantee-officer-dashboard']
@@ -228,6 +224,10 @@ export class TradeLayoutComponent implements OnInit {
         {
           label: 'Guarantee Checker Dashboard',
           route: ['/trade', 'guarantee-officer-checker-dashboard']
+        },
+        {
+          label: 'Regulatory Evaluation',
+          route: ['/trade', 'guarantee-regulatory-evaluation'],
         },
       ],
     },
@@ -386,6 +386,8 @@ export class TradeLayoutComponent implements OnInit {
 
   sidebarCollapsed = false;
   private expandedGroups: Record<string, boolean> = {};
+  private readonly LAST_ACTIVE_STORAGE_KEY = 'trade_last_active_menu';
+  private activePath: string | null = null;
 
   theme = tradeTheme;
 
@@ -394,40 +396,24 @@ export class TradeLayoutComponent implements OnInit {
   ngOnInit(): void {
     const currentUrl = this.router.url;
 
-    this.mainMenuItems.forEach((item) => {
-      if (item.children) {
-        const hasActiveChild = item.children.some((child) => {
-          // Check Level 2 Direct Route
-          if (child.route) {
-            const tree = this.router.createUrlTree(child.route);
-            const path = this.router.serializeUrl(tree);
-            if (currentUrl.startsWith(path)) {
-              return true;
-            }
-          }
+    let storedPath: string | null = null;
+    if (typeof window !== 'undefined') {
+      storedPath = window.localStorage.getItem(this.LAST_ACTIVE_STORAGE_KEY);
+    }
 
-          // Check Level 3 Children
-          if (child.children && child.children.length > 0) {
-            const hasActiveGrand = child.children.some((grand) => {
-              if (grand.route) {
-                const tree = this.router.createUrlTree(grand.route);
-                const path = this.router.serializeUrl(tree);
-                return currentUrl.startsWith(path);
-              }
-              return false;
-            });
+    const currentMatch = this.findMatchingMenuPath(currentUrl);
+    const initialPath = currentMatch || storedPath;
 
-            if (hasActiveGrand) {
-              this.expandedGroups[child.label] = true;
-              return true;
-            }
-          }
+    if (initialPath) {
+      this.setActivePath(initialPath);
+    }
 
-          return false;
-        });
-
-        if (hasActiveChild) {
-          this.expandedGroups[item.label] = true;
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const url = event.urlAfterRedirects || event.url;
+        const match = this.findMatchingMenuPath(url);
+        if (match) {
+          this.setActivePath(match);
         }
       }
     });
@@ -447,5 +433,99 @@ export class TradeLayoutComponent implements OnInit {
 
   toggleGroup(label: string): void {
     this.expandedGroups[label] = !this.expandedGroups[label];
+  }
+
+  getActiveClassForRoute(route?: any[]): string {
+    return this.isRouteActive(route) ? 'bg-blue-50 text-blue-700 border-blue-300' : '';
+  }
+
+  private findMatchingMenuPath(currentUrl: string): string | null {
+    let bestMatch: string | null = null;
+
+    const considerRoute = (route?: any[]) => {
+      const path = this.getRoutePath(route);
+      if (!path) {
+        return;
+      }
+      if (currentUrl.startsWith(path)) {
+        if (!bestMatch || path.length > bestMatch.length) {
+          bestMatch = path;
+        }
+      }
+    };
+
+    this.mainMenuItems.forEach((item) => {
+      considerRoute(item.route);
+      item.children?.forEach((child) => {
+        considerRoute(child.route);
+        child.children?.forEach((grand) => {
+          considerRoute(grand.route);
+        });
+      });
+    });
+
+    return bestMatch;
+  }
+
+  private setActivePath(path: string): void {
+    this.activePath = path;
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(this.LAST_ACTIVE_STORAGE_KEY, path);
+    }
+    this.updateExpandedGroups(path);
+  }
+
+  private updateExpandedGroups(activePath: string): void {
+    this.expandedGroups = {};
+
+    this.mainMenuItems.forEach((item) => {
+      let itemHasActive = false;
+
+      item.children?.forEach((child) => {
+        const childPath = this.getRoutePath(child.route);
+        let childHasActive = false;
+
+        if (childPath && activePath.startsWith(childPath)) {
+          childHasActive = true;
+        }
+
+        if (child.children && child.children.length > 0) {
+          const hasActiveGrand = child.children.some((grand) => {
+            const grandPath = this.getRoutePath(grand.route);
+            return !!grandPath && activePath.startsWith(grandPath);
+          });
+
+          if (hasActiveGrand) {
+            childHasActive = true;
+          }
+        }
+
+        if (childHasActive) {
+          this.expandedGroups[child.label] = true;
+          itemHasActive = true;
+        }
+      });
+
+      if (itemHasActive) {
+        this.expandedGroups[item.label] = true;
+      }
+    });
+  }
+
+  private getRoutePath(route?: any[]): string | null {
+    if (!route) {
+      return null;
+    }
+    const tree = this.router.createUrlTree(route);
+    return this.router.serializeUrl(tree);
+  }
+
+  private isRouteActive(route?: any[]): boolean {
+    const path = this.getRoutePath(route);
+    if (!path) {
+      return false;
+    }
+    const current = this.activePath || this.router.url;
+    return current.startsWith(path);
   }
 }

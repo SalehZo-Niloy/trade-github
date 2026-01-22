@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 import { UiInputComponent } from '../../../../../components/ui/ui-input.component';
 import { tradeTheme } from '../../../../../styles/theme';
+import Swal from 'sweetalert2';
 
 interface ChecklistItem {
   label: string;
@@ -46,6 +47,26 @@ export class GuaranteeCheckerApplicationReviewPageComponent {
   }
 
   submitDecision(): void {
-    this.router.navigate(['/trade', 'guarantee-officer-checker-dashboard']);
+    Swal.fire({
+      title: 'Submit checker decision?',
+      text: 'This will complete the checker review and update the guarantee status.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#4f46e5',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, submit'
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Decision submitted',
+          text: 'Checker decision has been recorded successfully.',
+          icon: 'success',
+          timer: 1800,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['/trade', 'guarantee-officer-checker-dashboard']);
+        });
+      }
+    });
   }
 }

@@ -201,18 +201,18 @@
               </span>
             </div>
             <div class="mt-4 space-y-2">
-              <a
-                [routerLink]="['/trade', 'guarantee']"
-                class="flex items-center justify-between rounded-lg bg-purple-50 px-4 py-2 text-sm font-medium text-purple-700"
+              <div
+                class="flex items-center justify-between rounded-lg bg-purple-50/70 px-4 py-2 text-sm font-medium text-purple-300 cursor-not-allowed"
+                aria-disabled="true"
               >
                 <span>Apply for New Guarantee</span>
-              </a>
-              <a
-                [routerLink]="['/trade', 'guarantee-officer-dashboard']"
-                class="flex items-center justify-between rounded-lg bg-purple-50 px-4 py-2 text-sm font-medium text-purple-700"
+              </div>
+              <div
+                class="flex items-center justify-between rounded-lg bg-purple-50/70 px-4 py-2 text-sm font-medium text-purple-300 cursor-not-allowed"
+                aria-disabled="true"
               >
                 <span>Request Amendment</span>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -408,28 +408,77 @@
             </p>
           </div>
           <div class="flex items-center gap-3">
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
-            >
-              <span>All Modules</span>
-              <span class="text-slate-400">
-                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none">
-                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </button>
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
-            >
-              <span>All Status</span>
-              <span class="text-slate-400">
-                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none">
-                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </button>
+            <div>
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="applyFilters()"
+                placeholder="Search Application ID"
+                class="w-48 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div class="relative">
+              <button
+                type="button"
+                (click)="toggleModuleFilter()"
+                class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
+              >
+                <span>{{ moduleFilter === 'All' ? 'All Modules' : moduleFilter }}</span>
+                <span class="text-slate-400">
+                  <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none">
+                    <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </button>
+              <div
+                *ngIf="showModuleDropdown"
+                class="absolute right-0 z-10 mt-2 w-40 rounded-xl border border-slate-200 bg-white py-1 shadow-lg"
+              >
+                <button
+                  *ngFor="let option of moduleOptions"
+                  type="button"
+                  class="flex w-full items-center justify-between px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
+                  (click)="selectModule(option)"
+                >
+                  <span>{{ option === 'All' ? 'All Modules' : option }}</span>
+                  <span
+                    *ngIf="moduleFilter === option"
+                    class="h-1.5 w-1.5 rounded-full bg-blue-500"
+                  ></span>
+                </button>
+              </div>
+            </div>
+            <div class="relative">
+              <button
+                type="button"
+                (click)="toggleStatusFilter()"
+                class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
+              >
+                <span>{{ statusFilter === 'All' ? 'All Status' : statusFilter }}</span>
+                <span class="text-slate-400">
+                  <svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="none">
+                    <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </button>
+              <div
+                *ngIf="showStatusDropdown"
+                class="absolute right-0 z-10 mt-2 w-44 rounded-xl border border-slate-200 bg-white py-1 shadow-lg"
+              >
+                <button
+                  *ngFor="let status of statusOptions"
+                  type="button"
+                  class="flex w-full items-center justify-between px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
+                  (click)="selectStatus(status)"
+                >
+                  <span>{{ status === 'All' ? 'All Status' : status }}</span>
+                  <span
+                    *ngIf="statusFilter === status"
+                    class="h-1.5 w-1.5 rounded-full bg-blue-500"
+                  ></span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="overflow-x-auto">
@@ -462,12 +511,12 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 bg-white">
-              <ng-container *ngFor="let t of recentTransactions">
+              <ng-container *ngFor="let row of filteredUnifiedRows">
                 <tr class="hover:bg-slate-50 transition-colors">
                   <td class="px-6 py-4 text-sm text-slate-500">
-                    <button (click)="toggleHistory(t.id)" class="text-slate-400 hover:text-slate-600">
+                    <button (click)="toggleHistory(row.id)" class="text-slate-400 hover:text-slate-600">
                       <svg
-                        *ngIf="expandedTransactionId !== t.id"
+                        *ngIf="expandedTransactionId !== row.id"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="none"
@@ -476,7 +525,7 @@
                         <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
                       <svg
-                        *ngIf="expandedTransactionId === t.id"
+                        *ngIf="expandedTransactionId === row.id"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="none"
@@ -487,60 +536,58 @@
                     </button>
                   </td>
                   <td class="px-6 py-4 text-sm font-semibold text-blue-700">
-                    {{ t.reference || t.id }}
+                    {{ row.id }}
                   </td>
                   <td class="px-6 py-4 text-sm">
                     <span
                       class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold"
                       [ngClass]="{
-                        'bg-blue-50 text-blue-700': t.type === 'REQUEST',
-                        'bg-emerald-50 text-emerald-700': t.type === 'EXPORT_BILL',
-                        'bg-purple-50 text-purple-700': t.type === 'EXPORT_PROCEED'
+                        'bg-purple-50 text-purple-700': row.module === 'Guarantee',
+                        'bg-blue-50 text-blue-700': row.module === 'Import',
+                        'bg-emerald-50 text-emerald-700': row.module === 'Export'
                       }"
                     >
-                      <span *ngIf="t.type === 'REQUEST'">Import</span>
-                      <span *ngIf="t.type === 'EXPORT_BILL'">Export</span>
-                      <span *ngIf="t.type === 'EXPORT_PROCEED'">Export Proceed</span>
+                      {{ row.module }}
                     </span>
                   </td>
                   <td class="px-6 py-4 text-sm text-slate-600">
-                    {{ formatType(t.type) }}
+                    {{ row.transactionType }}
                   </td>
                   <td class="px-6 py-4">
                     <span
                       class="inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold"
-                      [ngClass]="getStatusClass(t.status)"
+                      [ngClass]="getStatusClass(row.statusKey)"
                     >
-                      {{ t.status }}
+                      {{ row.statusDisplay }}
                     </span>
                   </td>
                   <td class="px-6 py-4 text-sm text-slate-600">
-                    LC Issued via SWIFT
+                    {{ row.lastBankAction }}
                   </td>
                   <td class="px-6 py-4 text-sm text-slate-600">
-                    Shipment Expected
+                    {{ row.nextStep }}
                   </td>
                   <td class="px-6 py-4 text-sm text-slate-500">
-                    {{ t.date | date: 'dd-MMM-yyyy' }}
+                    {{ row.lastUpdated | date: 'dd-MMM-yyyy' }}
                   </td>
                   <td class="px-6 py-4 text-right text-sm">
-                    <a [routerLink]="t.link" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                    <a [routerLink]="row.link" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                       View
                     </a>
                   </td>
                 </tr>
-                <tr *ngIf="expandedTransactionId === t.id" class="bg-slate-50">
+                <tr *ngIf="expandedTransactionId === row.id" class="bg-slate-50">
                   <td colspan="9" class="px-6 pb-4 pt-0">
                     <div class="ml-10 border-t border-slate-200 pt-4">
                       <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">
                         Processing History
                       </h4>
-                      <div *ngIf="t.history.length === 0" class="text-sm text-slate-500 italic">
+                      <div *ngIf="row.history.length === 0" class="text-sm text-slate-500 italic">
                         No history available.
                       </div>
-                      <div *ngIf="t.history.length > 0" class="flow-root">
+                      <div *ngIf="row.history.length > 0" class="flow-root">
                         <ul role="list" class="-mb-8">
-                          <li *ngFor="let event of t.history; let last = last">
+                          <li *ngFor="let event of row.history; let last = last">
                             <div class="relative pb-6">
                               <span
                                 *ngIf="!last"
@@ -585,9 +632,9 @@
                   </td>
                 </tr>
               </ng-container>
-              <tr *ngIf="recentTransactions.length === 0">
+              <tr *ngIf="filteredUnifiedRows.length === 0">
                 <td colspan="9" class="px-6 py-10 text-center text-sm text-slate-500">
-                  No recent transactions found.
+                  No transactions found for selected filters.
                 </td>
               </tr>
             </tbody>

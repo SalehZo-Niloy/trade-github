@@ -28,9 +28,9 @@
       </article>
 
       <article
-        class="rounded-2xl border p-5 shadow-sm opacity-60 cursor-not-allowed"
+        class="cursor-pointer rounded-2xl border p-5 shadow-sm transition hover:border-blue-200 hover:shadow-md"
         [ngClass]="[theme.border.default, theme.surface.card]"
-        aria-disabled="true"
+        (click)="goToSolution('trade-finance-customer')"
       >
         <h2 class="text-sm font-medium text-slate-500">
           Solution

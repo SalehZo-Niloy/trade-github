@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { TradeLayoutComponent } from '../../../styles/layout/trade-layout.component';
-import { TradeRequestService, TradeRequest } from '../../../services/trade-request.service';
-import { ExportBillService, ExportBill } from '../../../services/export-bill.service';
-import { ExportProceedService, ExportProceed } from '../../../services/export-proceed.service';
+import { TradeRequestService } from '../../../services/trade-request.service';
+import { ExportBillService } from '../../../services/export-bill.service';
+import { ExportProceedService } from '../../../services/export-proceed.service';
 import { TradeStatus } from '../../../services/workflow.service';
 import { combineLatest, map } from 'rxjs';
-import { RouterLink } from '@angular/router';
 
 interface HistoryEvent {
   status: string;
@@ -29,10 +30,25 @@ interface TransactionSummary {
   history: HistoryEvent[];
 }
 
+type ModuleType = 'Guarantee' | 'Import' | 'Export';
+
+interface UnifiedTransactionRow {
+  id: string;
+  module: ModuleType;
+  transactionType: string;
+  statusKey: TradeStatus;
+  statusDisplay: string;
+  lastBankAction: string;
+  nextStep: string;
+  lastUpdated: string;
+  link: string;
+  history: HistoryEvent[];
+}
+
 @Component({
   selector: 'app-trade-dashboard-page',
   standalone: true,
-  imports: [CommonModule, TradeLayoutComponent, RouterLink],
+  imports: [CommonModule, FormsModule, TradeLayoutComponent, RouterLink],
   templateUrl: './trade-dashboard.page.html'
 })
 export class TradeDashboardPageComponent implements OnInit {
@@ -45,6 +61,170 @@ export class TradeDashboardPageComponent implements OnInit {
 
   recentTransactions: TransactionSummary[] = [];
   expandedTransactionId: string | null = null;
+
+  unifiedRows: UnifiedTransactionRow[] = [
+    {
+      id: 'GTR-2024-001234',
+      module: 'Guarantee',
+      transactionType: 'Performance Guarantee',
+      statusKey: TradeStatus.SUBMITTED,
+      statusDisplay: 'Submitted',
+      lastBankAction: 'Application submitted',
+      nextStep: 'Monitor SLA – On Time',
+      lastUpdated: '2024-01-11',
+      link: '/trade/guarantee-officer-dashboard',
+      history: [
+        {
+          status: TradeStatus.SUBMITTED,
+          date: '2024-01-11',
+          time: '09:30',
+          actor: 'Customer',
+          comment: 'Guarantee application submitted'
+        },
+        {
+          status: TradeStatus.RO_VALIDATION,
+          date: '2024-01-11',
+          time: '10:15',
+          actor: 'Relationship Officer',
+          comment: 'Validation in progress'
+        }
+      ]
+    },
+    {
+      id: 'GTR-2024-001235',
+      module: 'Guarantee',
+      transactionType: 'Bid Bond',
+      statusKey: TradeStatus.RETURNED,
+      statusDisplay: 'Return',
+      lastBankAction: 'Returned for correction',
+      nextStep: 'Customer to update documents',
+      lastUpdated: '2024-01-10',
+      link: '/trade/guarantee-officer-dashboard',
+      history: [
+        {
+          status: TradeStatus.SUBMITTED,
+          date: '2024-01-10',
+          time: '11:05',
+          actor: 'Customer'
+        },
+        {
+          status: TradeStatus.RETURNED,
+          date: '2024-01-10',
+          time: '15:20',
+          actor: 'Relationship Officer',
+          comment: 'Missing contract copy'
+        }
+      ]
+    },
+    {
+      id: 'LC-2024-001',
+      module: 'Import',
+      transactionType: 'LC Issuance – Sight',
+      statusKey: TradeStatus.PENDING_APPROVAL,
+      statusDisplay: 'Pending Validation',
+      lastBankAction: 'Application received from ABC Trading Ltd',
+      nextStep: 'Validate documents',
+      lastUpdated: '2024-01-12',
+      link: '/trade/import/pending-review',
+      history: [
+        {
+          status: TradeStatus.SUBMITTED,
+          date: '2024-01-12',
+          time: '10:00',
+          actor: 'ABC Trading Ltd'
+        },
+        {
+          status: TradeStatus.PENDING_APPROVAL,
+          date: '2024-01-12',
+          time: '10:45',
+          actor: 'Trade Officer',
+          comment: 'Under review'
+        }
+      ]
+    },
+    {
+      id: 'LC-2024-002',
+      module: 'Import',
+      transactionType: 'LC Amendment Request',
+      statusKey: TradeStatus.PENDING_APPROVAL,
+      statusDisplay: 'Pending Validation',
+      lastBankAction: 'Amendment request from XYZ Exports Inc',
+      nextStep: 'Review amendment terms',
+      lastUpdated: '2024-01-13',
+      link: '/trade/import/lc-amendment-request',
+      history: [
+        {
+          status: TradeStatus.SUBMITTED,
+          date: '2024-01-13',
+          time: '09:10',
+          actor: 'XYZ Exports Inc'
+        },
+        {
+          status: TradeStatus.PENDING_APPROVAL,
+          date: '2024-01-13',
+          time: '09:40',
+          actor: 'Trade Officer'
+        }
+      ]
+    },
+    {
+      id: 'DC-2025-100001',
+      module: 'Export',
+      transactionType: 'Export LC Advising',
+      statusKey: TradeStatus.TO_TRADE_OFFICER,
+      statusDisplay: 'To Trade Officer',
+      lastBankAction: 'LC-DXB-9921 created',
+      nextStep: 'Trade officer review',
+      lastUpdated: '2026-01-19',
+      link: '/trade/dc-advising/to/dashboard',
+      history: [
+        {
+          status: TradeStatus.SUBMITTED,
+          date: '2026-01-19',
+          time: '11:25',
+          actor: 'Global Textiles Ltd'
+        },
+        {
+          status: TradeStatus.TO_TRADE_OFFICER,
+          date: '2026-01-19',
+          time: '11:45',
+          actor: 'System',
+          comment: 'Routed to Trade Officer queue'
+        }
+      ]
+    },
+    {
+      id: 'DC-2025-100002',
+      module: 'Export',
+      transactionType: 'Export Bill Submission',
+      statusKey: TradeStatus.SUBMITTED,
+      statusDisplay: 'Submitted',
+      lastBankAction: 'Export bill submitted',
+      nextStep: 'Verify documents',
+      lastUpdated: '2026-01-20',
+      link: '/trade/export-bill/to/dashboard',
+      history: [
+        {
+          status: TradeStatus.SUBMITTED,
+          date: '2026-01-20',
+          time: '14:10',
+          actor: 'Global Textiles Ltd'
+        }
+      ]
+    }
+  ];
+
+  filteredUnifiedRows: UnifiedTransactionRow[] = [...this.unifiedRows];
+
+  moduleFilter: 'All' | ModuleType = 'All';
+  statusFilter: 'All' | string = 'All';
+  searchTerm = '';
+
+  showModuleDropdown = false;
+  showStatusDropdown = false;
+
+  moduleOptions: Array<'All' | ModuleType> = ['All', 'Guarantee', 'Import', 'Export'];
+  statusOptions: string[] = ['All', 'Submitted', 'Return', 'Pending Validation', 'To Trade Officer'];
 
   constructor(
     private requestService: TradeRequestService,
@@ -186,5 +366,50 @@ export class TradeDashboardPageComponent implements OnInit {
 
   formatType(type: string): string {
     return type.replace('_', ' ');
+  }
+
+  applyFilters(): void {
+    let rows = [...this.unifiedRows];
+
+    if (this.moduleFilter !== 'All') {
+      rows = rows.filter((r) => r.module === this.moduleFilter);
+    }
+
+    if (this.statusFilter !== 'All') {
+      rows = rows.filter((r) => r.statusDisplay === this.statusFilter);
+    }
+
+    const term = this.searchTerm.trim().toLowerCase();
+    if (term) {
+      rows = rows.filter((r) => r.id.toLowerCase().includes(term));
+    }
+
+    this.filteredUnifiedRows = rows;
+  }
+
+  toggleModuleFilter(): void {
+    this.showModuleDropdown = !this.showModuleDropdown;
+    if (this.showModuleDropdown) {
+      this.showStatusDropdown = false;
+    }
+  }
+
+  toggleStatusFilter(): void {
+    this.showStatusDropdown = !this.showStatusDropdown;
+    if (this.showStatusDropdown) {
+      this.showModuleDropdown = false;
+    }
+  }
+
+  selectModule(option: 'All' | ModuleType): void {
+    this.moduleFilter = option;
+    this.showModuleDropdown = false;
+    this.applyFilters();
+  }
+
+  selectStatus(status: string): void {
+    this.statusFilter = status;
+    this.showStatusDropdown = false;
+    this.applyFilters();
   }
 }

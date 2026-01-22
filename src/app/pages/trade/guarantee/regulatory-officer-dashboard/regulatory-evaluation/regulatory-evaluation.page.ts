@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
+import Swal from 'sweetalert2';
 
 interface HeaderBadge {
   label: string;
@@ -248,5 +249,27 @@ export class GuaranteeRegulatoryEvaluationPageComponent {
       status: 'Clean'
     }
   ];
+
+  submitToRegulator(): void {
+    Swal.fire({
+      title: 'Submit to Regulator?',
+      text: 'This will confirm that the reporting pack has been submitted to the regulator.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#059669',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, submit'
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Submitted',
+          text: 'Reporting status is now marked as submitted to the regulator.',
+          icon: 'success',
+          timer: 1800,
+          showConfirmButton: false
+        });
+      }
+    });
+  }
 }
 

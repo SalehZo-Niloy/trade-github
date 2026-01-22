@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 import { UiInputComponent } from '../../../../../components/ui/ui-input.component';
 import { UiTableComponent } from '../../../../../components/ui/ui-table.component';
+import Swal from 'sweetalert2';
 
 interface ExistingGuaranteeRow {
   reference: string;
@@ -95,6 +96,42 @@ export class GuaranteeApplicationReviewPageComponent {
   }
 
   createSwiftMessage(): void {
-    this.router.navigate(['/trade', 'create-swift-message']);
+    Swal.fire({
+      title: 'Create SWIFT message?',
+      text: 'This will start preparing the MT76x message for this guarantee.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#2563eb',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Proceed'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/trade', 'create-swift-message']);
+      }
+    });
+  }
+
+  submitAndEscalate(): void {
+    Swal.fire({
+      title: 'Submit and escalate?',
+      text: 'This will escalate the application to the guarantee checker queue.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#059669',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, submit'
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Submitted',
+          text: 'Application has been submitted and escalated to checker.',
+          icon: 'success',
+          timer: 1800,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['/trade', 'guarantee-officer-checker-dashboard']);
+        });
+      }
+    });
   }
 }
