@@ -60,6 +60,14 @@ export class ImportSubmittingPageComponent implements OnInit, OnDestroy {
   statusType: 'success' | 'error' | '' = '';
 
   poReferenceFile: File | null = null;
+  isSubmitting = false;
+
+  uploadedFiles: File[] = [];
+  isUploading = false;
+  isPreviewOpen = false;
+  previewFileUrl: string | null = null;
+  previewFileType: 'image' | 'pdf' | 'other' | '' = '';
+  previewFileName = '';
 
   private subscription: Subscription = new Subscription();
 
@@ -109,6 +117,94 @@ export class ImportSubmittingPageComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  private addRequestToLocalList(reference: string, submissionDate: string): boolean {
+    if (typeof window === 'undefined') {
+      return true;
+    }
+
+    try {
+      const stored = window.localStorage.getItem('importLcRequests');
+      let requests: any[] = [];
+
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          requests = parsed;
+        }
+      }
+
+      const newRequest = {
+        reference,
+        submissionDate,
+        lcType: this.lcType,
+        amount: this.invoiceAmount,
+        currency: this.currency,
+        beneficiaryName: this.beneficiaryName,
+        beneficiaryCountry: this.beneficiaryCountry,
+        incoterm: this.incoterm,
+        goodsDescription: this.goodsDescription,
+        shipmentPeriod: this.shipmentPeriod,
+        portOfDischarge: this.portOfDischarge,
+        status: 'LC Initiated',
+        applicantName: this.applicantName,
+        poReferenceFileName: this.poReferenceFile?.name || this.poReference || '',
+      };
+
+      requests.unshift(newRequest);
+      window.localStorage.setItem('importLcRequests', JSON.stringify(requests));
+
+      return true;
+    } catch (error) {
+      this.statusType = 'error';
+      this.statusMessage = 'Failed to save your request. Please try again.';
+      return false;
+    }
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes < 1024) {
+      return `${bytes} B`;
+    }
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    }
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
+
+  previewFile(file: File): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (this.previewFileUrl) {
+      URL.revokeObjectURL(this.previewFileUrl);
+    }
+
+    const url = URL.createObjectURL(file);
+    this.previewFileUrl = url;
+    this.previewFileName = file.name;
+
+    if (file.type === 'application/pdf') {
+      this.previewFileType = 'pdf';
+    } else if (file.type.startsWith('image/')) {
+      this.previewFileType = 'image';
+    } else {
+      this.previewFileType = 'other';
+    }
+
+    this.isPreviewOpen = true;
+  }
+
+  closePreview(): void {
+    if (this.previewFileUrl) {
+      URL.revokeObjectURL(this.previewFileUrl);
+    }
+    this.previewFileUrl = null;
+    this.previewFileName = '';
+    this.previewFileType = '';
+    this.isPreviewOpen = false;
+  }
+
   updateServiceState(): void {
     this.importLcStateService.updateState({
       requestType: this.requestType,
@@ -150,13 +246,46 @@ export class ImportSubmittingPageComponent implements OnInit, OnDestroy {
   }
 
   submitRequest(): void {
-    // No required field validation — submit everything as-is
-    this.updateServiceState();
-    this.statusType = 'success';
-    this.statusMessage = 'LC initiation request submitted.';
+    this.isSubmitting = true;
+    const now = new Date();
+    const submissionDate = now.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+    const reference =
+      'LC' +
+      now.getFullYear().toString() +
+      (now.getMonth() + 1).toString().padStart(2, '0') +
+      now.getDate().toString().padStart(2, '0') +
+      Math.floor(1000 + Math.random() * 9000).toString();
 
-    // Navigate to customer view
-    this.router.navigate(['/trade', 'import', 'customer-view']);
+    this.updateServiceState();
+    const saved = this.addRequestToLocalList(reference, submissionDate);
+    if (!saved) {
+      this.isSubmitting = false;
+      return;
+    }
+
+    this.statusType = 'success';
+    this.statusMessage = `LC initiation request submitted. Reference: ${reference}.`;
+
+    this.router
+      .navigate(['/trade', 'import', 'submitting'], {
+        queryParams: { reference },
+      })
+      .catch(() => {
+        this.statusType = 'error';
+        this.statusMessage =
+          'Your request was submitted but navigation to the LC list failed. Please open the Import LC list from the menu.';
+      })
+      .finally(() => {
+        this.isSubmitting = false;
+      });
+  }
+
+  backToList(): void {
+    this.router.navigate(['/trade', 'import', 'submitting']);
   }
 
   cancel(): void {
@@ -165,16 +294,54 @@ export class ImportSubmittingPageComponent implements OnInit, OnDestroy {
 
   onFileSelected(event: Event, field: string): void {
     const input = event.target as HTMLInputElement;
-    const file = input.files && input.files.length > 0 ? input.files[0] : null;
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
     if (field === 'poReference') {
-      this.poReferenceFile = file;
-      this.updateServiceState();
+      this.isUploading = true;
+      const maxSize = 10 * 1024 * 1024;
+      const newFiles: File[] = [];
+      const errors: string[] = [];
+
+      Array.from(input.files).forEach((file) => {
+        const isAllowedType =
+          file.type === 'application/pdf' ||
+          file.type.startsWith('image/') ||
+          file.type === 'text/plain';
+
+        if (!isAllowedType) {
+          errors.push(`File type not allowed: ${file.name}`);
+          return;
+        }
+
+        if (file.size > maxSize) {
+          errors.push(`File too large (max 10MB): ${file.name}`);
+          return;
+        }
+
+        newFiles.push(file);
+      });
+
+      if (newFiles.length > 0) {
+        this.uploadedFiles = [...this.uploadedFiles, ...newFiles];
+        this.poReferenceFile = this.uploadedFiles[0];
+        this.updateServiceState();
+      }
+
+      if (errors.length > 0) {
+        this.statusType = 'error';
+        this.statusMessage = errors.join(' ');
+      }
+
+      this.isUploading = false;
     }
   }
 
   removeFile(field: string): void {
     if (field === 'poReference') {
       this.poReferenceFile = null;
+      this.uploadedFiles = [];
       this.updateServiceState();
     }
   }

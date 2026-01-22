@@ -199,12 +199,15 @@ export class ImportDocumentHandoverPageComponent {
     }
   }
 
-  actionLabel(status: LcStatus): string {
-    return 'View';
-  }
-
-  viewRequest(reference: string): void {
-    this.router.navigate(['/trade/import/document-handover/view', reference]);
+  async viewRequest(reference: string): Promise<void> {
+    try {
+      const success = await this.router.navigate(['/trade/import/document-handover/view', reference]);
+      if (!success) {
+        console.error('Navigation to document handover view failed for reference', reference);
+      }
+    } catch (error) {
+      console.error('Error during navigation to document handover view', reference, error);
+    }
   }
 
   trackByReference(_: number, request: LcRequestRow): string {

@@ -36,12 +36,20 @@
             <th class="px-6 py-3 font-medium">Amount</th>
             <th class="px-6 py-3 font-medium">Date</th>
             <th class="px-6 py-3 font-medium">Status</th>
-            <th class="px-6 py-3 font-medium">Action</th>
+            <!-- <th class="px-6 py-3 font-medium">Action</th> -->
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr *ngFor="let req of requests$ | async" class="hover:bg-gray-50">
-            <td class="px-6 py-4 font-medium text-gray-900">{{ req.exportLCNo }}</td>
+<td class="px-6 py-4 whitespace-nowrap">
+  <a
+    [routerLink]="['/trade/master-lc/to/request', req.id]"
+    class="text-blue-600 font-medium hover:text-blue-800"
+    title="View Details"
+  >
+    {{ req.exportLCNo }}
+  </a>
+</td>
             <td class="px-6 py-4">{{ req.applicantName }}</td>
             <td class="px-6 py-4">{{ req.currency }} {{ req.requestedAmount | number:'1.2-2' }}</td>
             <td class="px-6 py-4">{{ req.submissionDate }}</td>
@@ -53,7 +61,7 @@
                 {{ req.status }}
               </span>
             </td>
-            <td class="px-6 py-4">
+            <!-- <td class="px-6 py-4">
               <a
                 [routerLink]="['/trade/master-lc/to/request', req.id]"
                 class="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white p-2 text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -64,7 +72,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </a>
-            </td>
+            </td> -->
           </tr>
           <tr *ngIf="(requests$ | async)?.length === 0">
             <td colspan="6" class="px-6 py-8 text-center text-gray-500">

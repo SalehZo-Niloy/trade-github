@@ -31,6 +31,8 @@ export interface ImportLcRequest {
   remarks: string;
   confirm: boolean;
   poReferenceFile?: File | null;
+  lcReference: string;
+  lcReferences: string[];
 }
 
 @Injectable({
@@ -65,7 +67,9 @@ export class ImportLcStateService {
     preferredAdvisingBank: '',
     remarks: '',
     confirm: false,
-    poReferenceFile: null
+    poReferenceFile: null,
+    lcReference: '',
+    lcReferences: []
   };
 
   private stateSubject = new BehaviorSubject<ImportLcRequest>(this.initialState);

@@ -250,7 +250,6 @@
             <th class="px-3 py-2">Beneficiary</th>
             <th class="px-3 py-2">RO Name</th>
             <th class="px-3 py-2">Status</th>
-            <th class="px-3 py-2 text-right">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -258,7 +257,16 @@
             *ngFor="let request of pagedRequests; trackBy: trackByReference"
             class="border-b border-slate-100 last:border-b-0"
           >
-            <td class="px-3 py-2 font-semibold text-blue-700">{{ request.reference }}</td>
+            <td class="px-3 py-2">
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                (click)="viewSummary(request.reference)"
+                [attr.aria-label]="'Open pending review details for ' + request.reference"
+              >
+                <span>{{ request.reference }}</span>
+              </button>
+            </td>
             <td class="px-3 py-2">{{ request.submittedOn }}</td>
             <td class="px-3 py-2">{{ request.customer }}</td>
             <td class="px-3 py-2">{{ request.lcType }}</td>
@@ -272,15 +280,6 @@
               >
                 {{ request.status }}
               </span>
-            </td>
-            <td class="px-3 py-2 text-right">
-              <button
-                type="button"
-                class="inline-flex items-center rounded-md border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50"
-                (click)="viewSummary(request.reference)"
-              >
-                {{ actionLabel(request.status) }}
-              </button>
             </td>
           </tr>
         </tbody>

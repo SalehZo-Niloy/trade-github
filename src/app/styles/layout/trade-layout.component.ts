@@ -238,19 +238,15 @@ export class TradeLayoutComponent implements OnInit {
           label: 'Import Application',
           children: [
             {
-              label: 'Submitting Import LC Request',
+              label: 'LC Request',
               route: ['/trade', 'import', 'submitting'],
-            },
-            {
-              label: 'Import LC Request Customer view page',
-              route: ['/trade', 'import', 'customer-view'],
             },
             {
               label: 'Document view & Handover',
               route: ['/trade', 'import', 'document-handover'],
             },
             {
-              label: 'Pending review & Approve Import LC',
+              label: 'Pending review & Approve',
               route: ['/trade', 'import', 'pending-review'],
             },
             {
@@ -278,20 +274,16 @@ export class TradeLayoutComponent implements OnInit {
               route: ['/trade', 'import', 'document-checking'],
             },
             {
-              label: 'Discrepancy Record, Review & Rejection',
+              label: 'Discrepancy Checking',
               route: ['/trade', 'import', 'discrepancy-record'],
             },
             {
-              label: 'LC Settlement Decision',
+              label: 'LC Settlement',
               route: ['/trade', 'import', 'lc-settlement-decision'],
             },
             {
               label: 'PAD Creation',
               route: ['/trade', 'import', 'pad-creation'],
-            },
-            {
-              label: 'Execute Payment',
-              route: ['/trade', 'import', 'execute-payment'],
             },
             {
               label: 'LC Closure',
@@ -363,6 +355,7 @@ export class TradeLayoutComponent implements OnInit {
             }
           ]
         },
+        
         {
           label: 'Master LC',
           children: [
@@ -379,7 +372,22 @@ export class TradeLayoutComponent implements OnInit {
               route: ['/trade', 'master-lc', 'manager', 'dashboard']
             },
           ]
-        }
+        },
+        {
+          label: 'DC Amendment',
+        },
+        {
+          label: 'DC Transfer',
+        },
+        {
+          label: 'Cost Sheet',
+        },
+        {
+          label: 'ARV Process',
+        },
+        {
+          label: 'Master LC Replace',
+        },
       ]
     }
   ];

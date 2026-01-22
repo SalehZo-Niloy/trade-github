@@ -57,3 +57,11 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Draft LC PDF assets
+
+To enable the Import LC customer view page to display and download draft LC documents:
+
+- Place draft LC PDF files in `src/assets/pdf/`.
+- Ensure the main draft file is available as `src/assets/pdf/draft-lc-sample.pdf`, or update the path configured in `ImportCustomerViewPageComponent`.
+- The application will serve these files through the standard Angular assets pipeline in both development and production builds.

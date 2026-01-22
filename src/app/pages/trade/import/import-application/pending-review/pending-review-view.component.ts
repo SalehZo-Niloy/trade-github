@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 import { UiButtonComponent } from '../../../../../components/ui/ui-button.component';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
 
@@ -25,7 +27,7 @@ interface DocumentItem {
 @Component({
   selector: 'app-pending-review-view',
   standalone: true,
-  imports: [CommonModule, FormsModule, TradeLayoutComponent, UiButtonComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TradeLayoutComponent, UiButtonComponent],
   templateUrl: './pending-review-view.component.html',
 })
 export class PendingReviewViewComponent {
@@ -124,4 +126,34 @@ export class PendingReviewViewComponent {
 
   tradeRemarks = '';
   decision = 'approve';
+
+  onSaveAndContinue(): void {
+    Swal.fire({
+      title: 'Progress Saved',
+      text: 'Review has been saved. You can continue later.',
+      icon: 'success',
+      confirmButtonColor: '#4b5563',
+      confirmButtonText: 'OK',
+    });
+  }
+
+  onReject(): void {
+    Swal.fire({
+      title: 'Request Rejected',
+      text: 'Import LC request has been rejected and returned with remarks.',
+      icon: 'success',
+      confirmButtonColor: '#dc2626',
+      confirmButtonText: 'OK',
+    });
+  }
+
+  onApprove(): void {
+    Swal.fire({
+      title: 'Request Approved',
+      text: 'Import LC request has been approved and forwarded to Trade Officer.',
+      icon: 'success',
+      confirmButtonColor: '#059669',
+      confirmButtonText: 'OK',
+    });
+  }
 }

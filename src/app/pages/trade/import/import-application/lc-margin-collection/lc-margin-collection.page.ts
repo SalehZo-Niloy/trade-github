@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UiButtonComponent } from '../../../../../components/ui/ui-button.component';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
+import { ImportLcStateService } from '../../../../../services/import-lc-state.service';
 
 interface SummaryRow {
   label: string;
@@ -25,10 +26,18 @@ interface AccountOption {
 @Component({
   selector: 'app-lc-margin-collection-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, TradeLayoutComponent, UiButtonComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TradeLayoutComponent, UiButtonComponent],
   templateUrl: './lc-margin-collection.page.html',
 })
-export class LcMarginCollectionPageComponent {
+export class LcMarginCollectionPageComponent implements OnInit {
+  lcReferenceControl = new FormControl<string | null>(null);
+  lcOptions: string[] = [
+    'LC-2024-00847',
+    'LC-2024-01001',
+    'LC-2024-01025',
+    'LC-2025-00003',
+    'LC-REF-TEST',
+  ];
   header = {
     title: 'LC Margin Collection & Blocking',
     reference: 'LC-2024-00847',
@@ -53,7 +62,7 @@ export class LcMarginCollectionPageComponent {
 
   margin = {
     lcAmount: '2,450,000.00',
-    percentage: '20%',
+    percentage: 20,
     amount: '490,000.00',
   };
 
@@ -83,6 +92,143 @@ export class LcMarginCollectionPageComponent {
   ];
 
   selectedAccount = this.accountOptions[0];
+
+  constructor(private importLcStateService: ImportLcStateService) {
+  }
+
+  ngOnInit(): void {
+    const state = this.importLcStateService.getState();
+    const initialRef = state.lcReference || this.header.reference || null;
+
+    if (initialRef) {
+      this.header = {
+        ...this.header,
+        reference: initialRef,
+      };
+      this.marginSummary = {
+        ...this.marginSummary,
+        reference: initialRef,
+      };
+      this.lcReferenceControl.setValue(initialRef, { emitEvent: false });
+    }
+
+    this.lcReferenceControl.valueChanges.subscribe((reference) => {
+      if (reference) {
+        this.header = {
+          ...this.header,
+          reference,
+        };
+        this.marginSummary = {
+          ...this.marginSummary,
+          reference,
+        };
+        this.importLcStateService.updateState({ lcReference: reference });
+      }
+    });
+
+    this.importLcStateService.state$.subscribe((state) => {
+      if (state.lcReference) {
+        this.header = {
+          ...this.header,
+          reference: state.lcReference,
+        };
+        this.marginSummary = {
+          ...this.marginSummary,
+          reference: state.lcReference,
+        };
+        if (this.lcReferenceControl.value !== state.lcReference) {
+          this.lcReferenceControl.setValue(state.lcReference, { emitEvent: false });
+        }
+      }
+    });
+
+    this.recalculateMargin();
+  }
+
+  recalculateMargin() {
+    const baseAmount = this.parseAmount(this.margin.lcAmount);
+    const percentageNumber = Number(this.margin.percentage) || 0;
+
+    if (!Number.isFinite(baseAmount) || baseAmount <= 0 || percentageNumber < 0) {
+      this.margin.amount = this.formatAmount(0);
+      this.margin.percentage = 0;
+      this.marginSummary = {
+        ...this.marginSummary,
+        marginRequired: `USD ${this.margin.amount}`,
+      };
+      return;
+    }
+
+    const calculatedAmount = (baseAmount * percentageNumber) / 100;
+    this.margin.amount = this.formatAmount(calculatedAmount);
+    this.marginSummary = {
+      ...this.marginSummary,
+      marginRequired: `USD ${this.margin.amount}`,
+    };
+  }
+
+  onPercentageChange(value: string | number) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric) || numeric < 0) {
+      this.margin.percentage = 0;
+    } else if (numeric > 100) {
+      this.margin.percentage = 100;
+    } else {
+      this.margin.percentage = Number(numeric.toFixed(2));
+    }
+    this.recalculateMargin();
+  }
+
+  onAmountChange(value: string) {
+    const baseAmount = this.parseAmount(this.margin.lcAmount);
+    if (!Number.isFinite(baseAmount) || baseAmount <= 0) {
+      this.margin.amount = this.formatAmount(0);
+      this.margin.percentage = 0;
+      this.marginSummary = {
+        ...this.marginSummary,
+        marginRequired: `USD ${this.margin.amount}`,
+      };
+      return;
+    }
+
+    const enteredAmount = this.parseAmount(value);
+    let sanitizedAmount = enteredAmount;
+
+    if (!Number.isFinite(sanitizedAmount) || sanitizedAmount < 0) {
+      sanitizedAmount = 0;
+    }
+
+    if (sanitizedAmount > baseAmount) {
+      sanitizedAmount = baseAmount;
+    }
+
+    this.margin.amount = this.formatAmount(sanitizedAmount);
+
+    const percentage =
+      baseAmount === 0 ? 0 : (sanitizedAmount / baseAmount) * 100;
+    this.margin.percentage = Number(percentage.toFixed(2));
+
+    this.marginSummary = {
+      ...this.marginSummary,
+      marginRequired: `USD ${this.margin.amount}`,
+    };
+  }
+
+  private parseAmount(value: string): number {
+    const normalized = value.replace(/,/g, '');
+    const numeric = Number(normalized);
+    if (Number.isNaN(numeric)) {
+      return 0;
+    }
+    return numeric;
+  }
+
+  private formatAmount(value: number): string {
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
 
   steps: ProcessStep[] = [
     { title: 'LC Opened', date: 'Jan 15, 2025', status: 'completed' },

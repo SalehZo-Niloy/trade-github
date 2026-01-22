@@ -216,12 +216,15 @@ export class ImportPendingReviewPageComponent {
     }
   }
 
-  actionLabel(status: ReviewStatus): string {
-    return status === 'Pending Review' ? 'Review & Decide' : 'View Summary';
-  }
-
-  viewSummary(reference: string): void {
-    this.router.navigate(['/trade/import/pending-review/view', reference]);
+  async viewSummary(reference: string): Promise<void> {
+    try {
+      const success = await this.router.navigate(['/trade/import/pending-review/view', reference]);
+      if (!success) {
+        console.error('Navigation to pending review view failed for reference', reference);
+      }
+    } catch (error) {
+      console.error('Error during navigation to pending review view', reference, error);
+    }
   }
 
   trackByReference(_: number, request: PendingRequestRow): string {

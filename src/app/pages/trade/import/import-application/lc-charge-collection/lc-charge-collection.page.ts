@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UiButtonComponent } from '../../../../../components/ui/ui-button.component';
 import { TradeLayoutComponent } from '../../../../../styles/layout/trade-layout.component';
+import { ImportLcStateService } from '../../../../../services/import-lc-state.service';
 
 interface ChargeItem {
   title: string;
@@ -30,10 +31,19 @@ interface ProcessStep {
 @Component({
   selector: 'app-lc-charge-collection-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, TradeLayoutComponent, UiButtonComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TradeLayoutComponent, UiButtonComponent],
   templateUrl: './lc-charge-collection.page.html',
 })
-export class LcChargeCollectionPageComponent {
+export class LcChargeCollectionPageComponent implements OnInit {
+  lcReferenceControl = new FormControl<string | null>(null);
+
+  lcOptions: string[] = [
+    'LC-2024-00847',
+    'LC-2024-01001',
+    'LC-2024-01025',
+    'LC-2025-00003',
+    'LC-REF-TEST',
+  ];
   header = {
     title: 'LC Charges Collection',
     reference: 'LC-2024-00847',
@@ -147,6 +157,56 @@ export class LcChargeCollectionPageComponent {
   ];
 
   selectedAccount = this.debitAccounts[0];
+
+  constructor(private importLcStateService: ImportLcStateService) {
+  }
+
+  ngOnInit(): void {
+    const state = this.importLcStateService.getState();
+    const initialRef = state.lcReference || this.header.reference || this.lcOptions[0] || null;
+
+    if (initialRef) {
+      this.header = {
+        ...this.header,
+        reference: initialRef,
+      };
+      this.summary = {
+        ...this.summary,
+        reference: initialRef,
+      };
+      this.lcReferenceControl.setValue(initialRef, { emitEvent: false });
+    }
+
+    this.lcReferenceControl.valueChanges.subscribe((reference) => {
+      if (reference) {
+        this.header = {
+          ...this.header,
+          reference,
+        };
+        this.summary = {
+          ...this.summary,
+          reference,
+        };
+        this.importLcStateService.updateState({ lcReference: reference });
+      }
+    });
+
+    this.importLcStateService.state$.subscribe((state) => {
+      if (state.lcReference) {
+        this.header = {
+          ...this.header,
+          reference: state.lcReference,
+        };
+        this.summary = {
+          ...this.summary,
+          reference: state.lcReference,
+        };
+        if (this.lcReferenceControl.value !== state.lcReference) {
+          this.lcReferenceControl.setValue(state.lcReference, { emitEvent: false });
+        }
+      }
+    });
+  }
 
   get summaryTotal(): string {
     return this.totals.total;

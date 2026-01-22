@@ -15,7 +15,8 @@ import { GuaranteeClaimSettlementPageComponent } from '../pages/trade/guarantee/
 import { GuaranteeRegulatoryEvaluationPageComponent } from '../pages/trade/guarantee/regulatory-officer-dashboard/regulatory-evaluation/regulatory-evaluation.page';
 import { ImportApplicationPageComponent } from '../pages/trade/import/import-application/import-application.page';
 import { ImportSubmittingPageComponent } from '../pages/trade/import/import-application/submitting/submitting.page';
-import { ImportCustomerViewPageComponent } from '../pages/trade/import/import-application/customer-view/customer-view.page';
+import { ImportSubmittingViewPageComponent } from '../pages/trade/import/import-application/submitting/submitting.page.view';
+import { ImportCustomerViewPageComponent } from '../pages/trade/import/import-application/submitting/customer-view.page';
 import { ImportDocumentHandoverPageComponent } from '../pages/trade/import/import-application/document-handover/document-handover.page';
 import { DocumentHandoverViewComponent } from '../pages/trade/import/import-application/document-handover/document-handover-view.component';
 import { ImportPendingReviewPageComponent } from '../pages/trade/import/import-application/pending-review/pending-review.page';
@@ -130,6 +131,10 @@ export const tradeRoutes: Routes = [
       },
       {
         path: 'import/submitting',
+        component: ImportSubmittingViewPageComponent,
+      },
+      {
+        path: 'import/submitting/create',
         component: ImportSubmittingPageComponent,
       },
       {

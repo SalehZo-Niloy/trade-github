@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tf-swal-popup {
+  @apply rounded-2xl border border-slate-200 shadow-xl;
+}
+
+.tf-swal-confirm-button {
+  @apply rounded-md px-4 py-2 text-[11px] font-semibold;
+}

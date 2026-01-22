@@ -17,7 +17,16 @@
         <div>
           <h1 class="text-lg font-semibold text-slate-900">{{ header.title }}</h1>
           <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-            <span>LC Reference: {{ header.reference }}</span>
+            <span id="lc-charge-reference-label">LC Reference:</span>
+            <select
+              [formControl]="lcReferenceControl"
+              class="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              aria-labelledby="lc-charge-reference-label"
+            >
+              <option *ngFor="let ref of lcOptions" [value]="ref">
+                {{ ref }}
+              </option>
+            </select>
             <span class="h-1 w-1 rounded-full bg-slate-300"></span>
             <span
               class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700"
