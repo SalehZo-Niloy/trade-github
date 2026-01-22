@@ -6,16 +6,16 @@
 >
   <div class="px-6 py-6 bg-slate-50 min-h-screen space-y-6">
     <section class="space-y-2">
-      <h1 class="text-2xl font-semibold text-slate-900">Trade Finance Control Center</h1>
-      <p class="text-sm text-slate-500">
+      <h1 class="text-2xl font-semibold text-slate-900">Trade Finance</h1>
+      <!-- <p class="text-sm text-slate-500">
         Unified view of your Import, Export, and Guarantee operations
-      </p>
+      </p> -->
     </section>
 
     <section class="space-y-4">
-      <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+      <!-- <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
         Global Snapshot
-      </h2>
+      </h2> -->
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
           <div class="flex items-start gap-3">
@@ -44,10 +44,10 @@
               </svg>
             </div>
             <div>
-              <div class="text-2xl font-semibold text-slate-900">AED 12.5M</div>
+              <div class="text-2xl font-semibold text-slate-900">BDT 12.5M</div>
               <div class="mt-1 text-sm font-medium text-slate-800">Total Exposure</div>
               <div class="mt-1 text-xs text-slate-500">
-                Funded: AED 8.2M · Non-Funded: AED 4.3M
+                Funded: BDT 8.2M · Non-Funded: BDT 4.3M
               </div>
             </div>
           </div>
@@ -535,8 +535,13 @@
                       </svg>
                     </button>
                   </td>
-                  <td class="px-6 py-4 text-sm font-semibold text-blue-700">
-                    {{ row.id }}
+                  <td class="px-6 py-4 text-sm font-semibold">
+                    <a
+                      [routerLink]="row.link"
+                      class="text-blue-700 hover:text-blue-900 underline-offset-2 hover:underline"
+                    >
+                      {{ row.id }}
+                    </a>
                   </td>
                   <td class="px-6 py-4 text-sm">
                     <span
@@ -569,11 +574,6 @@
                   </td>
                   <td class="px-6 py-4 text-sm text-slate-500">
                     {{ row.lastUpdated | date: 'dd-MMM-yyyy' }}
-                  </td>
-                  <td class="px-6 py-4 text-right text-sm">
-                    <a [routerLink]="row.link" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                      View
-                    </a>
                   </td>
                 </tr>
                 <tr *ngIf="expandedTransactionId === row.id" class="bg-slate-50">

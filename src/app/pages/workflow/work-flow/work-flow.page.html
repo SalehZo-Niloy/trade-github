@@ -6,17 +6,10 @@
   primarySectionLabel="Work Flow"
   [mainMenuItems]="menuItems"
 >
-  <section class="space-y-4">
-    <div
-      class="rounded-2xl border p-0 shadow-sm"
-      [ngClass]="[theme.border.default, theme.surface.card]"
-    >
-      <iframe
-        [src]="safeUrl"
-        class="w-full h-[calc(100vh-200px)] max-h-[calc(100vh-200px)] min-h-[400px]"
-        frameborder="0"
-        title="Workflow Frame"
-      ></iframe>
-    </div>
-  </section>
+  <iframe
+    [src]="safeUrl"
+    class="block w-full h-[600px] max-h-[600px] min-h-[400px]"
+    frameborder="0"
+    title="Workflow Frame"
+  ></iframe>
 </app-trade-layout>
