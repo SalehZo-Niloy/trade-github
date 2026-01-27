@@ -8,17 +8,10 @@ import { tradeTheme } from '../../styles/theme';
   imports: [CommonModule],
   template: `
     <div class="overflow-x-auto">
-      <div
-        class="inline-block min-w-full align-middle"
-      >
-        <div
-          class="overflow-hidden rounded-xl border"
-          [ngClass]="[theme.border.default, theme.surface.card]"
-        >
-          <table class="min-w-full divide-y divide-slate-200 text-sm">
-            <ng-content></ng-content>
-          </table>
-        </div>
+      <div class="inline-block min-w-full align-middle">
+        <table class="min-w-full divide-y divide-blue-100 text-sm bg-white">
+          <ng-content></ng-content>
+        </table>
       </div>
     </div>
   `

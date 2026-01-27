@@ -1,0 +1,110 @@
+<app-trade-layout
+  organisationName="Trade Finance"
+  solutionName="Trade Finance"
+  breadcrumb="Report Builder"
+  basePath="/trade"
+>
+  <div class="p-6 bg-white min-h-screen space-y-4">
+    <div class="flex items-center justify-between">
+      <div class="flex gap-3">
+        <app-ui-button variant="secondary">
+          Import
+        </app-ui-button>
+        <app-ui-button variant="ghost">
+          Open in queries
+        </app-ui-button>
+      </div>
+      <div>
+        <app-ui-button variant="primary" (click)="toggleExportOptions()">
+          Export
+        </app-ui-button>
+      </div>
+    </div>
+
+    <div class="rounded-md border border-slate-200 bg-slate-50">
+      <textarea
+        [(ngModel)]="query"
+        class="block w-full bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-slate-800 outline-none border-0 min-h-[260px] resize-none"
+        spellcheck="false"
+      ></textarea>
+    </div>
+
+    <div class="flex items-start justify-between">
+      <div class="flex gap-3">
+        <app-ui-button variant="primary" (click)="runQuery()">
+          Run
+        </app-ui-button>
+        <app-ui-button variant="secondary" (click)="formatQuery()">
+          Format
+        </app-ui-button>
+      </div>
+      <div class="text-xs text-slate-500 space-y-0.5">
+        <div>Key bindings:</div>
+        <div>Shift + Enter : Run</div>
+        <div>Alt + Shift + F or Ctrl + Shift + F : Format</div>
+        <div>Alt + R : Apply focus to first result</div>
+      </div>
+    </div>
+
+    <div *ngIf="previewText" class="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4">
+      <div class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        Preview
+      </div>
+      <pre class="whitespace-pre-wrap font-mono text-xs text-slate-800" [textContent]="previewText"></pre>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showExportOptions"
+    class="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/40"
+  >
+    <div class="w-full max-w-md rounded-lg bg-white shadow-lg border border-slate-200">
+      <div class="flex items-center justify-between border-b border-slate-200 px-5 py-3">
+        <div class="text-sm font-semibold text-slate-900">
+          Export Report
+        </div>
+        <button
+          type="button"
+          class="inline-flex h-7 w-7 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+          (click)="toggleExportOptions()"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="px-5 py-4 space-y-3 text-sm text-slate-700">
+        <p class="text-xs text-slate-500">
+          Choose a format to download or view the LC static report.
+        </p>
+        <a
+          href="/assets/pdf/LC_Static_Report.pdf"
+          target="_blank"
+          download
+          class="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          (click)="toggleExportOptions()"
+        >
+          <span>PDF</span>
+          <span class="text-[11px] text-slate-400">View in new tab or download</span>
+        </a>
+        <a
+          href="/assets/pdf/LC_Static_Report.xlsx"
+          target="_blank"
+          download
+          class="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          (click)="toggleExportOptions()"
+        >
+          <span>Excel (.xlsx)</span>
+          <span class="text-[11px] text-slate-400">Open/download in new tab</span>
+        </a>
+      </div>
+      <div class="flex justify-end border-t border-slate-200 px-5 py-3">
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+          (click)="toggleExportOptions()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</app-trade-layout>

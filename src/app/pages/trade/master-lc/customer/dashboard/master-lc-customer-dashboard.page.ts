@@ -39,11 +39,11 @@ export class MasterLCCustomerDashboardPageComponent implements OnInit {
     switch (status) {
       case 'Manager Approved':
       case 'Issued':
-        return 'bg-green-100 text-green-800';
+        return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
       case 'Pending Approval':
-        return 'bg-orange-100 text-orange-800';
+        return 'bg-amber-50 text-amber-700 border border-amber-200';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-slate-50 text-slate-600 border border-slate-200';
     }
   }
 }

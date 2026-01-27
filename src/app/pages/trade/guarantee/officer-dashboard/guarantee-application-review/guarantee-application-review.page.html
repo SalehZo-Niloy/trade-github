@@ -16,7 +16,27 @@
           class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm hover:bg-slate-50"
           (click)="goBackToDashboard()"
         >
-          <span>← Back to Officer Dashboard</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3.5 w-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7 7-7"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12h18"
+            />
+          </svg>
+          <span>Back to Officer Dashboard</span>
         </button>
       </div>
     </section>
@@ -47,7 +67,7 @@
             Amount
           </div>
           <div class="text-sm font-semibold text-slate-900">
-            AED 500,000.00
+            USD 500,000.00
           </div>
         </div>
         <div class="space-y-1">
@@ -84,7 +104,7 @@
 
     <section class="grid gap-6 lg:grid-cols-[2.1fr,1fr]">
       <div class="space-y-4">
-        <section class="rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm">
+        <section class="rounded-2xl bg-white p-5 text-xs shadow-sm">
           <div class="flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-900">
               Customer &amp; Exposure Overview
@@ -112,7 +132,7 @@
                 Funded Exposure
               </div>
               <div class="text-sm font-semibold text-slate-900">
-                AED 2,500,000
+                USD 2,500,000
               </div>
               <div class="text-[11px] text-slate-500">
                 Current utilization
@@ -123,7 +143,7 @@
                 Non-Funded Exposure
               </div>
               <div class="text-sm font-semibold text-slate-900">
-                AED 1,200,000
+                USD 1,200,000
               </div>
               <div class="text-[11px] text-slate-500">
                 Including this request
@@ -134,7 +154,7 @@
                 Available Limit
               </div>
               <div class="text-sm font-semibold text-emerald-900">
-                AED 3,800,000
+                USD 3,800,000
               </div>
               <div class="text-[11px] text-emerald-700">
                 Expires: Dec 2024
@@ -146,7 +166,7 @@
           </div>
         </section>
 
-        <section class="rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm">
+        <section class="rounded-2xl bg-white p-5 text-xs shadow-sm">
           <h2 class="text-sm font-semibold text-slate-900">
             Application Core Data
           </h2>
@@ -273,7 +293,7 @@
                 Margin Amount
               </div>
               <div class="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900">
-                AED 75,000.00
+                USD 75,000.00
               </div>
             </div>
             <div class="space-y-1">
@@ -390,7 +410,32 @@
         <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <div class="flex items-center gap-2">
             <div class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-              🌐
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2 12h20"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 2v20"
+                />
+              </svg>
             </div>
             <h2 class="text-sm font-semibold text-slate-900">
               SWIFT Requirement
@@ -440,10 +485,30 @@
             </p>
             <button
               type="button"
-              class="mt-2 inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-blue-700"
+              class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-blue-700"
               (click)="createSwiftMessage()"
             >
-              + Create SWIFT Message
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 5v14"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 12h14"
+                />
+              </svg>
+              <span>Create SWIFT Message</span>
             </button>
           </div>
         </section>
@@ -451,7 +516,26 @@
         <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <div class="flex items-center gap-2">
             <div class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-              📌
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4"
+                />
+              </svg>
             </div>
             <h2 class="text-sm font-semibold text-slate-900">
               Final Decision
@@ -510,17 +594,57 @@
           <div class="mt-4 flex flex-col gap-2">
             <button
               type="button"
-              class="inline-flex w-full items-center justify-center rounded-md bg-slate-100 px-3 py-2 text-[11px] font-semibold text-slate-700 hover:bg-slate-200"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-slate-100 px-3 py-2 text-[11px] font-semibold text-slate-700 hover:bg-slate-200"
               (click)="goBackToDashboard()"
             >
-              ← Cancel / Back
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 19l-7-7 7-7"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 12h18"
+                />
+              </svg>
+              <span>Cancel / Back</span>
             </button>
             <button
               type="button"
-              class="inline-flex w-full items-center justify-center rounded-md bg-emerald-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-emerald-700"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-emerald-700"
               (click)="submitAndEscalate()"
             >
-              ↑ Submit &amp; Escalate
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 17l8-8"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 7h8v8"
+                />
+              </svg>
+              <span>Submit &amp; Escalate</span>
             </button>
           </div>
         </section>

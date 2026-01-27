@@ -4,20 +4,17 @@
   breadcrumb="Dashboard"
   basePath="/trade"
 >
-  <div class="px-6 py-6 bg-slate-50 min-h-screen space-y-6">
+  <div class="px-6 py-6 bg-white min-h-screen space-y-6">
     <section class="space-y-2">
       <h1 class="text-2xl font-semibold text-slate-900">Trade Finance</h1>
-      <!-- <p class="text-sm text-slate-500">
-        Unified view of your Import, Export, and Guarantee operations
-      </p> -->
+      <p class="text-sm text-slate-500">
+        Simple overview of your Import, Export, and Guarantee activity
+      </p>
     </section>
 
     <section class="space-y-4">
-      <!-- <h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-        Global Snapshot
-      </h2> -->
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-md border border-blue-100 bg-white px-5 py-4 shadow-sm">
           <div class="flex items-start gap-3">
             <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
@@ -26,83 +23,65 @@
               </svg>
             </div>
             <div>
-              <div class="text-2xl font-semibold text-slate-900">{{ stats.totalTransactions }}</div>
-              <div class="mt-1 text-sm font-medium text-slate-800">Active Trade Instruments</div>
+              <div class="text-2xl font-semibold text-blue-700">{{ stats.totalTransactions }}</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Total Transactions</div>
               <div class="mt-1 text-xs text-slate-500">
-                Import LCs: 12 · Export LCs: 8 · Guarantees: 8
+                Across Import, Export and Guarantee
               </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+        <div class="rounded-md border border-blue-100 bg-white px-5 py-4 shadow-sm">
           <div class="flex items-start gap-3">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                <rect x="4" y="5" width="16" height="14" rx="3" class="stroke-purple-500" stroke-width="1.5" />
-                <path d="M8 11h3l2 3h3" class="stroke-purple-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="12" cy="12" r="7" class="stroke-blue-500" stroke-width="1.5" />
+                <path d="M12 9v3.5H9" class="stroke-blue-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </div>
             <div>
-              <div class="text-2xl font-semibold text-slate-900">BDT 12.5M</div>
-              <div class="mt-1 text-sm font-medium text-slate-800">Total Exposure</div>
+              <div class="text-2xl font-semibold text-blue-700">{{ stats.pendingAction }}</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Pending Action</div>
               <div class="mt-1 text-xs text-slate-500">
-                Funded: BDT 8.2M · Non-Funded: BDT 4.3M
+                Items waiting for bank or customer action
               </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+        <div class="rounded-md border border-blue-100 bg-white px-5 py-4 shadow-sm">
           <div class="flex items-start gap-3">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                <circle cx="12" cy="12" r="7" class="stroke-emerald-500" stroke-width="1.5" />
-                <path d="M8 12.5 11 15l5-6" class="stroke-emerald-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8 12.5 11 15l5-6" class="stroke-blue-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="12" cy="12" r="7" class="stroke-blue-500" stroke-width="1.5" />
               </svg>
             </div>
             <div>
-              <div class="text-2xl font-semibold text-slate-900">15</div>
-              <div class="mt-1 text-sm font-medium text-slate-800">Payment Overdue</div>
+              <div class="text-2xl font-semibold text-blue-700">{{ stats.completed }}</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Completed</div>
               <div class="mt-1 text-xs text-slate-500">
-                Payment LCs: 12 · Payment Bills: 8 
+                Approved, realized or advice issued
               </div>
             </div>
           </div>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+        <div class="rounded-md border border-blue-100 bg-white px-5 py-4 shadow-sm">
           <div class="flex items-start gap-3">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-500">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                <rect x="5" y="4" width="14" height="16" rx="2" class="stroke-amber-500" stroke-width="1.5" />
-                <path d="M9 4v2M15 4v2M8 11h8" class="stroke-amber-500" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M12 9v4" class="stroke-blue-500" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="12" cy="16" r="0.75" class="fill-blue-500" />
+                <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z" class="stroke-blue-500" stroke-width="1.5" />
               </svg>
             </div>
             <div>
-              <div class="text-2xl font-semibold text-slate-900">5</div>
-              <div class="mt-1 text-sm font-medium text-slate-800">Upcoming Expiries</div>
+              <div class="text-2xl font-semibold text-blue-700">{{ stats.rejected }}</div>
+              <div class="mt-1 text-sm font-medium text-slate-800">Returned / Rejected</div>
               <div class="mt-1 text-xs text-slate-500">
-                LC Expiry: 3 · Guarantee Expiry: 2
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-          <div class="flex items-start gap-3">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-500">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                <path d="M12 9v4" class="stroke-rose-500" stroke-width="1.5" stroke-linecap="round" />
-                <circle cx="12" cy="16" r="0.75" class="fill-rose-500" />
-                <path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z" class="stroke-rose-500" stroke-width="1.5" />
-              </svg>
-            </div>
-            <div>
-              <div class="text-2xl font-semibold text-slate-900">3</div>
-              <div class="mt-1 text-sm font-medium text-slate-800">Action Required</div>
-              <div class="mt-1 text-xs text-slate-500">
-                Corrections: 2 · Margin Due: 1
+                Items needing correction or re-submission
               </div>
             </div>
           </div>
@@ -111,108 +90,152 @@
     </section>
 
     <section class="space-y-4">
-      <div class="rounded-3xl bg-blue-600 px-6 py-6 text-white shadow-sm">
-        <h2 class="text-sm font-semibold tracking-wide">Quick Actions</h2>
-        <div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div class="rounded-2xl border border-blue-300 bg-white/90 p-5 text-slate-900 shadow-sm">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                    <path d="M7 7h10v10H7z" class="stroke-blue-500" stroke-width="1.5" />
-                    <path d="M10 10h4" class="stroke-blue-500" stroke-width="1.5" stroke-linecap="round" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="text-sm font-semibold text-slate-900">Import Operations</div>
-                  <div class="text-xs text-slate-500">Manage import LCs and amendments</div>
-                </div>
-              </div>
-              <span class="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-blue-600">
-                Import
-              </span>
-            </div>
-            <div class="mt-4 space-y-2">
-              <a
-                [routerLink]="['/trade', 'import', 'submitting']"
-                class="flex items-center justify-between rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700"
-              >
-                <span>Apply for Import LC</span>
-              </a>
-              <a
-                [routerLink]="['/trade', 'import', 'lc-amendment-request']"
-                class="flex items-center justify-between rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700"
-              >
-                <span>Request LC Amendment</span>
-              </a>
-            </div>
+       <div>
+            <h2 class="text-sm font-semibold text-slate-900">Quick Actions</h2>
+            <p class="text-xs text-slate-500">
+              Jump directly to the most common workflows
+            </p>
           </div>
-
-          <div class="rounded-2xl border border-emerald-300 bg-white/90 p-5 text-slate-900 shadow-sm">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                    <path d="M6 7h12v10H6z" class="stroke-emerald-500" stroke-width="1.5" />
-                    <path d="M9 11h6M9 14h4" class="stroke-emerald-500" stroke-width="1.5" stroke-linecap="round" />
+      <div class="rounded-md bg-white px-6 py-5 shadow-sm border border-blue-100">
+        <div class="flex flex-col gap-3">
+          <div class="w-full overflow-x-auto">
+            <div class="inline-flex w-full items-stretch justify-between gap-2 text-sm min-w-max">
+            <a
+              [routerLink]="['/trade', 'import', 'submitting']"
+              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+            >
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    Import
+                  </span>
+                  <div class="mt-1 text-sm text-slate-900">Apply for Import LC</div>
+                </div>
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                    <rect x="5" y="6" width="14" height="11" rx="2" class="stroke-blue-500" stroke-width="1.5" />
+                    <path d="M8 9h8M8 12h5" class="stroke-blue-500" stroke-width="1.4" stroke-linecap="round" />
                   </svg>
                 </div>
-                <div>
-                  <div class="text-sm font-semibold text-slate-900">Export Operations</div>
-                  <div class="text-xs text-slate-500">Manage export advising and bills</div>
-                </div>
               </div>
-              <span class="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-600">
-                Export
-              </span>
-            </div>
-            <div class="mt-4 space-y-2">
-              <a
-                [routerLink]="['/trade', 'dc-advising', 'customer', 'dashboard']"
-                class="flex items-center justify-between rounded-lg bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700"
-              >
-                <span>Apply for LC Advising</span>
-              </a>
-              <a
-                [routerLink]="['/trade', 'export-bill', 'customer', 'dashboard']"
-                class="flex items-center justify-between rounded-lg bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700"
-              >
-                <span>Submit Export Bill</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-purple-300 bg-white/90 p-5 text-slate-900 shadow-sm">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
-                    <path d="M12 4 5 8v8l7 4 7-4V8z" class="stroke-purple-500" stroke-width="1.5" stroke-linejoin="round" />
-                    <path d="M10 11.5 12 13l3-3" class="stroke-purple-500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </a>
+            <a
+              [routerLink]="['/trade', 'import', 'lc-amendment-request']"
+              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+            >
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    Import
+                  </span>
+                  <div class="mt-1 text-sm text-slate-900">Request LC Amendment</div>
+                </div>
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                    <path d="M7 6h10v12H7z" class="stroke-blue-500" stroke-width="1.5" />
+                    <path d="M10 12h4M10 9h4M10 15h2" class="stroke-blue-500" stroke-width="1.4" stroke-linecap="round" />
                   </svg>
                 </div>
+              </div>
+            </a>
+            <a
+              [routerLink]="['/trade', 'dc-advising', 'customer', 'dashboard']"
+              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+            >
+              <div class="flex items-center justify-between gap-3">
                 <div>
-                  <div class="text-sm font-semibold text-slate-900">Guarantee Operations</div>
-                  <div class="text-xs text-slate-500">Issue and amend guarantees</div>
+                  <span class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    Export
+                  </span>
+                  <div class="mt-1 text-sm text-slate-900">Apply for LC Advising</div>
+                </div>
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                    <path d="M5 7h14v10H5z" class="stroke-blue-500" stroke-width="1.5" />
+                    <path d="M8 11h4M8 14h3M14 11h3" class="stroke-blue-500" stroke-width="1.4" stroke-linecap="round" />
+                  </svg>
                 </div>
               </div>
-              <span class="rounded-full bg-purple-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-purple-600">
-                Guarantee
-              </span>
-            </div>
-            <div class="mt-4 space-y-2">
-              <div
-                class="flex items-center justify-between rounded-lg bg-purple-50/70 px-4 py-2 text-sm font-medium text-purple-300 cursor-not-allowed"
-                aria-disabled="true"
-              >
-                <span>Apply for New Guarantee</span>
+            </a>
+            <a
+              [routerLink]="['/trade', 'export-bill', 'customer', 'dashboard']"
+              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+            >
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    Export
+                  </span>
+                  <div class="mt-1 text-sm text-slate-900">Submit Export Bill</div>
+                </div>
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                    <path d="M6 6h12v12H6z" class="stroke-blue-500" stroke-width="1.5" />
+                    <path
+                      d="M9 13h3.5a2 2 0 0 0 0-4H9v6m6 0-2-2m2 2-2 2"
+                      class="stroke-blue-500"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
               </div>
-              <div
-                class="flex items-center justify-between rounded-lg bg-purple-50/70 px-4 py-2 text-sm font-medium text-purple-300 cursor-not-allowed"
-                aria-disabled="true"
-              >
-                <span>Request Amendment</span>
+            </a>
+            <button
+              type="button"
+              class="rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed"
+              disabled
+            >
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    Guarantee
+                  </span>
+                  <div class="mt-1 text-sm text-slate-500">Apply for New Guarantee</div>
+                </div>
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                    <path
+                      d="M12 5 6 8v5.5C6 16.985 8.239 19 12 20c3.761-1 6-3.015 6-6.5V8l-6-3z"
+                      class="stroke-slate-400"
+                      stroke-width="1.5"
+                    />
+                    <path d="M10 12h4" class="stroke-slate-400" stroke-width="1.4" stroke-linecap="round" />
+                  </svg>
+                </div>
               </div>
+            </button>
+            <button
+              type="button"
+              class="rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed"
+              disabled
+            >
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    Guarantee
+                  </span>
+                  <div class="mt-1 text-sm text-slate-500">Request Amendment</div>
+                </div>
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+                    <path
+                      d="M12 5 6 8v5.5C6 16.985 8.239 19 12 20c3.761-1 6-3.015 6-6.5V8l-6-3z"
+                      class="stroke-slate-400"
+                      stroke-width="1.5"
+                    />
+                    <path
+                      d="M10 12h4M10.5 9.5l3 3"
+                      class="stroke-slate-400"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </button>
             </div>
           </div>
         </div>
@@ -221,7 +244,7 @@
 
     <section class="space-y-4">
       <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
           <div class="mb-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
@@ -234,17 +257,17 @@
             <button class="text-xs font-semibold text-blue-600">View All</button>
           </div>
           <div class="grid grid-cols-2 gap-3 text-sm">
-            <div class="rounded-xl bg-blue-50 px-4 py-3">
+            <div class="rounded-md bg-blue-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Active LCs</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">12</div>
             </div>
-            <div class="rounded-xl bg-blue-50 px-4 py-3">
+            <div class="rounded-md bg-blue-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Settled</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">8</div>
             </div>
           </div>
           <div class="mt-4 space-y-3 text-sm">
-            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-4 py-3">
               <div>
                 <div class="text-[11px] font-medium text-slate-500">Recent Import LCs</div>
                 <div class="mt-1 text-sm font-semibold text-slate-900">ILC-2024-0156</div>
@@ -254,7 +277,7 @@
                 Issued
               </span>
             </div>
-            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-4 py-3">
               <div>
                 <div class="text-sm font-semibold text-slate-900">ILC-2024-0142</div>
                 <div class="text-xs text-slate-500">USD 1,200,000</div>
@@ -279,7 +302,7 @@
           </div>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
           <div class="mb-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
@@ -292,21 +315,21 @@
             <button class="text-xs font-semibold text-emerald-600">View All</button>
           </div>
           <div class="grid grid-cols-3 gap-3 text-sm">
-            <div class="rounded-xl bg-emerald-50 px-4 py-3">
+            <div class="rounded-md bg-emerald-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Active Bills</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">8</div>
             </div>
-            <div class="rounded-xl bg-emerald-50 px-4 py-3">
+            <div class="rounded-md bg-emerald-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Paid</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">15</div>
             </div>
-            <div class="rounded-xl bg-emerald-50 px-4 py-3">
+            <div class="rounded-md bg-emerald-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Pending</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">3</div>
             </div>
           </div>
           <div class="mt-4 space-y-3 text-sm">
-            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-4 py-3">
               <div>
                 <div class="text-[11px] font-medium text-slate-500">Recent Export Bills</div>
                 <div class="mt-1 text-sm font-semibold text-slate-900">EXB-2024-0089</div>
@@ -316,7 +339,7 @@
                 Accepted
               </span>
             </div>
-            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-4 py-3">
               <div>
                 <div class="text-sm font-semibold text-slate-900">EXB-2024-0076</div>
                 <div class="text-xs text-slate-500">USD 98,500</div>
@@ -339,7 +362,7 @@
           </div>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div class="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
           <div class="mb-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
@@ -352,17 +375,17 @@
             <button class="text-xs font-semibold text-purple-600">View All</button>
           </div>
           <div class="grid grid-cols-2 gap-3 text-sm">
-            <div class="rounded-xl bg-purple-50 px-4 py-3">
+            <div class="rounded-md bg-purple-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Active</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">8</div>
             </div>
-            <div class="rounded-xl bg-purple-50 px-4 py-3">
+            <div class="rounded-md bg-purple-50 px-4 py-3">
               <div class="text-[11px] font-medium text-slate-600">Expiring Soon</div>
               <div class="mt-1 text-xl font-semibold text-slate-900">2</div>
             </div>
           </div>
           <div class="mt-4 space-y-3 text-sm">
-            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-4 py-3">
               <div>
                 <div class="text-[11px] font-medium text-slate-500">Active Guarantees</div>
                 <div class="mt-1 text-sm font-semibold text-slate-900">GUA-2024-0145</div>
@@ -372,7 +395,7 @@
                 Active
               </span>
             </div>
-            <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+            <div class="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-4 py-3">
               <div>
                 <div class="text-sm font-semibold text-slate-900">GUA-2024-0132</div>
                 <div class="text-xs text-slate-500">USD 250,000</div>
@@ -397,7 +420,7 @@
     </section>
 
     <section class="space-y-4">
-      <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div class="rounded-md border border-slate-200 bg-white shadow-sm">
         <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
           <div>
             <h2 class="text-sm font-semibold text-slate-900">
@@ -512,8 +535,8 @@
             </thead>
             <tbody class="divide-y divide-slate-100 bg-white">
               <ng-container *ngFor="let row of filteredUnifiedRows">
-                <tr class="hover:bg-slate-50 transition-colors">
-                  <td class="px-6 py-4 text-sm text-slate-500">
+                <tr class="hover:bg-slate-50 transition-colors cursor-pointer" [routerLink]="row.link">
+                  <!-- <td class="px-6 py-4 text-sm text-slate-500">
                     <button (click)="toggleHistory(row.id)" class="text-slate-400 hover:text-slate-600">
                       <svg
                         *ngIf="expandedTransactionId !== row.id"
@@ -534,23 +557,16 @@
                         <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
                     </button>
-                  </td>
+                  </td> -->
+                  <td></td>
                   <td class="px-6 py-4 text-sm font-semibold">
-                    <a
-                      [routerLink]="row.link"
-                      class="text-blue-700 hover:text-blue-900 underline-offset-2 hover:underline"
-                    >
+                    <span class="text-blue-700 hover:text-blue-900 underline-offset-2 hover:underline">
                       {{ row.id }}
-                    </a>
+                    </span>
                   </td>
                   <td class="px-6 py-4 text-sm">
                     <span
-                      class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold"
-                      [ngClass]="{
-                        'bg-purple-50 text-purple-700': row.module === 'Guarantee',
-                        'bg-blue-50 text-blue-700': row.module === 'Import',
-                        'bg-emerald-50 text-emerald-700': row.module === 'Export'
-                      }"
+                      class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold text-slate-600"
                     >
                       {{ row.module }}
                     </span>

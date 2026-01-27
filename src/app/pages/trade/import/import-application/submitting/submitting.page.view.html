@@ -149,17 +149,15 @@
         <tbody>
           <tr
             *ngFor="let request of pagedRequests"
-            class="border-b border-slate-100 last:border-b-0"
+            class="border-b border-slate-100 last:border-b-0 hover:bg-slate-50 cursor-pointer"
+            (click)="viewRequest(request.reference)"
           >
             <td class="px-3 py-2">
-              <button
-                type="button"
-                class="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                (click)="viewRequest(request.reference)"
-                [attr.aria-label]="'Open Import LC details for ' + request.reference"
+              <span
+                class="inline-flex items-center gap-1 text-xs font-semibold text-blue-700"
               >
                 <span>{{ request.reference }}</span>
-              </button>
+              </span>
             </td>
             <td class="px-3 py-2">
               {{ request.submissionDate }}

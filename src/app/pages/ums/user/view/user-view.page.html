@@ -47,7 +47,11 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200 bg-white">
-          <tr *ngFor="let user of users">
+          <tr
+            *ngFor="let user of users"
+            class="cursor-pointer hover:bg-slate-50"
+            [routerLink]="['/ums/users', user.id, 'edit']"
+          >
             <td class="px-4 py-3">
               <div class="flex flex-col">
                 <span class="text-sm font-semibold" [ngClass]="theme.text.primary">
@@ -78,12 +82,11 @@
             </td>
             <td class="px-4 py-3">
               <div class="flex justify-end gap-2">
-                <a
-                  [routerLink]="['/ums/users', user.id, 'edit']"
-                  class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                <span
+                  class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
                 >
                   Edit
-                </a>
+                </span>
               </div>
             </td>
           </tr>

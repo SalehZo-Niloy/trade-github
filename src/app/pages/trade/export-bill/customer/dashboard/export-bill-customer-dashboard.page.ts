@@ -51,11 +51,16 @@ export class ExportBillCustomerDashboardPageComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'SUBMITTED': return 'bg-blue-100 text-blue-800';
-      case 'VERIFIED': return 'bg-gray-100 text-gray-800';
-      case 'APPROVED': return 'bg-green-100 text-green-800';
-      case 'SENT_TO_IMPORTER': return 'bg-purple-100 text-purple-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'SUBMITTED':
+        return 'bg-blue-100 text-blue-800';
+      case 'VERIFIED':
+        return 'bg-blue-50 text-blue-700';
+      case 'APPROVED':
+        return 'bg-blue-100 text-blue-800';
+      case 'SENT_TO_IMPORTER':
+        return 'bg-blue-200 text-blue-900';
+      default:
+        return 'bg-blue-50 text-blue-700';
     }
   }
 

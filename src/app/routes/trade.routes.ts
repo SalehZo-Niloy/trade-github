@@ -68,6 +68,7 @@ import { MasterLCToDashboardPageComponent } from '../pages/trade/master-lc/to/da
 import { MasterLCToRequestDetailsPageComponent } from '../pages/trade/master-lc/to/request-details/master-lc-to-request-details.page';
 import { MasterLCManagerDashboardPageComponent } from '../pages/trade/master-lc/manager/dashboard/master-lc-manager-dashboard.page';
 import { MasterLCManagerRequestDetailsPageComponent } from '../pages/trade/master-lc/manager/request-details/master-lc-manager-request-details.page';
+import { ReportBuilderPageComponent } from '../pages/trade/report-builder/report-builder.page';
 
 export const tradeRoutes: Routes = [
   {
@@ -341,7 +342,10 @@ export const tradeRoutes: Routes = [
         path: 'master-lc/manager/request/:id',
         component: MasterLCManagerRequestDetailsPageComponent
       },
-
+      {
+        path: 'report-builder',
+        component: ReportBuilderPageComponent
+      },
   {
     path: '',
     redirectTo: 'dashboard',

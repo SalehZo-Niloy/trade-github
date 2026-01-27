@@ -72,7 +72,7 @@ export class TradeDashboardPageComponent implements OnInit {
       lastBankAction: 'Application submitted',
       nextStep: 'Monitor SLA – On Time',
       lastUpdated: '2024-01-11',
-      link: '/trade/guarantee-officer-dashboard',
+      link: '/trade/guarantee-application-review',
       history: [
         {
           status: TradeStatus.SUBMITTED,
@@ -99,7 +99,7 @@ export class TradeDashboardPageComponent implements OnInit {
       lastBankAction: 'Returned for correction',
       nextStep: 'Customer to update documents',
       lastUpdated: '2024-01-10',
-      link: '/trade/guarantee-officer-dashboard',
+      link: '/trade/guarantee-application-review',
       history: [
         {
           status: TradeStatus.SUBMITTED,
@@ -345,22 +345,21 @@ export class TradeDashboardPageComponent implements OnInit {
       case TradeStatus.REALIZED:
       case TradeStatus.DC_ADVICE_ISSUED:
       case TradeStatus.SENT_TO_IMPORTER:
-      case TradeStatus.SWIFT_VALIDATED:
-      case TradeStatus.VERIFIED:
-        return 'bg-green-100 text-green-800';
+        return 'bg-blue-100 text-blue-800';
       case TradeStatus.SUBMITTED:
       case TradeStatus.RO_VALIDATION:
       case TradeStatus.TO_TRADE_OFFICER:
       case TradeStatus.PENDING_APPROVAL:
-        return 'bg-blue-100 text-blue-800';
+      case TradeStatus.SWIFT_VALIDATED:
+      case TradeStatus.VERIFIED:
+        return 'bg-blue-50 text-blue-800';
       case TradeStatus.RETURNED:
       case TradeStatus.DISCREPANCY_RAISED:
       case TradeStatus.RETURNED_TO_CUSTOMER:
-        return 'bg-orange-100 text-orange-800';
       case TradeStatus.REJECTED:
-        return 'bg-red-100 text-red-800';
+        return 'bg-blue-200 text-blue-900';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-blue-50 text-blue-700';
     }
   }
 

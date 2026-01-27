@@ -67,55 +67,55 @@ export interface TradeTheme {
 
 export const tradeTheme: TradeTheme = {
   page: {
-    background: 'bg-slate-50'
+    background: 'bg-white'
   },
   surface: {
-    page: 'bg-slate-50',
+    page: 'bg-white',
     card: 'bg-white',
-    muted: 'bg-slate-50',
+    muted: 'bg-white',
     accent: 'bg-blue-50'
   },
   border: {
-    default: 'border-slate-200',
-    subtle: 'border-slate-100',
-    strong: 'border-slate-300',
-    accent: 'border-blue-200',
-    danger: 'border-rose-200'
+    default: 'border-blue-100',
+    subtle: 'border-blue-50',
+    strong: 'border-blue-200',
+    accent: 'border-blue-300',
+    danger: 'border-blue-400'
   },
   button: {
     primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-    secondary: 'bg-white border border-slate-300 text-slate-800 hover:bg-slate-50',
-    ghost: 'bg-transparent text-slate-700 hover:bg-slate-50',
-    danger: 'bg-rose-600 hover:bg-rose-700 text-white',
-    success: 'bg-emerald-600 hover:bg-emerald-700 text-white',
-    warning: 'bg-amber-500 hover:bg-amber-600 text-white'
+    secondary: 'bg-white border border-blue-300 text-blue-700 hover:bg-blue-50',
+    ghost: 'bg-transparent text-blue-700 hover:bg-blue-50',
+    danger: 'bg-blue-800 hover:bg-blue-900 text-white',
+    success: 'bg-blue-500 hover:bg-blue-600 text-white',
+    warning: 'bg-blue-400 hover:bg-blue-500 text-white'
   },
   input: {
     background: {
       default: 'bg-white',
-      filled: 'bg-slate-50',
-      disabled: 'bg-slate-100',
-      invalid: 'bg-rose-50'
+      filled: 'bg-blue-50',
+      disabled: 'bg-blue-50',
+      invalid: 'bg-blue-50'
     },
     border: {
-      default: 'border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100',
-      filled: 'border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100',
-      disabled: 'border-slate-200',
-      invalid: 'border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-100'
+      default: 'border-blue-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100',
+      filled: 'border-blue-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100',
+      disabled: 'border-blue-100',
+      invalid: 'border-blue-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100'
     }
   },
   table: {
-    header: 'bg-slate-50',
+    header: 'bg-blue-50',
     row: 'bg-white',
-    rowHover: 'hover:bg-slate-50',
-    border: 'border-slate-200'
+    rowHover: 'hover:bg-blue-50',
+    border: 'border-blue-100'
   },
   status: {
-    neutral: 'bg-slate-100 text-slate-800',
-    info: 'bg-blue-50 text-blue-700',
-    success: 'bg-emerald-50 text-emerald-700',
-    warning: 'bg-amber-50 text-amber-800',
-    danger: 'bg-rose-50 text-rose-700'
+    neutral: 'bg-blue-50 text-blue-700',
+    info: 'bg-blue-100 text-blue-800',
+    success: 'bg-blue-100 text-blue-800',
+    warning: 'bg-blue-100 text-blue-800',
+    danger: 'bg-blue-200 text-blue-900'
   },
   text: {
     primary: 'text-slate-900',
@@ -124,9 +124,9 @@ export const tradeTheme: TradeTheme = {
     onPrimary: 'text-white',
     onDanger: 'text-white',
     onSuccess: 'text-white',
-    success: 'text-emerald-700',
-    warning: 'text-amber-700',
-    danger: 'text-rose-700',
+    success: 'text-blue-700',
+    warning: 'text-blue-700',
+    danger: 'text-blue-700',
     info: 'text-blue-700'
   }
 };

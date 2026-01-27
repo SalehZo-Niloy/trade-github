@@ -51,7 +51,10 @@ interface TradeMenuItem {
                       [ngClass]="getActiveClassForRoute(item.route)"
                     >
                       <span class="flex items-center gap-2">
-                        <span class="flex h-4 w-4 items-center justify-center text-slate-400" *ngIf="item.label === 'Dashboard'">
+                        <span
+                          class="flex h-4 w-4 items-center justify-center text-slate-400"
+                          *ngIf="item.label === 'Dashboard'"
+                        >
                           <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
                             <path
                               d="M4 9.5 10 4l6 5.5V16a1 1 0 0 1-1 1h-3.5v-4H8.5v4H5a1 1 0 0 1-1-1V9.5Z"
@@ -62,7 +65,32 @@ interface TradeMenuItem {
                             />
                           </svg>
                         </span>
-                        <span>{{ item.label }}</span>
+                        <span
+                          class="flex h-4 w-4 items-center justify-center text-slate-400"
+                          *ngIf="item.label === 'Report Builder'"
+                        >
+                          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none">
+                            <rect
+                              x="3.5"
+                              y="4"
+                              width="13"
+                              height="12"
+                              rx="2"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                            />
+                            <path
+                              d="M7 11.5 9 9.5l2 2 2-3"
+                              stroke="currentColor"
+                              stroke-width="1.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span [ngClass]="item.label === 'Report Builder' ? 'text-xs font-medium' : ''">
+                          {{ item.label }}
+                        </span>
                       </span>
                     </a>
                   </ng-container>
@@ -151,7 +179,7 @@ interface TradeMenuItem {
                             />
                           </svg>
                         </span>
-                        <span class="text-xs font-semibold uppercase tracking-wide">
+                        <span class="text-xs font-medium text-slate-800">
                           {{ item.label }}
                         </span>
                       </span>
@@ -172,18 +200,18 @@ interface TradeMenuItem {
                         </svg>
                       </span>
                     </button>
-                    <div *ngIf="isGroupExpanded(item.label)" class="space-y-1 pl-2">
+                    <div *ngIf="isGroupExpanded(item.label)" class="space-y-1 pl-4 ml-1 border-l border-slate-200">
                       <ng-container *ngFor="let child of item.children">
                         <ng-container
                           *ngIf="!child.children || child.children.length === 0; else childGroup"
                         >
-                            <a
-                              [routerLink]="child.route"
-                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
-                              [ngClass]="getActiveClassForRoute(child.route)"
-                            >
-                              <span>{{ child.label }}</span>
-                            </a>
+                          <a
+                            [routerLink]="child.route"
+                            class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                            [ngClass]="getActiveClassForRoute(child.route)"
+                          >
+                            <span>{{ child.label }}</span>
+                          </a>
                         </ng-container>
                         <ng-template #childGroup>
                           <button
@@ -191,7 +219,7 @@ interface TradeMenuItem {
                             class="flex w-full items-center justify-between rounded-md border border-transparent px-3 py-1.5 text-left text-slate-700 hover:border-slate-200 hover:bg-slate-50"
                             (click)="toggleGroup(child.label)"
                           >
-                            <span class="text-xs font-semibold uppercase tracking-wide">
+                            <span class="text-[11px] font-semibold uppercase tracking-wide">
                               {{ child.label }}
                             </span>
                             <span class="flex h-4 w-4 items-center justify-center text-slate-400">
@@ -211,11 +239,11 @@ interface TradeMenuItem {
                               </svg>
                             </span>
                           </button>
-                          <div *ngIf="isGroupExpanded(child.label)" class="space-y-1 pl-2">
+                          <div *ngIf="isGroupExpanded(child.label)" class="space-y-1 pl-4 ml-4 border-l border-slate-200">
                             <a
                               *ngFor="let grand of child.children"
                               [routerLink]="grand.route"
-                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-sm font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
+                              class="flex items-center rounded-lg border border-transparent px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-blue-200 hover:bg-blue-50"
                               [ngClass]="getActiveClassForRoute(grand.route)"
                             >
                               <span>{{ grand.label }}</span>
@@ -260,28 +288,29 @@ interface TradeMenuItem {
               >
                 ☰
               </button>
-              <div class="flex items-center gap-2 text-xs text-slate-500">
-                <span>/</span>
-                <span class="font-medium text-slate-700">
+              <div class="flex flex-col">
+                <span class="text-sm font-semibold text-blue-700">
                   {{ breadcrumb }}
                 </span>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <button
-                type="button"
-                class="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm hover:bg-slate-50"
-                [ngClass]="[theme.border.default, theme.surface.card]"
-                (click)="goBack()"
-              >
-                <span>←</span>
-                <span>Back to main dashboard</span>
-              </button>
               <app-user-menu></app-user-menu>
             </div>
           </header>
 
           <main class="flex-1 overflow-y-auto px-6 py-6">
+            <div class="mb-4 flex justify-end">
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium text-blue-700 shadow-sm hover:bg-blue-50"
+                [ngClass]="theme.border.accent"
+                (click)="goBack()"
+              >
+                <span>←</span>
+                <span>Back to main dashboard</span>
+              </button>
+            </div>
             <ng-content></ng-content>
           </main>
         </section>
@@ -306,21 +335,22 @@ export class TradeLayoutComponent implements OnInit {
     {
       label: 'Guarantee',
       children: [
-        // {
-        //   label: 'Guarantee Application',
-        //   route: ['/trade', 'guarantee'],
-        // },
         {
-          label: 'Guarantee Officer Dashboard',
-          route: ['/trade', 'guarantee-officer-dashboard']
-        },
-        {
-          label: 'Guarantee Checker Dashboard',
-          route: ['/trade', 'guarantee-officer-checker-dashboard']
-        },
-        {
-          label: 'Regulatory Evaluation',
-          route: ['/trade', 'guarantee-regulatory-evaluation'],
+          label: 'Guarantee Application',
+          children: [
+            {
+              label: 'Guarantee Request Review',
+              route: ['/trade', 'guarantee-officer-dashboard']
+            },
+            {
+              label: 'Guarantee Request Approval',
+              route: ['/trade', 'guarantee-officer-checker-dashboard']
+            },
+            {
+              label: 'Regulatory Evaluation',
+              route: ['/trade', 'guarantee-regulatory-evaluation'],
+            },
+          ],
         },
       ],
     },
@@ -487,6 +517,10 @@ export class TradeLayoutComponent implements OnInit {
           ]
         },
       ]
+    },
+    {
+      label: 'Report Builder',
+      route: ['/trade', 'report-builder'],
     }
   ];
 
@@ -542,7 +576,9 @@ export class TradeLayoutComponent implements OnInit {
   }
 
   getActiveClassForRoute(route?: any[]): string {
-    return this.isRouteActive(route) ? 'bg-blue-50 text-blue-700 border-blue-300' : '';
+    return this.isRouteActive(route)
+      ? 'bg-blue-50 text-blue-700 border-blue-300 shadow-sm'
+      : '';
   }
 
   private findMatchingMenuPath(currentUrl: string): string | null {

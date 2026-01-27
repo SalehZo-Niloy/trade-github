@@ -93,9 +93,15 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <tr *ngFor="let r of filteredRequests" class="hover:bg-gray-50 transition-colors">
-            <td class="px-6 py-4 font-medium text-blue-600">
-              <a [routerLink]="['/trade/dc-advising/customer/request', r.id]">{{ r.id }}</a>
+          <tr
+            *ngFor="let r of filteredRequests"
+            class="hover:bg-gray-50 transition-colors cursor-pointer"
+            [routerLink]="['/trade/dc-advising/customer/request', r.id]"
+          >
+            <td class="px-6 py-4 font-medium text-blue-700">
+              <span>
+                {{ r.id }}
+              </span>
             </td>
             <td class="px-6 py-4">{{ r.applicant.name }}</td>
             <td class="px-6 py-4">{{ r.exportLC.lcNo }}</td>

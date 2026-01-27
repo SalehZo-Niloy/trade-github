@@ -82,16 +82,16 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200">
-          <tr *ngFor="let p of filteredProceeds" class="hover:bg-slate-50">
-            <td class="px-6 py-4 whitespace-nowrap">
-  <a
-    [routerLink]="['/trade/export-proceed/to/request', p.id]"
-    class="text-blue-600 font-medium hover:text-blue-800"
-    title="View Details"
-  >
-    {{ p.id }}
-  </a>
-</td>
+          <tr
+            *ngFor="let p of filteredProceeds"
+            class="hover:bg-slate-50 cursor-pointer"
+            [routerLink]="['/trade/export-proceed/to/request', p.id]"
+          >
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-medium">
+              <span class="hover:underline">
+                {{ p.id }}
+              </span>
+            </td>
 
             <td class="px-6 py-4 text-slate-900">{{ p.customer }}</td>
             <td class="px-6 py-4">

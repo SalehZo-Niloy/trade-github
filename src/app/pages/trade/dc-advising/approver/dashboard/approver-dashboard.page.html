@@ -4,7 +4,7 @@
   breadcrumb="Trade Approver Dashboard"
   basePath="/trade"
 >
-  <div class="p-6 bg-slate-50 min-h-screen">
+  <div class="p-6 bg-white min-h-screen">
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
       <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
@@ -86,11 +86,15 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200">
-          <tr *ngFor="let request of filteredRequests" class="hover:bg-slate-50">
-            <td class="px-6 py-4 whitespace-nowrap">
-              <a [routerLink]="['/trade/dc-advising/approver/request', request.id]" class="text-blue-600 font-medium hover:text-blue-800">
-  {{ request.id }}
-</a>
+          <tr
+            *ngFor="let request of filteredRequests"
+            class="hover:bg-slate-50 cursor-pointer"
+            [routerLink]="['/trade/dc-advising/approver/request', request.id]"
+          >
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-medium">
+              <span>
+                {{ request.id }}
+              </span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">{{ request.applicant.name }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">{{ request.exportLC.lcNo }}</td>

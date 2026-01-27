@@ -15,6 +15,37 @@ import { tradeTheme } from '../../styles/theme';
 export class DashboardPageComponent {
   theme = tradeTheme;
 
+  solutions = [
+    {
+      id: 'trade-finance',
+      label: 'Trade Finance',
+      category: 'Core Solution',
+      description: 'Process guarantees, letters of credit and export transactions in one place.',
+      accent: 'bg-blue-50 text-blue-700',
+    },
+    {
+      id: 'trade-finance-customer',
+      label: 'Trade Finance (Customer)',
+      category: 'Customer Portal',
+      description: 'Customer-facing workspace to initiate and track trade requests.',
+      accent: 'bg-emerald-50 text-emerald-700',
+    },
+    {
+      id: 'ums',
+      label: 'User Management',
+      category: 'Administration',
+      description: 'Manage users, roles and access across all trade solutions.',
+      accent: 'bg-indigo-50 text-indigo-700',
+    },
+    {
+      id: 'work-flow',
+      label: 'Workflow',
+      category: 'Operations',
+      description: 'Configure and monitor approval workflows across modules.',
+      accent: 'bg-amber-50 text-amber-700',
+    },
+  ];
+
   users = [
     {
       name: 'Rahim Uddin',
@@ -43,6 +74,58 @@ export class DashboardPageComponent {
   ];
 
   constructor(private router: Router) {}
+
+  get totalUsers(): number {
+    return this.users.length;
+  }
+
+  get activeUsers(): number {
+    return this.users.filter((user) => user.status === 'Active').length;
+  }
+
+  get invitedUsers(): number {
+    return this.users.filter((user) => user.status === 'Invited').length;
+  }
+
+  getUserInitials(name: string): string {
+    if (!name) {
+      return '';
+    }
+
+    return name
+      .split(' ')
+      .filter((part) => part && part.length > 0)
+      .map((part) => part[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Active':
+        return this.theme.status.success;
+      case 'Invited':
+        return this.theme.status.info;
+      case 'Suspended':
+        return this.theme.status.danger;
+      default:
+        return this.theme.status.neutral;
+    }
+  }
+
+  getStatusLabel(status: string): string {
+    switch (status) {
+      case 'Active':
+        return 'Active user';
+      case 'Invited':
+        return 'Invite sent';
+      case 'Suspended':
+        return 'Suspended';
+      default:
+        return status;
+    }
+  }
 
   goToSolution(solution: string): void {
     if (solution === 'trade-finance') {

@@ -46,7 +46,11 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200 bg-white">
-          <tr *ngFor="let role of roles">
+          <tr
+            *ngFor="let role of roles"
+            class="cursor-pointer hover:bg-slate-50"
+            [routerLink]="['/ums/roles', role.id, 'edit']"
+          >
             <td class="px-4 py-3 text-sm font-semibold text-slate-900">
               {{ role.name }}
             </td>
@@ -69,12 +73,11 @@
             </td>
             <td class="px-4 py-3">
               <div class="flex justify-end gap-2">
-                <a
-                  [routerLink]="['/ums/roles', role.id, 'edit']"
-                  class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                <span
+                  class="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
                 >
                   Edit
-                </a>
+                </span>
               </div>
             </td>
           </tr>

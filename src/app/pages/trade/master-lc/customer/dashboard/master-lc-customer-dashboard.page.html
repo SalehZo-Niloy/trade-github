@@ -82,28 +82,40 @@
         </thead>
         <tbody class="divide-y divide-slate-200">
           <!-- Mock Data for now, ideally fetched from TradeRequestService -->
-          <tr class="hover:bg-slate-50">
-            <td class="px-6 py-4 font-medium text-slate-900">ELC/EU/2026/789</td>
+          <tr
+            class="hover:bg-slate-50 cursor-pointer"
+            [routerLink]="['/trade/master-lc/customer/create']"
+            [queryParams]="{ lc: 'ELC/EU/2026/789' }"
+          >
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-medium">
+              <span class="hover:underline">ELC/EU/2026/789</span>
+            </td>
             <td class="px-6 py-4">Best Garments Ltd (BD)</td>
             <td class="px-6 py-4">€75,000.00</td>
             <td class="px-6 py-4">15 Jan 2026</td>
             <td class="px-6 py-4">21 Mar 2026</td>
             <td class="px-6 py-4 text-right">
-              <a [routerLink]="['/trade/master-lc/customer/create']" [queryParams]="{lc: 'ELC/EU/2026/789'}" class="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-500">
+              <span class="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
                 Create Master LC
-              </a>
+              </span>
             </td>
           </tr>
-          <tr class="hover:bg-slate-50">
-            <td class="px-6 py-4 font-medium text-slate-900">ELC/US/2026/102</td>
+          <tr
+            class="hover:bg-slate-50 cursor-pointer"
+            [routerLink]="['/trade/master-lc/customer/create']"
+            [queryParams]="{ lc: 'ELC/US/2026/102' }"
+          >
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-medium">
+              <span class="hover:underline">ELC/US/2026/102</span>
+            </td>
             <td class="px-6 py-4">Best Garments Ltd (BD)</td>
             <td class="px-6 py-4">$50,000.00</td>
             <td class="px-6 py-4">10 Jan 2026</td>
             <td class="px-6 py-4">15 Apr 2026</td>
             <td class="px-6 py-4 text-right">
-              <a [routerLink]="['/trade/master-lc/customer/create']" [queryParams]="{lc: 'ELC/US/2026/102'}" class="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-500">
+              <span class="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
                 Create Master LC
-              </a>
+              </span>
             </td>
           </tr>
         </tbody>
@@ -129,9 +141,18 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200">
-          <tr *ngFor="let req of recentRequests$ | async" class="hover:bg-slate-50">
-            <td class="px-6 py-4 font-medium text-slate-900">{{ req.id }}</td>
-            <td class="px-6 py-4">{{ req.exportLCNo }}</td>
+          <tr
+            *ngFor="let req of recentRequests$ | async"
+            class="hover:bg-slate-50 cursor-pointer"
+            [routerLink]="['/trade/master-lc/customer/create']"
+            [queryParams]="{ lc: req.exportLCNo }"
+          >
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-medium">
+              <span class="hover:underline">{{ req.id }}</span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700">
+              <span class="hover:underline">{{ req.exportLCNo }}</span>
+            </td>
             <td class="px-6 py-4">{{ req.supplierName }}</td>
             <td class="px-6 py-4">{{ req.currency }} {{ req.requestedAmount | number:'1.2-2' }}</td>
             <td class="px-6 py-4">

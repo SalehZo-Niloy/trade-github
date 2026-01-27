@@ -33,14 +33,14 @@ export class GuaranteeApplicationReviewPageComponent {
     {
       reference: 'GTR-2023-006578',
       type: 'Advance Payment',
-      amount: 'AED 300,000',
+      amount: 'USD 300,000',
       expiry: 'Jun 30, 2024',
       status: 'Active'
     },
     {
       reference: 'GTR-2023-004321',
       type: 'Bid Bond',
-      amount: 'AED 150,000',
+      amount: 'USD 150,000',
       expiry: 'Mar 15, 2024',
       status: 'Active'
     }

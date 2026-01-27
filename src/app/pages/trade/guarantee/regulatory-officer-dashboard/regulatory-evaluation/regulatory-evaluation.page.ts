@@ -101,9 +101,9 @@ export class GuaranteeRegulatoryEvaluationPageComponent {
     { label: 'Issue Date', value: '15-Jun-2024' },
     { label: 'Expiry Date', value: '31-Dec-2024' },
     { label: 'Claim Period End', value: '30-Jan-2025' },
-    { label: 'Guarantee Amount', value: 'AED 750,000' },
-    { label: 'Margin Amount', value: 'AED 187,500' },
-    { label: 'Commission Amount', value: 'AED 11,250' },
+    { label: 'Guarantee Amount', value: 'USD 750,000' },
+    { label: 'Margin Amount', value: 'USD 187,500' },
+    { label: 'Commission Amount', value: 'USD 11,250' },
     { label: 'Customer CIF', value: 'CIF-987654321' },
     { label: 'Beneficiary Country', value: 'United States' },
     { label: 'Beneficiary Bank', value: 'Citibank N.A. (CITIAEAD)' }
@@ -149,20 +149,20 @@ export class GuaranteeRegulatoryEvaluationPageComponent {
       label: 'MT760 - Issuance Summary',
       reference: 'SWIFT-760-2024-001234',
       valueDate: '15-Jun-2024',
-      amount: 'AED 500,000'
+      amount: 'USD 500,000'
     },
     {
       label: 'MT767 - Amendment Summary',
       reference: 'SWIFT-767-2024-001234',
       valueDate: '15-Sep-2024',
-      amount: 'Increase AED 250,000'
+      amount: 'Increase USD 250,000'
     }
   ];
 
   financialCards: FinancialCard[] = [
     {
       label: 'Off-Balance Sheet Exposure',
-      value: 'AED 750,000',
+      value: 'USD 750,000',
       subLabel: 'Final guarantee amount',
       badge: 'Reported',
       bgClass: 'bg-orange-50',
@@ -170,14 +170,14 @@ export class GuaranteeRegulatoryEvaluationPageComponent {
     },
     {
       label: 'Utilized Guarantee Limit',
-      value: 'AED 750,000',
+      value: 'USD 750,000',
       subLabel: 'Including latest amendment',
       bgClass: 'bg-sky-50',
       accentClass: 'text-sky-700'
     },
     {
       label: 'Available Guarantee Limit',
-      value: 'AED 4,250,000',
+      value: 'USD 4,250,000',
       subLabel: 'Post-adjustment balance',
       bgClass: 'bg-emerald-50',
       accentClass: 'text-emerald-700'

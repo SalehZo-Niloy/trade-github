@@ -40,16 +40,16 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <tr *ngFor="let req of requests$ | async" class="hover:bg-gray-50">
-<td class="px-6 py-4 whitespace-nowrap">
-  <a
-    [routerLink]="['/trade/master-lc/manager/request', req.id]"
-    class="text-blue-600 font-medium hover:text-blue-800"
-    title="View Details"
-  >
-    {{ req.exportLCNo }}
-  </a>
-</td>
+          <tr
+            *ngFor="let req of requests$ | async"
+            class="hover:bg-gray-50 cursor-pointer"
+            [routerLink]="['/trade/master-lc/manager/request', req.id]"
+          >
+            <td class="px-6 py-4 whitespace-nowrap text-blue-700 font-medium">
+              <span class="hover:underline">
+                {{ req.exportLCNo }}
+              </span>
+            </td>
             <td class="px-6 py-4">{{ req.applicantName }}</td>
             <td class="px-6 py-4">{{ req.currency }} {{ req.requestedAmount | number:'1.2-2' }}</td>
             <td class="px-6 py-4">{{ req.submissionDate }}</td>

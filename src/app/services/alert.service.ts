@@ -7,7 +7,7 @@ type ButtonColor = string;
   providedIn: 'root',
 })
 export class AlertService {
-  private readonly defaultSuccessColor = '#16a34a';
+  private readonly defaultSuccessColor = '#2563eb';
 
   async showSuccess(message: string, buttonColor: ButtonColor): Promise<SweetAlertResult> {
     const normalizedColor = this.normalizeColor(buttonColor);
