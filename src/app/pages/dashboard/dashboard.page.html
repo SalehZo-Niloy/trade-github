@@ -6,9 +6,7 @@
     <div class="flex items-center gap-3 text-sm text-slate-700">
       <img src="era_logo.svg" alt="ERA InfoTech Limited" class="h-8 w-auto" />
       <div class="flex flex-col">
-        <span class="text-sm font-semibold text-slate-900">
-          Trade Finance
-        </span>
+        <span class="text-sm font-semibold text-slate-900"> Trade Finance </span>
         <!-- <span class="text-[11px] font-medium uppercase tracking-wide text-slate-500">
           Unified solution workspace
         </span> -->
@@ -18,91 +16,6 @@
   </header>
 
   <main class="mx-auto flex-1 max-w-6xl px-4 py-6">
-    <section class="grid gap-6 md:grid-cols-[2fr,1.2fr] items-stretch mb-6">
-      <article
-        class="relative overflow-hidden rounded-2xl border p-6 shadow-sm bg-white"
-        [ngClass]="[theme.border.default, theme.surface.card]"
-      >
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-blue-50/80 via-sky-50/60 to-transparent"></div>
-        <div class="relative flex h-full flex-col justify-between gap-4">
-          <div class="space-y-2">
-            <p class="text-xs font-semibold uppercase tracking-wide text-blue-600">
-              Welcome
-            </p>
-            <h1 class="text-xl font-semibold text-slate-900">
-              Trade Finance experience, in one dashboard
-            </h1>
-            <p class="text-xs text-slate-600">
-              Quickly jump into core trade solutions, manage users, and monitor workflows from a single entry point.
-            </p>
-          </div>
-          <div class="mt-4 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700"
-              (click)="goToSolution('trade-finance')"
-            >
-              <span>Open Trade Finance</span>
-              <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  d="M5 10.75A.75.75 0 0 1 5.75 10h6.19l-2.72-2.72a.75.75 0 1 1 1.06-1.06l4 4a.75.75 0 0 1 0 1.06l-4 4a.75.75 0 1 1-1.06-1.06l2.72-2.72h-6.19A.75.75 0 0 1 5 10.75z"
-                />
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
-              (click)="goToSolution('ums')"
-            >
-              <span>Manage users &amp; roles</span>
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <article
-        class="rounded-2xl border p-5 shadow-sm bg-white"
-        [ngClass]="[theme.border.default, theme.surface.card]"
-      >
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-sm font-semibold text-slate-900">
-              At a glance
-            </h2>
-            <p class="text-xs text-slate-500">
-              Quick snapshot of your environment
-            </p>
-          </div>
-        </div>
-        <div class="mt-4 grid gap-3 sm:grid-cols-3">
-          <div class="rounded-xl bg-blue-50 px-3 py-3">
-            <div class="text-[11px] font-medium uppercase tracking-wide text-blue-700">
-              Total users
-            </div>
-            <div class="mt-1 text-lg font-semibold text-slate-900">
-              {{ totalUsers }}
-            </div>
-          </div>
-          <div class="rounded-xl bg-emerald-50 px-3 py-3">
-            <div class="text-[11px] font-medium uppercase tracking-wide text-emerald-700">
-              Active
-            </div>
-            <div class="mt-1 text-lg font-semibold text-slate-900">
-              {{ activeUsers }}
-            </div>
-          </div>
-          <div class="rounded-xl bg-amber-50 px-3 py-3">
-            <div class="text-[11px] font-medium uppercase tracking-wide text-amber-700">
-              Invited
-            </div>
-            <div class="mt-1 text-lg font-semibold text-slate-900">
-              {{ invitedUsers }}
-            </div>
-          </div>
-        </div>
-      </article>
-    </section>
-
     <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       <article
         *ngFor="let solution of solutions"
@@ -148,18 +61,11 @@
       </article>
     </section>
 
-    <section
-      class="mt-8 rounded-2xl p-5 shadow-sm bg-white"
-      [ngClass]="theme.surface.card"
-    >
+    <section class="mt-8 rounded-2xl p-5 shadow-sm bg-white" [ngClass]="theme.surface.card">
       <div class="flex items-center justify-between gap-2">
         <div>
-          <h2 class="text-sm font-medium text-slate-900">
-            Recently active users
-          </h2>
-          <p class="text-xs text-slate-500">
-            Snapshot of users across your trade platform
-          </p>
+          <h2 class="text-sm font-medium text-slate-900">Recently active users</h2>
+          <p class="text-xs text-slate-500">Snapshot of users across your trade platform</p>
         </div>
       </div>
       <div class="mt-4">
