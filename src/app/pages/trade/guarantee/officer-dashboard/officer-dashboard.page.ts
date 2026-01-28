@@ -119,7 +119,7 @@ export class GuaranteeOfficerDashboardPageComponent {
   theme = tradeTheme;
 
   branchOptions: BranchOption[] = [
-    { id: 'dhaka-main', label: 'Dhaka Main Branch' },
+    { id: 'dhaka-main', label: 'All Branches' },
     { id: 'gazipur-branch', label: 'Gazipur Branch (Outer Dhaka)' },
     { id: 'chattogram-branch', label: 'Chattogram Branch' },
     { id: 'sylhet-branch', label: 'Sylhet Branch' },

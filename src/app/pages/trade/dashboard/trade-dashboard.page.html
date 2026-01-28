@@ -4,7 +4,7 @@
   breadcrumb="Dashboard"
   basePath="/trade"
 >
-  <div class="px-6 py-6 bg-white min-h-screen space-y-6">
+  <div class="px-2 py-4 bg-white min-h-screen space-y-4 w-full flex-1 max-w-screen-lg mx-auto">
     <section class="space-y-2">
       <h1 class="text-2xl font-semibold text-slate-900">Trade Finance</h1>
       <p class="text-sm text-slate-500">
@@ -13,7 +13,7 @@
     </section>
 
     <section class="space-y-4">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div class="rounded-md border border-blue-100 bg-white px-5 py-4 shadow-sm">
           <div class="flex items-start gap-3">
             <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
@@ -98,11 +98,11 @@
           </div>
       <div class="rounded-md bg-white px-6 py-5 shadow-sm border border-blue-100">
         <div class="flex flex-col gap-3">
-          <div class="w-full overflow-x-auto">
-            <div class="inline-flex w-full items-stretch justify-between gap-2 text-sm min-w-max">
+          <div class="w-full">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 w-full">
             <a
               [routerLink]="['/trade', 'import', 'submitting']"
-              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+              class="rounded-md border border-blue-100 px-3 py-4 text-xs font-medium text-blue-700 hover:bg-blue-50 h-full flex flex-col justify-between"
             >
               <div class="flex items-center justify-between gap-3">
                 <div>
@@ -121,7 +121,7 @@
             </a>
             <a
               [routerLink]="['/trade', 'import', 'lc-amendment-request']"
-              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+              class="rounded-md border border-blue-100 px-3 py-4 text-xs font-medium text-blue-700 hover:bg-blue-50 h-full flex flex-col justify-between"
             >
               <div class="flex items-center justify-between gap-3">
                 <div>
@@ -140,7 +140,7 @@
             </a>
             <a
               [routerLink]="['/trade', 'dc-advising', 'customer', 'dashboard']"
-              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+              class="rounded-md border border-blue-100 px-3 py-4 text-xs font-medium text-blue-700 hover:bg-blue-50 h-full flex flex-col justify-between"
             >
               <div class="flex items-center justify-between gap-3">
                 <div>
@@ -159,7 +159,7 @@
             </a>
             <a
               [routerLink]="['/trade', 'export-bill', 'customer', 'dashboard']"
-              class="rounded-md border border-blue-100 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+              class="rounded-md border border-blue-100 px-3 py-4 text-xs font-medium text-blue-700 hover:bg-blue-50 h-full flex flex-col justify-between"
             >
               <div class="flex items-center justify-between gap-3">
                 <div>
@@ -184,7 +184,7 @@
             </a>
             <button
               type="button"
-              class="rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed"
+              class="rounded-md border border-slate-200 px-3 py-4 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed h-full flex flex-col justify-between"
               disabled
             >
               <div class="flex items-center justify-between gap-3">
@@ -208,7 +208,7 @@
             </button>
             <button
               type="button"
-              class="rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed"
+              class="rounded-md border border-slate-200 px-3 py-4 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed h-full flex flex-col justify-between"
               disabled
             >
               <div class="flex items-center justify-between gap-3">

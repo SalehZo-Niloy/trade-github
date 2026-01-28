@@ -26,7 +26,7 @@ interface TradeMenuItem {
       <div class="flex flex-1 overflow-hidden">
         <aside
           class="flex flex-col border-r overflow-hidden transition-all duration-300 ease-in-out"
-          [ngClass]="[theme.border.default, theme.surface.card]"
+          [ngClass]="[theme.border.default, theme.surface.card, !sidebarCollapsed ? 'min-w-64' : 'min-w-0']"
           [class.w-64]="!sidebarCollapsed"
           [class.w-0]="sidebarCollapsed"
         >
@@ -299,7 +299,7 @@ interface TradeMenuItem {
             </div>
           </header>
 
-          <main class="flex-1 overflow-y-auto px-6 py-6">
+          <main class="flex-1 w-full overflow-y-auto px-6 py-6">
             <div class="mb-4 flex justify-end">
               <button
                 type="button"
@@ -548,6 +548,11 @@ export class TradeLayoutComponent implements OnInit {
       this.setActivePath(initialPath);
     }
 
+    // Always show sidebar on dashboard
+    if (currentUrl.startsWith('/trade/dashboard')) {
+      this.sidebarCollapsed = false;
+    }
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects || event.url;
@@ -652,6 +657,8 @@ export class TradeLayoutComponent implements OnInit {
         this.expandedGroups[item.label] = true;
       }
     });
+
+    // Removed auto-expand all groups on dashboard. Only expand active group.
   }
 
   private getRoutePath(route?: any[]): string | null {
