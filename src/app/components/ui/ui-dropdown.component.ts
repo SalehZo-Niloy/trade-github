@@ -20,16 +20,13 @@ interface UiDropdownOption {
       <div class="relative">
         <button
           type="button"
-          class="flex w-full items-center justify-between rounded-md border px-3 py-2 text-sm text-slate-700"
+          class="flex w-full items-center justify-between rounded-md border px-3 text-sm text-slate-700 h-10"
           [ngClass]="[theme.border.strong, theme.surface.card]"
           (click)="toggleOpen()"
+          style="align-items: center;"
         >
           <span>
-            {{
-              selectedLabel ||
-              placeholder ||
-              'Select'
-            }}
+            {{ selectedLabel || placeholder || 'Select' }}
           </span>
           <span class="ml-2 flex h-4 w-4 items-center justify-center text-slate-400">
             <svg
@@ -55,7 +52,7 @@ interface UiDropdownOption {
         >
           <button
             type="button"
-            class="flex w-full items-center justify-between px-3 py-1.5 text-left text-slate-700 hover:bg-slate-50"
+            class="flex w-full items-center justify-between px-3 py-1.5 text-left text-slate-700 hover:bg-slate-50 h-10"
             *ngFor="let option of options"
             (click)="select(option)"
           >
@@ -65,7 +62,7 @@ interface UiDropdownOption {
         </div>
       </div>
     </div>
-  `
+  `,
 })
 export class UiDropdownComponent {
   @Input() label = '';
